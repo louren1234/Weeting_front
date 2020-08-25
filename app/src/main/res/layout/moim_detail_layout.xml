@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/detailMoimImage"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@drawable/ic_https_black_24dp" />
+
+        <TextView
+            android:id="@+id/detailMoimName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="detailMoimName" />
+
+        <TextView
+            android:id="@+id/detailMoimDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="detailMoimDescription" />
+
+        <TextView
+            android:id="@+id/detailMoimLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="detailMoimLocation" />
+
+        <TextView
+            android:id="@+id/detailMoimTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="detailMoimTime" />
+
+        <TextView
+            android:id="@+id/detailMoimRecruitment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="detailMoimRecruitment" />
+
+        <TextView
+            android:id="@+id/detailMoimAgeLimitMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="detailMoimAgeLimitMin" />
+
+        <TextView
+            android:id="@+id/detailMoimAgeLimitMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="detailMoimAgeLimitMax" />
+
+        <TextView
+            android:id="@+id/detailMoimCaptainNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="detailMoimCaptainNickname" />
+
+        <Button
+            android:id="@+id/detailMoimEditButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="수정"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/detailMoimDeleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="삭제" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

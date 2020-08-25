@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/meetingImg"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_image"/>
+
+        <EditText
+            android:id="@+id/meetingName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/meetingIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="intro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/meetingLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="location"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/meetingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:text="2020-08-04"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/meetingNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="50"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/minAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="20"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/maxAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="100"
+            tools:ignore="HardcodedText,LabelFor"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="만들기"
+            android:onClick="editMoimValid"
+            tools:ignore="HardcodedText"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

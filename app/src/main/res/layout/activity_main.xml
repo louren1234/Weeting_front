@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Weeting!"
+        android:textSize="45dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Women+meeting, 여성만 이용할 수 있는 모임 어플입니다."
+        />
+    <EditText
+        android:id="@+id/mainId"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_person_black_24dp"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:hint="아이디"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/mainPassword"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:drawableStart="@drawable/ic_https_black_24dp"
+        android:drawableLeft="@drawable/ic_https_black_24dp"
+        android:hint="비밀번호"
+        android:inputType="textPassword"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp"
+        >
+        <TextView
+            android:id="@+id/mainFindId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디 찾기"
+            android:clickable="true"
+            />
+        <TextView
+            android:id="@+id/mainFindPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="비밀번호 찾기"
+            android:clickable="true"
+            />
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/mainLogin"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:onClick="LoginCheck"
+        />
+    <Button
+        android:id="@+id/mainSignUp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:onClick="mainSignUp"
+        />
+
+
+</LinearLayout>
