@@ -1,30 +1,40 @@
 package com.example.again;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class After_have_group extends AppCompatActivity {
-    private ImageView firstRecommendMoim, secondRecommendMoim, firstMyMoim, secondMyMoim;
+public class After_have_group extends AppCompatActivity implements MainMoimRecyclerAdapter.OnMainMoimClickListener {
+//    private ImageView firstRecommendMoim, secondRecommendMoim, firstMyMoim, secondMyMoim;
 
-    String firstRecommendMoimImage;
-    String secondRecommendMoimImage;
-    String firstMyMoimImage;
-    String secondMyMoimImage;
+    private Context mcontext;
 
     MainMoimThumbnailData.serviceApi serviceApi;
     MainMoimThumbnailData.MaimMoimThumbnailDataResponse dataList;
+
+    MainMoimThumbnailData.MaimMoimThumbnailDataResponse myMoimList;
+    List<MainMoimThumbnailData> myMoim;
+    List<MainMoimThumbnailData> recommendMoim;
+
+    RecyclerView myMoimRecyclerView, recommendMoimRecyclerView;
+    MainMoimRecyclerAdapter myMoimRecyclerAdapter, recommendMoimRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +50,11 @@ public class After_have_group extends AppCompatActivity {
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
-        firstRecommendMoim = findViewById(R.id.firstRandomMoim);
-        secondRecommendMoim = findViewById(R.id.secondRandomMoim);
+        myMoimRecyclerView = findViewById(R.id.mainMyRecycler); // 이렇게 해야됨 1
+        myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
 
-        firstMyMoim = findViewById(R.id.firstMyMoim);
-        secondMyMoim = findViewById(R.id.secondMyMoim);
+        recommendMoimRecyclerView = findViewById(R.id.mainRecommedRecycler);
+        recommendMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
 
@@ -110,11 +120,16 @@ public class After_have_group extends AppCompatActivity {
             public void onResponse(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Response<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> response) {
                 dataList = response.body();
 
-                for(MainMoimThumbnailData mainMoimThumbnailData : dataList.getRecommend_mettings()){
+                    myMoimList = response.body();
 
+                    myMoim = myMoimList.getMy_meetings();
+                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
+                    mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
 
+                    recommendMoim = myMoimList.getRecommend_mettings();
+                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
+                    mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
 
-                }
             }
 
             @Override
@@ -124,5 +139,24 @@ public class After_have_group extends AppCompatActivity {
         });
 
 
+    }
+
+    public void mainMoimrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
+        mainMoimRecyclerAdapter.setOnItemClicklistener(this);
+        myMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
+    }
+
+    public void mainrecommendrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
+        mainMoimRecyclerAdapter.setOnItemClicklistener(this);
+        recommendMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
+    }
+
+    @Override
+    public void onMainThumbnailClick(View view, MainMoimThumbnailData mainMoimThumbnailData){
+//        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
+        Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+        intent.putExtra("meetingId", mainMoimThumbnailData.getMeeting_id());
+        startActivity(intent);
+        Log.e("RecyclerVIew :: ", mainMoimThumbnailData.toString());
     }
 }

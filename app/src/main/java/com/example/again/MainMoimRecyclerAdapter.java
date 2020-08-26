@@ -32,13 +32,13 @@ public class MainMoimRecyclerAdapter extends RecyclerView.Adapter<MainMoimRecycl
     private List<MainMoimThumbnailData> dataList;
     private Context mcontext;
 
-    public interface OnDataDetailClickListener {
+    public interface OnMainMoimClickListener {
         public void onMainThumbnailClick(View view, MainMoimThumbnailData mainMoimThumbnailData);
     }
 
-    public OnDataDetailClickListener mOnItemClickListener = null;
+    public OnMainMoimClickListener mOnItemClickListener = null;
 
-    public void setOnItemClicklistener(OnDataDetailClickListener listener) {
+    public void setOnItemClicklistener(OnMainMoimClickListener listener) {
         mOnItemClickListener = listener;
     }
 
@@ -53,7 +53,6 @@ public class MainMoimRecyclerAdapter extends RecyclerView.Adapter<MainMoimRecycl
         View view = LayoutInflater.from(mcontext).inflate(R.layout.main_moim_list, parent, false);
 
         return new ViewHolder(view);
-
     }
 
     @Override
