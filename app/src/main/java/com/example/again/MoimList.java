@@ -175,37 +175,5 @@ public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDat
         Log.e("RecyclerVIew :: ", moimCategoryData.toString());
     }
 
-
-
-//    public void toGetCategoryMoim(View v) {
-//
-//        String selectedCategory = categoryRecyclerView.toString();
-//
-//        serviceApi.getCategoryList(selectedCategory).enqueue(new Callback<MoimCategoryData.MoimCategoryResponse>(){
-//            @Override
-//            public void onResponse(Call<MoimCategoryData.MoimCategoryResponse> call, Response<MoimCategoryData.MoimCategoryResponse> response) {
-//                MoimCategoryData.MoimCategoryResponse result = response.body();
-//
-//                Toast.makeText(MoimList.this, result.getMessage(), Toast.LENGTH_LONG).show();
-//
-//                if(result.getState() == 200) {
-//                    System.out.println("yeah");
-//                    finish();
-//                }
-//                else if(result.getState() == 400) {
-//                    System.out.println("nooooo");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MoimCategoryData.MoimCategoryResponse> call, Throwable t) {
-//                Toast.makeText(MoimList.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-//                Log.e("모임생성 에러", t.getMessage());
-//                t.printStackTrace();
-//            }
-//        });
-//
-//    }
-
 }
 

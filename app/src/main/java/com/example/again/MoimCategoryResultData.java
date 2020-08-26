@@ -96,5 +96,8 @@ public class MoimCategoryResultData {
 
         @GET("weetings/{category}")
         Call<MoimCategoryResultDataResponse> getCategoryResultMoim(@Path("category") String category);
+
+        @GET("/myWeeting")
+        Call<MoimCategoryResultDataResponse> getMyMoim();
     }
 }
