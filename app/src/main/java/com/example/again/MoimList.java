@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +58,72 @@ public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDat
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         mcontext = this;
+
+        TextView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMap = findViewById(R.id.toMap);
+//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Search.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        toMap.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+//        toCalender.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); 이렇게 하면 안됨. 1 내 생각엔 this를 못 읽어오는 것 같음. 직접 레이아웃 지정해주는게 맞는듯. 아,
 //        recyclerView.setLayoutManager(layoutManager); 이렇게 하면 안됨. 2

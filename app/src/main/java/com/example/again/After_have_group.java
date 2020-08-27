@@ -77,7 +77,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         toHome.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), No_have_group.class);
                 startActivity(intent);
             }
         });
@@ -118,7 +118,6 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         serviceApi.getAfterHaveMoimMain().enqueue(new Callback<MainMoimThumbnailData.MaimMoimThumbnailDataResponse>() {
             @Override
             public void onResponse(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Response<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> response) {
-                dataList = response.body();
 
                     myMoimList = response.body();
 
@@ -127,14 +126,14 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
                     mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
 
                     recommendMoim = myMoimList.getRecommend_mettings();
-                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
+                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, recommendMoim);
                     mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
 
             }
 
             @Override
             public void onFailure(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Throwable t) {
-
+                Log.d("MainMoim : ", "메인 모임 오류 : " + t);
             }
         });
 

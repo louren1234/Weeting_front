@@ -41,6 +41,7 @@
         <activity android:name=".SpinnerTest"/>
         <activity android:name=".MoimDetail"/>
         <activity android:name=".UpdateMyMoim"/>
+        <activity android:name=".No_have_group"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

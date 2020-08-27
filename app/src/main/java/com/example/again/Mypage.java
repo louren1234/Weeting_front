@@ -61,6 +61,7 @@ public class Mypage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
                 startActivity(intent);
             }
         });

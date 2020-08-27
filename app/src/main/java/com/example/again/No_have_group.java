@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,17 +30,15 @@ public class No_have_group extends AppCompatActivity implements MainMoimRecycler
     MainMoimThumbnailData.serviceApi serviceApi;
     MainMoimThumbnailData.MaimMoimThumbnailDataResponse dataList;
 
-    MainMoimThumbnailData.MaimMoimThumbnailDataResponse myMoimList;
-    List<MainMoimThumbnailData> myMoim;
     List<MainMoimThumbnailData> recommendMoim;
 
-    RecyclerView myMoimRecyclerView, recommendMoimRecyclerView;
-    MainMoimRecyclerAdapter myMoimRecyclerAdapter, recommendMoimRecyclerAdapter;
+    RecyclerView recommendMoimRecyclerView;
+    MainMoimRecyclerAdapter recommendMoimRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.after_have_group);
+        setContentView(R.layout.no_have_group);
 
         TextView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
@@ -50,11 +49,8 @@ public class No_have_group extends AppCompatActivity implements MainMoimRecycler
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
-        myMoimRecyclerView = findViewById(R.id.mainMyRecycler); // 이렇게 해야됨 1
-        myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
-
-        recommendMoimRecyclerView = findViewById(R.id.mainRecommedRecycler);
-        recommendMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recommendMoimRecyclerView = findViewById(R.id.noHaveMoimRecommendRecycler);
+        recommendMoimRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
 
@@ -120,14 +116,8 @@ public class No_have_group extends AppCompatActivity implements MainMoimRecycler
             public void onResponse(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Response<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> response) {
                 dataList = response.body();
 
-                myMoimList = response.body();
-
-                myMoim = myMoimList.getMy_meetings();
-                myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
-                mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
-
-                recommendMoim = myMoimList.getRecommend_mettings();
-                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
+                recommendMoim = dataList.getRecommend_mettings();
+                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, recommendMoim);
                 mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
 
             }
@@ -139,11 +129,6 @@ public class No_have_group extends AppCompatActivity implements MainMoimRecycler
         });
 
 
-    }
-
-    public void mainMoimrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
-        mainMoimRecyclerAdapter.setOnItemClicklistener(this);
-        myMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
     }
 
     public void mainrecommendrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
