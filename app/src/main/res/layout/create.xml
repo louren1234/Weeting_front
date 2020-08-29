@@ -63,7 +63,7 @@
             android:text="주소검색"
             tools:ignore="HardcodedText,LabelFor" />
 
-        <EditText
+        <TextView
             android:id="@+id/meetingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,6 +74,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText,LabelFor"
             android:importantForAutofill="no" />
+
+
+        <Button
+            android:id="@+id/selectDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="날짜선택"
+            android:onClick="OnClickHandler"/>
 
         <EditText
             android:id="@+id/meetingNum"
