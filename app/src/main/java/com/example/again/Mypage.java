@@ -16,7 +16,7 @@ public class Mypage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_mypage);
+        setContentView(R.layout.mypage);
 
         TextView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
@@ -27,6 +27,7 @@ public class Mypage extends AppCompatActivity {
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
+        LinearLayout editmyinform = findViewById(R.id.myinform);
         LinearLayout interest = findViewById(R.id.interest);
         LinearLayout alertSetting = findViewById(R.id.alertSetting);
         LinearLayout faq = findViewById(R.id.faq);
@@ -85,7 +86,17 @@ public class Mypage extends AppCompatActivity {
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                Intent intent = new Intent(getApplicationContext(), EditMyInformation.class);
+                startActivity(intent);
+            }
+        });
+
+        // 리스트
+
+        editmyinform.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EditMyInformation.class);
                 startActivity(intent);
             }
         });
