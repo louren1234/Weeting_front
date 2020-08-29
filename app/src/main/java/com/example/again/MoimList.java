@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,18 +24,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDataDetailClickListener, InterestListRecyclerAdapter.OnCategoryListClickListener {
+public class MoimList extends FragmentActivity implements InterestListRecyclerAdapter.OnCategoryListClickListener {
     private MoimCategoryData.serviceApi serviceApi;
     private Context mcontext;
+    private String categoryName;
+    private MoimListFragment fragment;
 
-    MoimCategoryResultData.MoimCategoryResultDataResponse moimDataList;
     MoimCategoryData.MoimCategoryResponse categoryDataList;
 
-    List<MoimCategoryResultData> moimDataInfo;
     List<MoimCategoryData> categoryDataInfo;
 
     RecyclerView moimRecyclerView, categoryRecyclerView;
-    RecyclerAdapter moimRecyclerAdapter;
     InterestListRecyclerAdapter categoryRecyclerAdapter;
 
     @Override
@@ -51,10 +53,8 @@ public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDat
             }
         });
 
-        moimRecyclerView = findViewById(R.id.recyclerView); // 이렇게 해야됨 1
         categoryRecyclerView = findViewById(R.id.category);
 
-        moimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         mcontext = this;
@@ -129,57 +129,20 @@ public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDat
 //        recyclerView.setLayoutManager(layoutManager); 이렇게 하면 안됨. 2
 
         Intent intent = getIntent();
-        final String categoryName = intent.getExtras().getString("category");
+        categoryName = intent.getExtras().getString("category");
 
-        MoimCategoryResultData.serviceApi moimApiInterface = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//        fragmentTransaction.add(R.id.fragment, new MoimListFragment());
+//        fragmentTransaction.commit();
 
-        if (categoryName.equals("all")) {
-            Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getAllMoim();
-//            Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getAllMoim();
-            moimCall.enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
-                @Override
-                public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
+        if(fragment == null){
+            fragment = new MoimListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("category", categoryName);
+            fragment.setArguments(bundle);
 
-                    moimDataList = response.body();
-
-                    Log.d("MoimList 성공", moimDataList.toString());
-
-                    moimDataInfo = moimDataList.data;
-
-                    moimRecyclerAdapter = new RecyclerAdapter(mcontext, moimDataInfo);
-                    recyclerAdapterinit(moimRecyclerAdapter);
-                }
-
-                @Override
-                public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
-
-                    Log.d("MoimList 실패", t.toString());
-                }
-            });
-        }
-        else {
-            Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getCategoryResultMoim(categoryName);
-//            Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getAllMoim();
-            moimCall.enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
-                @Override
-                public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
-
-                    moimDataList = response.body();
-
-                    Log.d("MoimList 성공", moimDataList.toString());
-
-                    moimDataInfo = moimDataList.data;
-
-                    moimRecyclerAdapter = new RecyclerAdapter(getApplicationContext(), moimDataInfo);
-                    recyclerAdapterinit(moimRecyclerAdapter);
-                }
-
-                @Override
-                public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
-
-                    Log.d("MoimList 실패", t.toString());
-                }
-            });
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
 
 
@@ -210,37 +173,32 @@ public class MoimList extends AppCompatActivity implements RecyclerAdapter.OnDat
         });
     }
 
-    //모임 리스트 클릭 시 setting
-    public void recyclerAdapterinit(RecyclerAdapter moimRecyclerAdapter){
-        moimRecyclerAdapter.setOnItemClicklistener(this);
-        moimRecyclerView.setAdapter(moimRecyclerAdapter);
-    }
-
     //모임 카테고리 클릭 시 setting
     public void InterestListRecyclerAdapterinit(InterestListRecyclerAdapter categoryRecyclerAdapter){
         categoryRecyclerAdapter.setOnItemClicklistener(this);
         categoryRecyclerView.setAdapter(categoryRecyclerAdapter);
     }
 
-    // 모임 리스트 클릭 시
-    @Override
-    public void onItemClick(View view, MoimCategoryResultData moimCategoryResultData){
-//        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
-        Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-        intent.putExtra("meetingId", moimCategoryResultData.getMeeting_id());
-        startActivity(intent);
-        Log.e("RecyclerVIew :: ", moimCategoryResultData.toString());
-    }
-
     //카테고리 클릭 시
     @Override
     public void onCategoryClick(View view, MoimCategoryData moimCategoryData){
+        Log.d("카테고리 클릭 함수는 들어오는지", "제발 들어오길");
 //        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
-        Fragment fragment = new Fragment();
-        Intent intent = new Intent(getApplicationContext(), MoimList.class);
-        intent.putExtra("category", moimCategoryData.getInterests_name());
-        startActivity(intent);
-        Log.e("RecyclerVIew :: ", moimCategoryData.toString());
+//        Intent intent = new Intent(getApplicationContext(), MoimList.class);
+//        intent.putExtra("category", moimCategoryData.getInterests_name());
+//        startActivity(intent);
+//        Log.e("RecyclerVIew :: ", moimCategoryData.toString());
+//
+        if(fragment == null) {
+            fragment = new MoimListFragment();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("category", moimCategoryData.getInterests_name());
+        fragment.setArguments(bundle);
+
+        fragment.refreshFragment();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
 }
