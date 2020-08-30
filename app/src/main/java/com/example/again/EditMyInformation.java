@@ -87,7 +87,7 @@ public class EditMyInformation extends AppCompatActivity {
         editMyInfoButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                editMyInfo(myimg, myintro);
+                editMyInfo();
             }
         });
 
@@ -345,13 +345,17 @@ public class EditMyInformation extends AppCompatActivity {
 
     }
 
-    protected void editMyInfo(final String editmyimg, final String editmyintro) {
+    protected void editMyInfo() {
+
+        myintro = myIntroduce.getText().toString();
+
+        Log.d(TAG, "이미지 값 : " + myimg + " 자기소개 " + myintro);
 
         if( tempFile == null || tempFile.length() <= 0) { // 새로운 이미지 업데이트가 없고
 
             if (myimg != null) { // 기존 이미지가 존재한다면
 
-                Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(editmyintro);
+                Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
                 calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
                     @Override
                     public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
@@ -383,7 +387,7 @@ public class EditMyInformation extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
 
-                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(editmyintro);
+                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
                         calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
                             @Override
                             public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
@@ -414,10 +418,10 @@ public class EditMyInformation extends AppCompatActivity {
             }
         } else { // 새로운 이미지가 있다면
 
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile );
-//            body = MultipartBody.Part.createFormData("meeting_img", tempFile.getName(), requestFile);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("user_img", tempFile.getName(), requestFile);
 
-            Call<UserData.UserImgorIntroResponse> call = serviceApi.updateMyNewImg(requestFile);
+            Call<UserData.UserImgorIntroResponse> call = serviceApi.updateMyNewImg(body);
 
             call.enqueue(new Callback<UserData.UserImgorIntroResponse>(){
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
@@ -425,11 +429,11 @@ public class EditMyInformation extends AppCompatActivity {
                 public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
                     UserData.UserImgorIntroResponse result = response.body();
 
-                    Toast.makeText(EditMyInformation.this, result.getMessage(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(EditMyInformation.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if(result.getState() == 200) {
 
-                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(editmyintro);
+                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
                         calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
                             @Override
                             public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {

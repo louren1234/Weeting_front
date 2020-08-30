@@ -72,6 +72,11 @@
             android:layout_height="wrap_content"
             android:text="detailMoimCaptainNickname" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/meetingMemberRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <Button
             android:id="@+id/detailMoimEditButton"
             android:layout_width="match_parent"

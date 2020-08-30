@@ -70,7 +70,7 @@ public class Mypage extends AppCompatActivity {
         toMap.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Group_location_map.class);
+                Intent intent = new Intent(getApplicationContext(), Create.class);
                 startActivity(intent);
             }
         });

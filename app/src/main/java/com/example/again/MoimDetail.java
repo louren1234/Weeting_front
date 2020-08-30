@@ -45,6 +45,7 @@ public class MoimDetail extends AppCompatActivity {
         detailMoimImage = findViewById(R.id.detailMoimImage);
         detailMoimEditButton = findViewById(R.id.detailMoimEditButton);
         detailMoimDeleteButton = findViewById(R.id.detailMoimDeleteButton);
+        detailMoimCaptainNickname = findViewById(R.id.detailMoimCaptainNickname);
 
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
@@ -74,6 +75,7 @@ public class MoimDetail extends AppCompatActivity {
                     detailMoimRecruitment.setText(String.valueOf(moimDetailData.getMeeting_recruitment()));
                     detailMoimAgeLimitMin.setText(String.valueOf(moimDetailData.getAge_limit_min()));
                     detailMoimAgeLimitMax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
+                    detailMoimCaptainNickname.setText(String.valueOf(moimDetailData.getCaptain_nick_name()));
                 }
 
             }

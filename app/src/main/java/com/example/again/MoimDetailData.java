@@ -37,6 +37,13 @@ public class MoimDetailData {
     String meeting_img;
     @SerializedName("captain_nick_name")
     String captain_nick_name;
+    // meeting_members
+    @SerializedName("user_nick_name")
+    String user_nick_name;
+    @SerializedName("user_img")
+    String user_img;
+    @SerializedName("user_introduce")
+    String user_introduce;
 
     public MoimDetailData(int fk_meeting_interest, String meeting_name, String meeting_description, String meeting_location, String meeting_time,
                           int meeting_recruitment, int age_limit_min, int age_limit_max, String meeting_img, String captain_nick_name) {
@@ -50,6 +57,12 @@ public class MoimDetailData {
         this.age_limit_max = age_limit_max;
         this.meeting_img = meeting_img;
         this.captain_nick_name = captain_nick_name;
+    }
+
+    public MoimDetailData(String user_nick_name, String user_img, String user_introduce) {
+        this.user_nick_name = user_nick_name;
+        this.user_img = user_img;
+        this.user_introduce = user_introduce;
     }
 
     public int getFk_meeting_interest() {
@@ -138,9 +151,13 @@ public class MoimDetailData {
         int is_member;
         String meeting_interest;
         List<MoimDetailData> data;
+        List<MoimDetailData> meeting_members;
 
         public int getStatus() { return state; }
         public String getMessage() { return message; }
+        public List<MoimDetailData> getData() { return data; }
+        public List<MoimDetailData> getMeeting_members() { return meeting_members; }
+
         public int getIs_member() { return is_member; }
         public String getMeeting_interest() { return meeting_interest; }
     }
@@ -149,11 +166,11 @@ public class MoimDetailData {
         @GET("/weetingDetail/{meeting_id}")
         Call<MoimDetailDataResponse> getMoimDetail(@Path("meeting_id") int meeting_id);
 
-        @POST("/myWeetingUpdate")
-        Call<MoimDetailDataResponse> updateMoim();
-
-        @Multipart
-        @POST("/myWeetingDelete")
-        Call<MoimDetailDataResponse> deleteMoim(@Path("meeting_id") RequestBody meeting_id);
+//        @POST("/myWeetingUpdate")
+//        Call<MoimDetailDataResponse> updateMoim();
+//
+//        @Multipart
+//        @POST("/myWeetingDelete")
+//        Call<MoimDetailDataResponse> deleteMoim(@Path("meeting_id") RequestBody meeting_id);
     }
 }

@@ -44,14 +44,14 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
 
         serviceApi = RetrofitClient.getClient().create(MoimCategoryData.serviceApi.class);
 
-        ImageView create = findViewById(R.id.toMap);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Create.class);
-                startActivity(intent);
-            }
-        });
+//        ImageView create = findViewById(R.id.toMap);
+//        create.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), Create.class);
+//                startActivity(intent);
+//            }
+//        });
 
         categoryRecyclerView = findViewById(R.id.category);
 

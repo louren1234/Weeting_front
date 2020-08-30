@@ -34,7 +34,7 @@ public class SearchMoimAddress extends AppCompatActivity {
 
         addressWebView.addJavascriptInterface(new AndroidBridge(), "Testapp");
         addressWebView.setWebChromeClient(new WebChromeClient());
-        addressWebView.loadUrl("file:///android_asset/kakao_address");
+        addressWebView.loadUrl("http://52.35.235.199:3000/routes/createMeeting/daum_address.php");
     }
 
     private class AndroidBridge {

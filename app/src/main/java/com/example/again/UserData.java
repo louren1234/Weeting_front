@@ -8,6 +8,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -115,10 +117,16 @@ public class UserData {
         @POST("/mypage/edit/img")
         Call<UserImgorIntroResponse> updateMyImg(@Query("user_img") String user_img);
 
+//        @FormUrlEncoded
+        @Multipart
         @POST("/mypage/edit/img")
-        Call<UserImgorIntroResponse> updateMyNewImg(@Path("user_img") RequestBody user_img);
+        Call<UserImgorIntroResponse> updateMyNewImg(@Part MultipartBody.Part user_img);
 
+//        @FormUrlEncoded
+//        @POST("/mypage/edit/introduce")
+//        Call<UserImgorIntroResponse> updateMyIntro(@Field("user_introduce") String user_introduce);
+        @FormUrlEncoded
         @POST("/mypage/edit/introduce")
-        Call<UserImgorIntroResponse> updateMyIntro(@Path("user_introduce") String user_introduce);
+        Call<UserImgorIntroResponse> updateMyIntro(@Field("user_introduce") String user_introduce);
     }
 }
