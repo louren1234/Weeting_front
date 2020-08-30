@@ -32,9 +32,9 @@ public class SearchMoimAddress extends AppCompatActivity {
         addressWebView.getSettings().setLoadWithOverviewMode(true);
         addressWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
-        addressWebView.addJavascriptInterface(new AndroidBridge(), "testapp");
+        addressWebView.addJavascriptInterface(new AndroidBridge(), "Testapp");
         addressWebView.setWebChromeClient(new WebChromeClient());
-        addressWebView.loadUrl("http://52.35.235.199:3000");
+        addressWebView.loadUrl("file:///android_asset/kakao_address");
     }
 
     private class AndroidBridge {

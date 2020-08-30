@@ -58,8 +58,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Create extends AppCompatActivity {
-    private EditText m_name, m_description, m_location, m_num, m_agemin, m_agemax;
-    private TextView m_time;
+    private EditText m_name, m_description, m_num, m_agemin, m_agemax;
+    private TextView m_time, m_location;
     private Button selectDateButton;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TimePickerDialog.OnTimeSetListener timecallbackMethod;
@@ -197,6 +197,13 @@ public class Create extends AppCompatActivity {
         m_agemax = findViewById(R.id.maxAge);
         serviceApi = RetrofitClient.getClient().create(MoimData.ServiceApi.class);
 
+        m_location.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -231,8 +238,8 @@ public class Create extends AppCompatActivity {
 //        String img = bitmap.toString();
 
         String time = m_time.getText().toString();
-        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
-        Date timeDate = trans.parse(time);
+//        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
+//        Date timeDate = trans.parse(time);
 
         if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
                 num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {

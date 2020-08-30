@@ -44,6 +44,7 @@
         <activity android:name=".UpdateMyMoim"/>
         <activity android:name=".No_have_group"/>
         <activity android:name=".EditMyInformation"/>
+        <activity android:name=".SearchMoimAddress"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
