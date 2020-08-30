@@ -12,8 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -29,6 +33,10 @@ public class MoimDetail extends AppCompatActivity {
     private MoimDetailData.serviceApi serviceApi;
     MoimDetailData.MoimDetailDataResponse detailList;
     MoimDetailData detailListConponent;
+
+    List<MoimDetailData> moimMemberInfo;
+    RecyclerView moimMemberRecyclerView;
+    MoimMemberRecyclerAdapter moimMemberRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,9 @@ public class MoimDetail extends AppCompatActivity {
         detailMoimEditButton = findViewById(R.id.detailMoimEditButton);
         detailMoimDeleteButton = findViewById(R.id.detailMoimDeleteButton);
         detailMoimCaptainNickname = findViewById(R.id.detailMoimCaptainNickname);
+        moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
+
+        moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
@@ -59,6 +70,10 @@ public class MoimDetail extends AppCompatActivity {
             @Override
             public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
                 detailList = response.body();
+
+                moimMemberInfo = detailList.meeting_members;
+                moimMemberRecyclerAdapter = new MoimMemberRecyclerAdapter(getApplicationContext(), moimMemberInfo);
+                moimMemberRecyclerView.setAdapter(moimMemberRecyclerAdapter);
 
                 for(MoimDetailData moimDetailData : detailList.data){
 
@@ -129,4 +144,8 @@ public class MoimDetail extends AppCompatActivity {
             }
         });
     }
+
+//    public void MoimMemberRecyclerAdapterinit(MoimMemberRecyclerAdapter moimMemberRecyclerAdapter){
+//        moimMemberRecyclerAdapter
+//    }
 }

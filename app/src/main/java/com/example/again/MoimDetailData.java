@@ -145,6 +145,30 @@ public class MoimDetailData {
         this.captain_nick_name = captain_nick_name;
     }
 
+    public String getUser_nick_name() {
+        return user_nick_name;
+    }
+
+    public void setUser_nick_name(String user_nick_name) {
+        this.user_nick_name = user_nick_name;
+    }
+
+    public String getUser_img() {
+        return user_img;
+    }
+
+    public void setUser_img(String user_img) {
+        this.user_img = user_img;
+    }
+
+    public String getUser_introduce() {
+        return user_introduce;
+    }
+
+    public void setUser_introduce(String user_introduce) {
+        this.user_introduce = user_introduce;
+    }
+
     class MoimDetailDataResponse{
         int state;
         String message;
