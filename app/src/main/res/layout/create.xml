@@ -93,7 +93,7 @@
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="number"
-            android:text="50"
+            android:text="정원 수"
             tools:ignore="HardcodedText,LabelFor" />
 
         <EditText
@@ -103,7 +103,7 @@
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="number"
-            android:text="20"
+            android:text="최소인원"
             tools:ignore="HardcodedText,LabelFor" />
 
         <EditText
@@ -113,7 +113,7 @@
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="number"
-            android:text="100"
+            android:text="최대인원"
             tools:ignore="HardcodedText,LabelFor" />
 
         <Button

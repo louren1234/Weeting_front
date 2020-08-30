@@ -14,6 +14,8 @@ public class SearchMoimAddress extends AppCompatActivity {
     private WebView addressWebView;
     private Handler handler;
 
+//    protected ProxyWebChromeClient proxyWebChromeClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,10 +33,11 @@ public class SearchMoimAddress extends AppCompatActivity {
         addressWebView.getSettings().setJavaScriptEnabled(true);
         addressWebView.getSettings().setLoadWithOverviewMode(true);
         addressWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        addressWebView.getSettings().setSupportMultipleWindows(true);
 
         addressWebView.addJavascriptInterface(new AndroidBridge(), "Testapp");
-        addressWebView.setWebChromeClient(new WebChromeClient());
-        addressWebView.loadUrl("http://52.35.235.199:3000/routes/createMeeting/daum_address.php");
+        addressWebView.setWebChromeClient(new WebChromeClientSet());
+        addressWebView.loadUrl("http://52.35.235.199:3000/daum_address.php");
     }
 
     private class AndroidBridge {
@@ -50,4 +53,6 @@ public class SearchMoimAddress extends AppCompatActivity {
             });
         }
     }
+
+
 }

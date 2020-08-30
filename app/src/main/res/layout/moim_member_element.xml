@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
 
     <LinearLayout
         android:id="@+id/member"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/line_down"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -24,19 +22,17 @@
 
             <ImageView
                 android:id="@+id/memberImg"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/circle" />
+                android:src="@drawable/circle" />
 
             <TextView
                 android:id="@+id/memberNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 tools:text="닉네임" />
 
         </LinearLayout>
@@ -46,9 +42,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp"
             android:textSize="15sp"
             tools:text="저는 땡땡땡을 좋아하는 땡땡입니다" />
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
+
+    <!--
+    참고 블로그 : https://riucc.tistory.com/327
+    -->

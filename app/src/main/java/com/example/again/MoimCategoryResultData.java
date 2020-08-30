@@ -21,16 +21,16 @@ public class MoimCategoryResultData {
     String meeting_location;
     @SerializedName("meeting_time")
     String meeting_time;
-    @SerializedName("meeting_recruitment")
-    int meeting_recruitment;
+    @SerializedName("present_members")
+    int present_members;
 
-    public MoimCategoryResultData(int meeting_id, String meeting_name, String meeting_img, String meeting_location, String meeting_time, int meeting_recruitment) {
+    public MoimCategoryResultData(int meeting_id, String meeting_name, String meeting_img, String meeting_location, String meeting_time, int present_members) {
         this.meeting_id = meeting_id;
         this.meeting_name = meeting_name;
         this.meeting_img = meeting_img;
         this.meeting_location = meeting_location;
         this.meeting_time = meeting_time;
-        this.meeting_recruitment = meeting_recruitment;
+        this.present_members = present_members;
     }
 
     public int getMeeting_id() {
@@ -73,12 +73,12 @@ public class MoimCategoryResultData {
         this.meeting_time = meeting_time;
     }
 
-    public int getMeeting_recruitment() {
-        return meeting_recruitment;
+    public int getPresent_members() {
+        return present_members;
     }
 
-    public void setMeeting_recruitment(int meeting_recruitment) {
-        this.meeting_recruitment = meeting_recruitment;
+    public void setPresent_members(int present_members) {
+        this.present_members = present_members;
     }
 
     class MoimCategoryResultDataResponse{

@@ -8,6 +8,8 @@ import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -35,6 +37,8 @@ public class MoimDetailData {
     int age_limit_max;
     @SerializedName("meeting_img")
     String meeting_img;
+    @SerializedName("present_members")
+    int present_members;
     @SerializedName("captain_nick_name")
     String captain_nick_name;
     // meeting_members
@@ -46,7 +50,7 @@ public class MoimDetailData {
     String user_introduce;
 
     public MoimDetailData(int fk_meeting_interest, String meeting_name, String meeting_description, String meeting_location, String meeting_time,
-                          int meeting_recruitment, int age_limit_min, int age_limit_max, String meeting_img, String captain_nick_name) {
+                          int meeting_recruitment, int age_limit_min, int age_limit_max, String meeting_img, int present_members, String captain_nick_name) {
         this.fk_meeting_interest = fk_meeting_interest;
         this.meeting_name = meeting_name;
         this.meeting_description = meeting_description;
@@ -56,6 +60,7 @@ public class MoimDetailData {
         this.age_limit_min = age_limit_min;
         this.age_limit_max = age_limit_max;
         this.meeting_img = meeting_img;
+        this.present_members = present_members;
         this.captain_nick_name = captain_nick_name;
     }
 
@@ -137,6 +142,14 @@ public class MoimDetailData {
         this.meeting_img = meeting_img;
     }
 
+    public int getPresent_members() {
+        return present_members;
+    }
+
+    public void setPresent_members(int present_members) {
+        this.present_members = present_members;
+    }
+
     public String getCaptain_nick_name() {
         return captain_nick_name;
     }
@@ -189,6 +202,14 @@ public class MoimDetailData {
     public interface serviceApi {
         @GET("/weetingDetail/{meeting_id}")
         Call<MoimDetailDataResponse> getMoimDetail(@Path("meeting_id") int meeting_id);
+
+        @FormUrlEncoded
+        @POST("/participate")
+        Call<MoimDetailDataResponse> participateMoim(@Field("meeting_id") int meeting_id);
+
+        @FormUrlEncoded
+        @POST("/withdraw")
+        Call<MoimDetailDataResponse> withdrawMoim(@Field("meeting_id") int meeting_id);
 
 //        @POST("/myWeetingUpdate")
 //        Call<MoimDetailDataResponse> updateMoim();

@@ -246,15 +246,19 @@ public class Create extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "빈 칸 존재", Toast.LENGTH_LONG).show();
         }
         else {
-            int num2 = Integer.parseInt(num);
-            int agemin2 = Integer.parseInt(agemin);
-            int agemax2 = Integer.parseInt(agemax);
+            int numInt = Integer.parseInt(num);
+            int ageminInt = Integer.parseInt(agemin);
+            int agemaxInt = Integer.parseInt(agemax);
 //            int interest = Integer.parseInt(m_interest);
-
-            startCreateMoim(new MoimData(m_interest, name, description, time, location, num2, agemin2, agemax2));
-            Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            if ( ageminInt > agemaxInt ) {
+                Toast.makeText(getApplicationContext(), "최소 인원이 최대 인원보다 크게 설정되어 있습니다.", Toast.LENGTH_LONG).show();
+            } else {
+                if( numInt < 5 ){
+                    Toast.makeText(getApplicationContext(), "모임원은 5명 이상으로 설정해주세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    startCreateMoim(new MoimData(m_interest, name, description, time, location, numInt, ageminInt, agemaxInt));
+                }
+            }
         }
     }
 
@@ -518,6 +522,7 @@ public class Create extends AppCompatActivity {
 
                     if (result.getStatus() == 200) {
                         System.out.println("yeah");
+                        Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                         startActivity(intent);
                     } else if (result.getStatus() == 400) {
