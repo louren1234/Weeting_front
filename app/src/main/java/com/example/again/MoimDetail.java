@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -23,12 +28,19 @@ import retrofit2.Response;
 
 public class MoimDetail extends AppCompatActivity {
 
-    private TextView detailMoimName, detailMoimDescription, detailMoimLocation, detailMoimTime, detailMoimRecruitment, detailMoimAgeLimitMin, detailMoimAgeLimitMax, detailMoimCaptainNickname;
+    private TextView detailMoimName, detailMoimDescription, detailMoimLocation, detailMoimTime, detailMoimRecruitment, detailMoimAgeLimitMin, detailMoimAgeLimitMax, detailMoimPresentMembersNum, detailMoimCaptainNickname;
     private ImageView detailMoimImage;
-    private Button detailMoimEditButton, detailMoimDeleteButton;
+    private LinearLayout memberLayout;
+    private Button detailMoimEditButton, detailMoimDeleteButton, moimParticipateButton, moimWithdrawButton;
     private MoimDetailData.serviceApi serviceApi;
-    MoimDetailData.MoimDetailDataResponse detailList;
-    MoimDetailData detailListConponent;
+    private int is_member;
+
+    private MoimDetailData.MoimDetailDataResponse detailList;
+    private MoimDetailData detailListConponent;
+
+    List<MoimDetailData> moimMemberInfo;
+    RecyclerView moimMemberRecyclerView;
+    MoimMemberRecyclerAdapter moimMemberRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +57,32 @@ public class MoimDetail extends AppCompatActivity {
         detailMoimImage = findViewById(R.id.detailMoimImage);
         detailMoimEditButton = findViewById(R.id.detailMoimEditButton);
         detailMoimDeleteButton = findViewById(R.id.detailMoimDeleteButton);
+        moimParticipateButton = findViewById(R.id.moimParticipateButton);
+        moimWithdrawButton = findViewById(R.id.moimWithDrawButton);
+        detailMoimPresentMembersNum = findViewById(R.id.detailMoimPresentMembersNum);
+        detailMoimCaptainNickname = findViewById(R.id.detailMoimCaptainNickname);
+
+        memberLayout = findViewById(R.id.meetingMemberLayout);
+        moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
+
+        moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 
         Log.d("MoimDetail", "모임 아이디가 뭘까? : " + meeting_id);
 
-        final MoimDetailData.serviceApi apiInterface = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
-        Call<MoimDetailData.MoimDetailDataResponse> call = apiInterface.getMoimDetail(meeting_id);
+        serviceApi = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
+        Call<MoimDetailData.MoimDetailDataResponse> call = serviceApi.getMoimDetail(meeting_id);
 
         call.enqueue(new Callback<MoimDetailData.MoimDetailDataResponse>() {
             @Override
             public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
                 detailList = response.body();
+
+                moimMemberInfo = detailList.getMeeting_members();
+                moimMemberRecyclerAdapter = new MoimMemberRecyclerAdapter(getApplicationContext(), moimMemberInfo);
+                moimMemberRecyclerView.setAdapter(moimMemberRecyclerAdapter);
 
                 for(MoimDetailData moimDetailData : detailList.data){
 
@@ -74,6 +99,16 @@ public class MoimDetail extends AppCompatActivity {
                     detailMoimRecruitment.setText(String.valueOf(moimDetailData.getMeeting_recruitment()));
                     detailMoimAgeLimitMin.setText(String.valueOf(moimDetailData.getAge_limit_min()));
                     detailMoimAgeLimitMax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
+                    detailMoimPresentMembersNum.setText(String.valueOf(moimDetailData.getPresent_members()));
+                    detailMoimCaptainNickname.setText(String.valueOf(moimDetailData.getCaptain_nick_name()));
+                }
+
+                is_member = detailList.is_member;
+                if(is_member != 1) {
+                    memberLayout.setVisibility(View.GONE);
+                    moimWithdrawButton.setVisibility(View.GONE);
+                }else if(is_member == 1){
+                    moimParticipateButton.setVisibility(View.GONE);
                 }
 
             }
@@ -126,5 +161,68 @@ public class MoimDetail extends AppCompatActivity {
                 });
             }
         });
+
+        moimParticipateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                serviceApi.participateMoim(meeting_id).enqueue(new Callback<MoimDetailData.MoimDetailDataResponse>() {
+                    @Override
+                    public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
+                        MoimDetailData.MoimDetailDataResponse response1 = response.body();
+
+                        if ( response1.getStatus() == 200 ){
+
+                            Toast myToast = Toast.makeText(getApplicationContext(),"모임 참여 완료", Toast.LENGTH_SHORT);
+                            myToast.show();
+                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+                            intent.putExtra("meetingId", meeting_id);
+                            startActivity(intent);
+
+                        } else{
+                            Log.d("모임 참여 에러 : ", " 서버 에러 ");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MoimDetailData.MoimDetailDataResponse> call, Throwable t) {
+                        Log.d("모임 참여 에러 : ", " retrofit 에러 ");
+                    }
+                });
+            }
+        });
+
+        moimWithdrawButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                serviceApi.withdrawMoim(meeting_id).enqueue(new Callback<MoimDetailData.MoimDetailDataResponse>() {
+                    @Override
+                    public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
+                        MoimDetailData.MoimDetailDataResponse response1 = response.body();
+
+                        if ( response1.getStatus() == 200 ){
+
+                            Toast myToast = Toast.makeText(getApplicationContext(),"모임 탈퇴 완료", Toast.LENGTH_SHORT);
+                            myToast.show();
+                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+                            intent.putExtra("meetingId", meeting_id);
+                            startActivity(intent);
+
+                        } else{
+                            Log.d("모임 참여 에러 : ", " 서버 에러 ");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MoimDetailData.MoimDetailDataResponse> call, Throwable t) {
+                        Log.d("모임 참여 에러 : ", " retrofit 에러 ");
+                    }
+                });
+            }
+        });
+
     }
+
+//    public void MoimMemberRecyclerAdapterinit(MoimMemberRecyclerAdapter moimMemberRecyclerAdapter){
+//        moimMemberRecyclerAdapter
+//    }
 }

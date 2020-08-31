@@ -84,6 +84,7 @@ public class UpdateMyMoim extends AppCompatActivity {
 
     private Spinner interestSpinner;
     private MoimEditData.serviceApi serviceApi;
+    private MoimEditSameImageData.serviceApi SameImageserviceApi;
     MoimCategoryData.MoimCategoryResponse dataList;
     //    ArrayList<HashMap<String, Integer>> categoryArrayListData;
     HashMap<String, Integer> categoryHashMap;
@@ -462,6 +463,7 @@ public class UpdateMyMoim extends AppCompatActivity {
     public void startEditMoim(MoimEditData data) {
 
         Log.d(TAG, "updateImage : 여기까진 들어왔음 startUpdateMoim");
+        Log.d(TAG, "데이터가 들어있니?" + data.getMeeting_location()); // 있는데ㅡㅡ
 
         RequestBody meeting_interest
                 = RequestBody.create(MediaType.parse("text/plain"), data.getMeeting_interest() );
@@ -488,26 +490,40 @@ public class UpdateMyMoim extends AppCompatActivity {
 
         if( tempFile == null || tempFile.length() <= 0) {
 
-            Log.d(TAG, "자, 여기서 이미지 그대로 가져갈 때 interest가 왜 초기화될까?" + data.getMeeting_interest());
-            Log.d(TAG, "자, 왜 이미지는 null로 들어가는걸까?" + data.getMeeting_img());
-
             if ( myimg != null ) { // 이미지가 기존 이미지라면
 
-//                String OUTPUT_FILE_PATH = "출력 파일 경로";
-//                String FILE_URL = data.getMeeting_img();
-//                try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
-//                     FileOutputStream fileOutputStream = new FileOutputStream(imageFile)) {
-//                    byte dataBuffer[] = new byte[1024];
-//                    int bytesRead;
-//                    while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-//                        fileOutputStream.write(dataBuffer, 0, bytesRead);
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+//                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile );
+//                body = MultipartBody.Part.createFormData("meeting_img", tempFile.getName(), requestFile);
 
-                serviceApi.editNullImgMoim(data).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
-                    //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
+//                SameImageserviceApi = RetrofitClient.getClient().create(MoimEditSameImageData.serviceApi.class);
+////                SameImageserviceApi.editSameImgMoim(data.getMeeting_interest(), data.getMeeting_name(), data.getMeeting_description(), data.getMeeting_time(), data.getMeeting_location(), data.getMeeting_recruitment(), data.getAge_limit_min(), data.getAge_limit_max(), data.getMeeting_id()).enqueue(new Callback<MoimEditSameImageData.MoimEditSameImageDataResponse>(){
+//                SameImageserviceApi.editSameImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id).enqueue(new Callback<MoimEditSameImageData.MoimEditSameImageDataResponse>(){
+//                    @Override
+//                    public void onResponse(Call<MoimEditSameImageData.MoimEditSameImageDataResponse> call, Response<MoimEditSameImageData.MoimEditSameImageDataResponse> response) {
+//                        MoimEditSameImageData.MoimEditSameImageDataResponse result = response.body();
+//
+//                        Toast.makeText(UpdateMyMoim.this, result.getMessage(), Toast.LENGTH_LONG).show();
+//
+//                        if(result.getState() == 200) {
+//                            System.out.println("yeah");
+//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+//                            intent.putExtra("meetingId", meetingid);
+//                            startActivity(intent);
+//                        }
+//                        else if(result.getState() == 400) {
+//                            System.out.println("nooooo");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MoimEditSameImageData.MoimEditSameImageDataResponse> call, Throwable t) {
+//                        Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
+//                        Log.e("모임수정 에러", t.getMessage());
+//                        t.printStackTrace();
+//                    }
+//                });
+
+                serviceApi.editSameImgMoim(data).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                     @Override
                     public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {
                         MoimEditData.MoimEditDataResponse result = response.body();
@@ -535,11 +551,10 @@ public class UpdateMyMoim extends AppCompatActivity {
 
             }else{
 
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
-                body = MultipartBody.Part.createFormData("meeting_img", imageFile.getName(), requestFile);
+//                RequestBody meeting_img
+//                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null) );
 
-                serviceApi.editMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, body).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
-                    //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
+                serviceApi.editNullImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, null).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                     @Override
                     public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {
                         MoimEditData.MoimEditDataResponse result = response.body();
@@ -571,7 +586,7 @@ public class UpdateMyMoim extends AppCompatActivity {
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile );
             body = MultipartBody.Part.createFormData("meeting_img", tempFile.getName(), requestFile);
 
-            serviceApi.editMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, body).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
+            serviceApi.editUpdateImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, body).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
                 public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {

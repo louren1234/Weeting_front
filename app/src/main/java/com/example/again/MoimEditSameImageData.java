@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-public class MoimEditData {
+public class MoimEditSameImageData {
     @SerializedName("meeting_interest")
     String meeting_interest;
     @SerializedName("meeting_name")
@@ -32,10 +32,8 @@ public class MoimEditData {
     int age_limit_max;
     @SerializedName("meeting_id")
     int meeting_id;
-    @SerializedName("meeting_img")
-    String meeting_img;
 
-    public MoimEditData(String meeting_interest, String meeting_name, String meeting_description, String meeting_location, String meeting_time, int meeting_recruitment, int age_limit_min, int age_limit_max, int meeting_id) {
+    public MoimEditSameImageData(String meeting_interest, String meeting_name, String meeting_description, String meeting_location, String meeting_time, int meeting_recruitment, int age_limit_min, int age_limit_max, int meeting_id) {
         this.meeting_interest = meeting_interest;
         this.meeting_name = meeting_name;
         this.meeting_description = meeting_description;
@@ -45,7 +43,6 @@ public class MoimEditData {
         this.age_limit_min = age_limit_min;
         this.age_limit_max = age_limit_max;
         this.meeting_id = meeting_id;
-//        this.meeting_img = meeting_img;
     }
 
     public String getMeeting_interest() {
@@ -120,18 +117,10 @@ public class MoimEditData {
         this.meeting_id = meeting_id;
     }
 
-    public String getMeeting_img() {
-        return meeting_img;
-    }
-
-    public void setMeeting_img(String meeting_img) {
-        this.meeting_img = meeting_img;
-    }
-
-    class MoimEditDataResponse{
+    class MoimEditSameImageDataResponse{
         int state;
         String message;
-        List<MoimEditData> data;
+        List<MoimEditSameImageData> data;
 
         int getState(){ return state; }
         String getMessage(){ return message; }
@@ -139,29 +128,8 @@ public class MoimEditData {
 
     public interface serviceApi{
         @Multipart
-        //이거하면 에러남. 이거 해주고나면 데이터 넣을 때도 인코딩 해줘야하는 것 같음. 근데 데이터 잘 가니까 그거 어떻게 화면에 표시하게 할지가 고민. 그리고 데이터가 너무 길어서 짤려가니까 이것도 압축하는 방법이 필요할 것 같음.
         @POST("/myWeetingUpdate")
-        Call<MoimEditData.MoimEditDataResponse> editUpdateImgMoim(
-                @Part("meeting_interest") RequestBody meeting_interest,
-                @Part("meeting_name") RequestBody meeting_name,
-                @Part("meeting_description") RequestBody meeting_description,
-                @Part("meeting_location") RequestBody meeting_location,
-                @Part("meeting_time") RequestBody meeting_time,
-                @Part("meeting_recruitment") RequestBody meeting_recruitment,
-                @Part("age_limit_min") RequestBody age_limit_min,
-                @Part("age_limit_max") RequestBody age_limit_max,
-                @Part("meeting_id") RequestBody meeting_id,
-                @Part MultipartBody.Part meeting_img
-                // 이거 은오한테 img는 수정 안되냐고 물어보기
-        );
-
-
-        @POST("/myWeetingUpdate")
-        Call<MoimEditData.MoimEditDataResponse> editSameImgMoim(@Body MoimEditData data);
-
-        @Multipart
-        @POST("/myWeetingUpdate")
-        Call<MoimEditData.MoimEditDataResponse> editNullImgMoim(@Part("meeting_interest") RequestBody meeting_interest,
+        Call<MoimEditSameImageData.MoimEditSameImageDataResponse> editSameImgMoim(@Part("meeting_interest") RequestBody meeting_interest,
                                                                                   @Part("meeting_name") RequestBody meeting_name,
                                                                                   @Part("meeting_description") RequestBody meeting_description,
                                                                                   @Part("meeting_location") RequestBody meeting_location,
@@ -169,7 +137,17 @@ public class MoimEditData {
                                                                                   @Part("meeting_recruitment") RequestBody meeting_recruitment,
                                                                                   @Part("age_limit_min") RequestBody age_limit_min,
                                                                                   @Part("age_limit_max") RequestBody age_limit_max,
-                                                                                  @Part("meeting_id") RequestBody meeting_id,
-                                                                                  @Part("meeting_img") String meeting_img);
+                                                                                  @Part("meeting_id") RequestBody meeting_id);
+
+//        @POST("/myWeetingUpdate")
+//        Call<MoimEditSameImageData.MoimEditSameImageDataResponse> editSameImgMoim(@Path("meeting_interest") String meeting_interest,
+//                                                                                  @Path("meeting_name") String meeting_name,
+//                                                                                  @Path("meeting_description") String meeting_description,
+//                                                                                  @Path("meeting_location") String meeting_location,
+//                                                                                  @Path("meeting_time") String meeting_time,
+//                                                                                  @Path("meeting_recruitment") int meeting_recruitment,
+//                                                                                  @Path("age_limit_min") int age_limit_min,
+//                                                                                  @Path("age_limit_max") int age_limit_max,
+//                                                                                  @Path("meeting_id") int meeting_id);
     }
 }

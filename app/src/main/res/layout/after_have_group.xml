@@ -139,7 +139,7 @@ tools:context=".MainActivity">
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout11"
+        android:id="@+id/mainRecommendMoim"
         android:layout_width="412dp"
         android:layout_height="142dp"
         android:orientation="horizontal"
@@ -150,29 +150,11 @@ tools:context=".MainActivity">
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.382">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:contentDescription="random_gruop"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/puppy"
-            tools:ignore="HardcodedText" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:contentDescription="random_group"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:srcCompat="@drawable/mountain"
-            tools:ignore="HardcodedText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainRecommedRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
@@ -206,38 +188,25 @@ tools:context=".MainActivity">
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <TableLayout
-        android:layout_width="409dp"
+    <LinearLayout
+        android:id="@+id/mainMyMoim"
+        android:layout_width="412dp"
         android:layout_height="142dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="442dp">
-        <TableRow
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.382">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainMyRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="UselessParent">
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                tools:srcCompat="@drawable/game"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/universe"
-                tools:ignore="ContentDescription" />
-
-        </TableRow>
-    </TableLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

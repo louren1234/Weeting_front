@@ -3,6 +3,8 @@ package com.example.again;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,10 +19,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,6 +44,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,7 +58,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Create extends AppCompatActivity {
-    private EditText m_name, m_description, m_time, m_location, m_num, m_agemin, m_agemax;
+    private EditText m_name, m_description, m_num, m_agemin, m_agemax;
+    private TextView m_time, m_location;
+    private Button selectDateButton;
+    private DatePickerDialog.OnDateSetListener callbackMethod;
+    private TimePickerDialog.OnTimeSetListener timecallbackMethod;
 
     //카메라 관련 변수들
     private ImageView m_img;
@@ -73,6 +84,9 @@ public class Create extends AppCompatActivity {
     private String[] selectCamorAlbum = {"카메라", "앨범"};
     AlertDialog.Builder mSelectCamOrAlbum;
 
+    Calendar calendar;
+    int year, month, day, hour, minute;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -89,6 +103,10 @@ public class Create extends AppCompatActivity {
                 mSelectCamOrAlbum.show();
             }
         });
+
+        this.InitializeView();
+        this.InitializeListener();
+        selectDateButton = findViewById(R.id.selectDate);
 
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
@@ -179,6 +197,13 @@ public class Create extends AppCompatActivity {
         m_agemax = findViewById(R.id.maxAge);
         serviceApi = RetrofitClient.getClient().create(MoimData.ServiceApi.class);
 
+        m_location.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -213,23 +238,27 @@ public class Create extends AppCompatActivity {
 //        String img = bitmap.toString();
 
         String time = m_time.getText().toString();
-        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
-        Date timeDate = trans.parse(time);
+//        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
+//        Date timeDate = trans.parse(time);
 
         if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
                 num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
             Toast.makeText(getApplicationContext(), "빈 칸 존재", Toast.LENGTH_LONG).show();
         }
         else {
-            int num2 = Integer.parseInt(num);
-            int agemin2 = Integer.parseInt(agemin);
-            int agemax2 = Integer.parseInt(agemax);
+            int numInt = Integer.parseInt(num);
+            int ageminInt = Integer.parseInt(agemin);
+            int agemaxInt = Integer.parseInt(agemax);
 //            int interest = Integer.parseInt(m_interest);
-
-            startCreateMoim(new MoimData(m_interest, name, description, time, location, num2, agemin2, agemax2));
-            Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            if ( ageminInt > agemaxInt ) {
+                Toast.makeText(getApplicationContext(), "최소 인원이 최대 인원보다 크게 설정되어 있습니다.", Toast.LENGTH_LONG).show();
+            } else {
+                if( numInt < 5 ){
+                    Toast.makeText(getApplicationContext(), "모임원은 5명 이상으로 설정해주세요.", Toast.LENGTH_LONG).show();
+                } else {
+                    startCreateMoim(new MoimData(m_interest, name, description, time, location, numInt, ageminInt, agemaxInt));
+                }
+            }
         }
     }
 
@@ -493,6 +522,7 @@ public class Create extends AppCompatActivity {
 
                     if (result.getStatus() == 200) {
                         System.out.println("yeah");
+                        Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                         startActivity(intent);
                     } else if (result.getStatus() == 400) {
@@ -509,6 +539,63 @@ public class Create extends AppCompatActivity {
             });
         }
     }
+
+//     달력 함수
+
+    public void InitializeView()
+    {
+        m_time = findViewById(R.id.meetingDate);
+    }
+
+    public void InitializeListener()
+    {
+        callbackMethod = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int newyear, int monthOfYear, int dayOfMonth)
+            {
+                year = newyear;
+                month = monthOfYear + 1;
+                day = dayOfMonth;
+
+                timeSet(); // 시간 정하면 좋을 것 같아서 넣음
+
+
+// 날짜만 정하는거면 밑 두 줄만 해도 됨. timeSet() 함수랑 timecallbackMethod 지우고.
+//                int setmonthOfYear = monthOfYear + 1;
+//                m_time.setText(year + "-" + setmonthOfYear + "-" + dayOfMonth);
+            }
+        };
+
+        timecallbackMethod = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int newminute)
+            {
+//                textView_Date.setText(hourOfDay + "시" + minute + "분");
+                hour = hourOfDay;
+                minute = newminute;
+                m_time.setText(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            }
+        };
+
+    }
+
+    public void OnClickHandler(View view)
+    {
+        calendar = Calendar.getInstance();
+        int nowYear = calendar.get(Calendar.YEAR);
+        int nowMonth = calendar.get(Calendar.MONTH);
+        int nowDay = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, nowYear, nowMonth, nowDay);
+        dialog.show();
+    }
+
+    public void timeSet(){
+        TimePickerDialog timedialog = new TimePickerDialog(this, timecallbackMethod, 8, 10, true);
+        timedialog.show();
+    }
+
 
 
 }

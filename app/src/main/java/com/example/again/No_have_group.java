@@ -1,22 +1,44 @@
 package com.example.again;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-//import org.w3c.dom.Text;
+import com.bumptech.glide.Glide;
 
-public class Mypage extends AppCompatActivity {
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class No_have_group extends AppCompatActivity implements MainMoimRecyclerAdapter.OnMainMoimClickListener {
+//    private ImageView firstRecommendMoim, secondRecommendMoim, firstMyMoim, secondMyMoim;
+
+    private Context mcontext;
+
+    MainMoimThumbnailData.serviceApi serviceApi;
+    MainMoimThumbnailData.MaimMoimThumbnailDataResponse dataList;
+
+    List<MainMoimThumbnailData> recommendMoim;
+
+    RecyclerView recommendMoimRecyclerView;
+    MainMoimRecyclerAdapter recommendMoimRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mypage);
+        setContentView(R.layout.no_have_group);
 
         TextView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
@@ -27,12 +49,10 @@ public class Mypage extends AppCompatActivity {
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
-        LinearLayout editmyinform = findViewById(R.id.myinform);
-        LinearLayout interest = findViewById(R.id.interest);
-        LinearLayout alertSetting = findViewById(R.id.alertSetting);
-        LinearLayout faq = findViewById(R.id.faq);
-        LinearLayout qna = findViewById(R.id.qna);
-        LinearLayout terms_of_use = findViewById(R.id.terms_of_use);
+        recommendMoimRecyclerView = findViewById(R.id.noHaveMoimRecommendRecycler);
+        recommendMoimRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
 
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,59 +106,42 @@ public class Mypage extends AppCompatActivity {
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditMyInformation.class);
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
                 startActivity(intent);
             }
         });
 
-        // 리스트
-
-        editmyinform.setOnClickListener(new View.OnClickListener(){
+        serviceApi.getAfterHaveMoimMain().enqueue(new Callback<MainMoimThumbnailData.MaimMoimThumbnailDataResponse>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditMyInformation.class);
-                startActivity(intent);
+            public void onResponse(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Response<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> response) {
+                dataList = response.body();
+
+                recommendMoim = dataList.getRecommend_mettings();
+                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, recommendMoim);
+                mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
+
+            }
+
+            @Override
+            public void onFailure(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Throwable t) {
+
             }
         });
 
-        interest.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Interest.class);
-                startActivity(intent);
-            }
-        });
 
-        alertSetting.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AlertSetting.class);
-                startActivity(intent);
-            }
-        });
+    }
 
-        faq.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Faq.class);
-                startActivity(intent);
-            }
-        });
+    public void mainrecommendrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
+        mainMoimRecyclerAdapter.setOnItemClicklistener(this);
+        recommendMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
+    }
 
-        qna.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Qna.class);
-                startActivity(intent);
-            }
-        });
-
-        terms_of_use.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Terms_of_use.class);
-                startActivity(intent);
-            }
-        });
+    @Override
+    public void onMainThumbnailClick(View view, MainMoimThumbnailData mainMoimThumbnailData){
+//        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
+        Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+        intent.putExtra("meetingId", mainMoimThumbnailData.getMeeting_id());
+        startActivity(intent);
+        Log.e("RecyclerVIew :: ", mainMoimThumbnailData.toString());
     }
 }

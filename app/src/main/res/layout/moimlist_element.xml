@@ -38,18 +38,17 @@
                 android:orientation="horizontal"
                 tools:ignore="UseCompoundDrawables">
 
-                <ImageView
-                    android:id="@+id/groupIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/groupIcon"-->
+<!--                    android:layout_width="25dp"-->
+<!--                    android:layout_height="25dp"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    tools:ignore="ContentDescription" />-->
 
                 <TextView
                     android:id="@+id/groupArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     tools:ignore="HardcodedText"
                     tools:text="지역" />
 
