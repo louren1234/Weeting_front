@@ -6,7 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public class MoimCategoryResultData {
@@ -97,7 +101,17 @@ public class MoimCategoryResultData {
         @GET("weetings/{category}")
         Call<MoimCategoryResultDataResponse> getCategoryResultMoim(@Path("category") String category);
 
+
         @GET("/myWeeting")
         Call<MoimCategoryResultDataResponse> getMyMoim();
+
+        @POST("/search")
+        @FormUrlEncoded
+        Call<MoimCategoryResultDataResponse> getSearchEntire(@Field("search") String search);
+
+        @POST("/searchbyLocation")
+        @FormUrlEncoded
+        Call<MoimCategoryResultDataResponse> getSearchbyLocation(@Field("search") String search, @Field("user_location") String user_location);
+
     }
 }

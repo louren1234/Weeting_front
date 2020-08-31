@@ -66,10 +66,11 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             }
         });
 
+
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Search.class);
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
                 startActivity(intent);
             }
         });

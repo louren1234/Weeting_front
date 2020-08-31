@@ -200,6 +200,5 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
         fragment.refreshFragment();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
-
 }
 
