@@ -23,10 +23,13 @@
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
             android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
         <activity android:name=".Test"/>
         <activity android:name=".Create"/>
-        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".SignUpActivity"          />
+        <!--            android:theme="@style/Theme.MaterialComponents.CompactMenu"-->
+
         <activity android:name=".MoimList"/>
         <activity android:name=".After_have_group"/>
         <activity android:name=".AlertSetting"/>
@@ -36,11 +39,11 @@
         <activity android:name=".Mypage"/>
         <activity android:name=".Qna"/>
         <activity android:name=".Qna_list"/>
-        <activity android:name=".Search"/>
         <activity android:name=".Terms_of_use"/>
         <activity android:name=".SpinnerTest"/>
         <activity android:name=".MoimDetail"/>
         <activity android:name=".UpdateMyMoim"/>
+        <activity android:name=".SearchList"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

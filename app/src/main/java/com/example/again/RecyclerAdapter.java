@@ -30,6 +30,7 @@ import retrofit2.Response;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<MoimCategoryResultData> dataList;
+    private List<SearchData> searchDataList;
     private Context mcontext;
 //    private MoimCategoryResultData.serviceApi serviceApi;
 //    OnDataDetailClickListener listener;
@@ -52,6 +53,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.mcontext = mcontext;
         this.dataList = dataList;
     }
+
 
 //    @NonNull
     @Override
@@ -117,7 +119,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView moimDate;
         private ImageView moimimg;
         private LinearLayout moimList;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -126,6 +127,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             moimLocation = (TextView)itemView.findViewById(R.id.groupArea);
             moimDate = (TextView)itemView.findViewById(R.id.groupDate);
             moimimg = (ImageView)itemView.findViewById(R.id.groupImage);
+
             moimList = (LinearLayout)itemView.findViewById(R.id.meetingList);
 
 //            itemView.setOnClickListener(new View.OnClickListener(){
