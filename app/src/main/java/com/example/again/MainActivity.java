@@ -109,12 +109,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
                 MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
-                if (data.data.size() > 0){
-                    Intent i = new Intent(getApplicationContext(), After_have_group.class);
-                    i.putExtra("email", email);
-                    startActivity(i);
-                    finish();
-                }else {
+                if(data.data != null){
+                    if (data.data.size() > 0){
+                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
+                        i.putExtra("email", email);
+                        startActivity(i);
+                        finish();
+                    }
+                }
+                else if (data.data == null) {
                     Intent i = new Intent(getApplicationContext(), No_have_group.class);
                     i.putExtra("email", email);
                     startActivity(i);

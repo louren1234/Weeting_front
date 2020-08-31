@@ -38,7 +38,7 @@ public class Qna extends AppCompatActivity {
         setContentView(R.layout.qna);
 
         ImageButton back = findViewById(R.id.back);
-        Button qna_list = findViewById(R.id.myqna);
+//        Button qna_list = findViewById(R.id.myqna);
 
         m_content = findViewById(R.id.content);
 
@@ -52,13 +52,13 @@ public class Qna extends AppCompatActivity {
             }
         });
 
-        qna_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Qna_list.class);
-                startActivity(intent);
-            }
-        });
+//        qna_list.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), Qna_list.class);
+//                startActivity(intent);
+//            }
+//        });
 
 //        sendQna.setOnClickListener(new View.OnClickListener() {
 //            @Override

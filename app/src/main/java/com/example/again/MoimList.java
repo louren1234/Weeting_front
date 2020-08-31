@@ -79,7 +79,7 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
         search.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Search.class);
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
                 startActivity(intent);
             }
         });

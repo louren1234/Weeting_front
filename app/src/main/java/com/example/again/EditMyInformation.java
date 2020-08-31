@@ -364,6 +364,7 @@ public class EditMyInformation extends AppCompatActivity {
                         if (response2.getState() == 200) {
                             Intent intent = new Intent(getApplicationContext(), Mypage.class);
                             startActivity(intent);
+                            finish();
                         }
                         else if (response2.getState() == 400) {
                             Log.e("내 소개 수정 오류", "오류가 있다.");
@@ -396,6 +397,7 @@ public class EditMyInformation extends AppCompatActivity {
                                 if(response2.getState() == 200){
                                     Intent intent = new Intent(getApplicationContext(), Mypage.class);
                                     startActivity(intent);
+                                    finish();
                                 }else {
                                     Log.e("이미지 null & introduction보냄", "오류");
                                 }
@@ -440,6 +442,7 @@ public class EditMyInformation extends AppCompatActivity {
                                 System.out.println("yeah");
                                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
                                 startActivity(intent);
+                                finish();
                             }
 
                             @Override

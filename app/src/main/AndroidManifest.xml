@@ -39,9 +39,7 @@
         <activity android:name=".Interest"/>
         <activity android:name=".Mypage"/>
         <activity android:name=".Qna"/>
-        <activity android:name=".Qna_list"/>
         <activity android:name=".Terms_of_use"/>
-        <activity android:name=".SpinnerTest"/>
         <activity android:name=".MoimDetail"/>
         <activity android:name=".UpdateMyMoim"/>
         <activity android:name=".No_have_group"/>
