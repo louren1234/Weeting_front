@@ -1,19 +1,20 @@
 package com.example.again;
 
-import android.graphics.Bitmap;
 import android.media.Image;
-import android.text.Html;
-import android.widget.ImageView;
 
+import com.example.again.LoginData;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
 
-import okhttp3.ResponseBody;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public class SignUpData {
     @SerializedName("user_email")
@@ -27,7 +28,7 @@ public class SignUpData {
     @SerializedName("user_birth")
     Date user_birth;
     @SerializedName("user_img")
-    Bitmap img;
+    Image img;
 
 
     public String getUser_email() {
@@ -70,7 +71,7 @@ public class SignUpData {
         this.user_birth = user_birth;
     }
 
-    public SignUpData(String user_passwd, Date user_birth, String user_email, String user_name, String user_nick_name, Bitmap img) {
+    public SignUpData(String user_passwd, Date user_birth, String user_email, String user_name, String user_nick_name, Image img) {
         this.user_passwd = user_passwd;
         this.user_birth = user_birth;
         this.user_email = user_email;
@@ -78,9 +79,10 @@ public class SignUpData {
         this.user_nick_name = user_nick_name;
         this.img = img;
     }
-    class SignUpResponse{
+    class Response{
         int state;
         String message;
+        String token;
 
         public int getStatus() {
             return state;
@@ -89,12 +91,34 @@ public class SignUpData {
         public String getMessage() {
             return message;
         }
+
+        public String getToken(){
+            return token;
+        }
     }
+
     public interface ServiceApi{
         @POST("/login/join")
-        Call<SignUpResponse> userSignUP(@Body SignUpData data);
+        @Multipart
+        Call<Response> userSignUP(@Part("user_passwd") RequestBody user_passwd, @Part("user_birth") RequestBody user_birth,
+                                  @Part("user_email") RequestBody user_email, @Part("user_name") RequestBody user_name,
+                                  @Part("user_nick_name") RequestBody user_nick_name, @Part MultipartBody.Part user_img
+
+        );
         @POST("/login/login")
         Call<LoginResponse> userLogin(@Body LoginData data);
+
+        @FormUrlEncoded
+        @POST("/login/join/check/nickname")
+        Call<Response> nickNameOverlap(@Field("user_nick_name") String user_nick_name);
+
+        @FormUrlEncoded
+        @POST("/login/join/check/email")
+        Call<Response> emailOverlap(@Field("user_email") String user_email);
+
+        @FormUrlEncoded
+        @POST("/login/join/auth/email")
+        Call<Response> emailCheck(@Field("user_email") String user_email);
     }
 }
 

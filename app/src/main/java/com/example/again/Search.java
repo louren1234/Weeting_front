@@ -17,7 +17,7 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        m_search = findViewById(R.id.search);
+//        m_search = findViewById(R.id.search);
     }
 
 //    public void searchValid(View v) throws ParseException {

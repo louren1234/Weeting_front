@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="409dp"
@@ -24,7 +26,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/search"
+                android:id="@+id/edit_search"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
@@ -36,16 +38,48 @@
 
             <ImageButton
                 android:id="@+id/searchButton"
-                android:layout_width="31dp"
+                android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@android:color/transparent"
+                android:onClick="SearchMoim"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/search" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            >
+        <Spinner
+            android:id="@+id/city"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
 
+        <Spinner
+            android:id="@+id/region"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/neighborhood"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
 
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchMoimList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:scrollbars="vertical">
 
+
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,12 +12,12 @@ public interface serviceApi {
     @GET("/fullCategory")
     Call<MoimCategoryData.MoimCategoryResponse> getSpinnerList();
 
-    //로그인 및 회원가입
-    @POST("/login/join")
-    Call<SignUpData.SignUpResponse> userSignUP(@Body SignUpData data);
+//    //로그인 및 회원가입
+//    @POST("/login/join")
+//    Call<SignUpData.Response> userSignUP(@Body SignUpData data);
 
-    @POST("/login/login")
-    Call<LoginResponse> userLogin(@Body LoginData data);
+//    @POST("/login/login")
+//    Call<LoginResponse> userLogin(@Body LoginData data);
 
     //Qna
     @POST("/mypage/contact")
