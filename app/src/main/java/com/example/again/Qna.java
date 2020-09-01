@@ -49,6 +49,7 @@ public class Qna extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
                 startActivity(intent);
+                finish();
             }
         });
 

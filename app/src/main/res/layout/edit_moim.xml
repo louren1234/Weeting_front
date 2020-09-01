@@ -354,6 +354,7 @@
                         android:layout_height="wrap_content"
                         android:onClick="editMoimValid"
                         android:text="만들기"
+                        android:backgroundTint="@color/colorAccent"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
             </LinearLayout>
