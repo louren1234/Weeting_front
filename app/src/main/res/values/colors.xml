@@ -3,9 +3,9 @@
 <!--    <color name="colorPrimary">#6200EE</color>-->
 <!--    <color name="colorPrimaryDark">#3700B3</color>-->
 <!--    <color name="colorAccent">#03DAC5</color>-->
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#7A7A7A</color>
+    <color name="colorPrimaryDark">#606060</color>
+    <color name="colorAccent">#9575CD</color>
 
     <color name="mainColor">#000000</color>
 </resources>
