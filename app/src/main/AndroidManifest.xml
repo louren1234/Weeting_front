@@ -30,7 +30,7 @@
         <activity android:name=".Create"/>
         <activity android:name=".SignUpActivity"          />
         <!--            android:theme="@style/Theme.MaterialComponents.CompactMenu"-->
-
+        <activity android:name=".MyMoim"/>
         <activity android:name=".MoimList"/>
         <activity android:name=".After_have_group"/>
         <activity android:name=".AlertSetting"/>

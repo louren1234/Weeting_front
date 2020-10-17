@@ -180,7 +180,7 @@ tools:context=".MainActivity">
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/myMoimButton"
             android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

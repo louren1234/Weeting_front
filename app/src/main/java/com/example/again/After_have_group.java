@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         ImageButton toMap = findViewById(R.id.toMap);
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
+
+        Button myMoimButton = findViewById(R.id.myMoimButton);
 
         myMoimRecyclerView = findViewById(R.id.mainMyRecycler); // 이렇게 해야됨 1
         myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
@@ -113,6 +116,14 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
+
+        myMoimButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyMoim.class);
                 startActivity(intent);
             }
         });
