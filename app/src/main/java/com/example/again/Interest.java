@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class Interest extends AppCompatActivity {
     private RecyclerView myInterestsRecyclerView;
     private MyInterestsRecyclerAdapter myInterestsRecyclerAdapter;
 
+    private String getMyInterests;
+    private String[] sliceMyInterests;
+
     private TextView myInterests;
     private Button editMyInterestsButton;
 
@@ -36,8 +40,10 @@ public class Interest extends AppCompatActivity {
         ImageButton back = findViewById(R.id.back);
 
         myInterestsRecyclerView = findViewById(R.id.myInterestRecycler);
-        myInterests = findViewById(R.id.myInterests);
+//        myInterests = findViewById(R.id.myInterests);
         editMyInterestsButton = findViewById(R.id.editMyInterestsButton);
+
+        myInterestsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +72,20 @@ public class Interest extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserData.UserDataResponse> call, Response<UserData.UserDataResponse> response) {
                 userDataResponse = response.body();
+
                 if ( userDataResponse.getState() == 200){
                     userDataInfo = userDataResponse.list;
 
                     for(UserData userData : userDataInfo) {
-                        myInterests.setText(userData.getUser_interests());
+                        getMyInterests = userData.getUser_interests();
+                        sliceMyInterests = getMyInterests.split("/");
+
+//                        for(int i = 0; i < sliceMyInterests.length; i++){
+//                            Log.d("split 테스트 : ", "잘 나오나?" + sliceMyInterests[i]);
+//                        }
+
+                        myInterestsRecyclerAdapter = new MyInterestsRecyclerAdapter(getApplicationContext(), sliceMyInterests);
+                        myInterestsRecyclerView.setAdapter(myInterestsRecyclerAdapter);
                     }
 
                 } else {

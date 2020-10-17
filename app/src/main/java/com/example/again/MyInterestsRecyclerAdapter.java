@@ -16,10 +16,11 @@ import java.util.List;
 
 public class MyInterestsRecyclerAdapter extends RecyclerView.Adapter<MyInterestsRecyclerAdapter.ViewHolder> {
 
-    private List<UserData> dataList;
+//    private List<UserData> dataList;
+    private String[] dataList;
     private Context mcontext;
 
-    public MyInterestsRecyclerAdapter(Context mcontext, List<UserData> dataList) {
+    public MyInterestsRecyclerAdapter(Context mcontext, String[] dataList) {
         this.mcontext = mcontext;
         this.dataList = dataList;
     }
@@ -35,9 +36,10 @@ public class MyInterestsRecyclerAdapter extends RecyclerView.Adapter<MyInterests
     @Override
     public void onBindViewHolder(@NonNull MyInterestsRecyclerAdapter.ViewHolder holder, int position) {
 
-        final UserData userData = dataList.get(position);
+//        final UserData userData = dataList.get(position);
+//        final String[] interests = dataList.
 
-        holder.userInterests.setText(userData.getUser_interests());
+        holder.userInterests.setText(dataList[position]);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MyInterestsRecyclerAdapter extends RecyclerView.Adapter<MyInterests
             result = 0;
         }
         else{
-            result = dataList.size();
+            result = dataList.length;
         }
         return result;
     }
