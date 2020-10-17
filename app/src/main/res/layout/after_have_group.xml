@@ -189,6 +189,37 @@ tools:context=".MainActivity">
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/noHaveMoimLayout"
+        android:layout_width="409dp"
+        android:layout_height="165dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <!--layout에서 gravity는 layout 안에 있는 것을 정렬하고 layout_gravity는 layout 안에 있는 요소들이 layout에서 정렬될 때 쓰이는 것 같다.
+        즉, gravity : 어떤 요소 안의 것들을 정렬시킴 / layout_gravity : 어떤 요소 안의 것들이 그걸 감싸고 있는 요소에 맞춰 정렬됨
+        뇌피셜이지만 이 차이인 것 같다. -->
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:inputType="textMultiLine"
+            android:text="원하는 모임이 없나요?\n 모임을 만들어보세요."
+            android:textSize="20sp"
+            tools:ignore="HardcodedText,TextViewEdits" />
+
+        <Button
+            android:id="@+id/makeGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="모임 만들기"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/mainMyMoim"
         android:layout_width="412dp"
         android:layout_height="142dp"

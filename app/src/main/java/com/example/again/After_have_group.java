@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,9 +26,15 @@ import retrofit2.Response;
 public class After_have_group extends AppCompatActivity implements MainMoimRecyclerAdapter.OnMainMoimClickListener {
 //    private ImageView firstRecommendMoim, secondRecommendMoim, firstMyMoim, secondMyMoim;
 
+    private LinearLayout noHaveMoimLayout;
+    private LinearLayout haveMoim;
+    private Button myMoimButton;
+    private Button makeGroup;
+
     private Context mcontext;
     private Context recommendedcontext;
 
+    MoimCategoryResultData.serviceApi checkMoimServiceApi;
     MainMoimThumbnailData.serviceApi serviceApi;
     MainMoimThumbnailData.MaimMoimThumbnailDataResponse dataList;
 
@@ -52,7 +59,13 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
 //        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
-        Button myMoimButton = findViewById(R.id.myMoimButton);
+//        LinearLayout noHaveMoimLayout = findViewById(R.id.noHaveMoimLayout);
+
+        myMoimButton = findViewById(R.id.myMoimButton);
+        makeGroup = findViewById(R.id.makeGroup);
+
+        noHaveMoimLayout = findViewById(R.id.noHaveMoimLayout);
+        haveMoim = findViewById(R.id.mainMyMoim);
 
         myMoimRecyclerView = findViewById(R.id.mainMyRecycler); // 이렇게 해야됨 1
         myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
@@ -61,6 +74,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         recommendMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
+        checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
 
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,14 +89,6 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchList.class);
-                startActivity(intent);
-            }
-        });
-
-        toHome.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), No_have_group.class);
                 startActivity(intent);
             }
         });
@@ -128,21 +134,50 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             }
         });
 
+        makeGroup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
         serviceApi.getAfterHaveMoimMain().enqueue(new Callback<MainMoimThumbnailData.MaimMoimThumbnailDataResponse>() {
             @Override
             public void onResponse(Call<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> call, Response<MainMoimThumbnailData.MaimMoimThumbnailDataResponse> response) {
 
-                    myMoimList = response.body();
+                myMoimList = response.body();
 
-                    myMoim = myMoimList.getMy_meetings();
-                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), myMoim);
+                recommendMoim = myMoimList.getRecommend_mettings();
+                Log.d("MainMoim : ", "메인 모임 오류 : " + myMoimList.getRecommend_mettings());
+                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), recommendMoim);
+                mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
+
+                checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
+                    @Override
+                    public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
+                        MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
+                        if(data.data != null){
+                            if (data.data.size() > 0){
+                                noHaveMoimLayout.setVisibility(View.GONE);
+                                myMoim = myMoimList.getMy_meetings();
+                                myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), myMoim);
 //                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim); // 이거로 하면 에러남. context 문제였음. 밑에도 마찬가지.
-                    mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
+                                mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
+                            }
+                        }
+                        else if (data.data == null) {
+                            haveMoim.setVisibility(View.GONE);
+                            myMoimButton.setVisibility(View.GONE);
+                        }
 
-                    recommendMoim = myMoimList.getRecommend_mettings();
-                    Log.d("MainMoim : ", "메인 모임 오류 : " + myMoimList.getRecommend_mettings());
-                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), recommendMoim);
-                    mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
+                        Log.e("내 모임 불러오기 에러 발생", t.getMessage());
+                    }
+                });
 
             }
 
@@ -174,4 +209,33 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         startActivity(intent);
         Log.e("RecyclerVIew :: ", mainMoimThumbnailData.toString());
     }
+
+//    public void checkHaveOrNotHaveMoim() {
+//        checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
+//            @Override
+//            public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
+//                MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
+//                if(data.data != null){
+//                    if (data.data.size() > 0){
+//                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
+//                        i.putExtra("email", email);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                }
+//                else if (data.data == null) {
+//                    Intent i = new Intent(getApplicationContext(), No_have_group.class);
+//                    i.putExtra("email", email);
+//                    startActivity(i);
+//                    finish();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
+//                Log.e("내 모임 불러오기 에러 발생", t.getMessage());
+//            }
+//        });
+//    }
 }
