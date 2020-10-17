@@ -51,15 +51,16 @@ public class MainMoimRecyclerAdapter extends RecyclerView.Adapter<MainMoimRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mcontext).inflate(R.layout.main_moim_list, parent, false);
-
+//        ViewHolder viewHolder = new ViewHolder(view);
         return new ViewHolder(view);
+//        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MainMoimRecyclerAdapter.ViewHolder holder, int position) {
         final MainMoimThumbnailData mainMoimThumbnailData = dataList.get(position);
 
-//        holder.moimName.setText(dataList.get(position).getMeeting_name()); // 나중에 썸네일 위에 쓸 글씨
+        holder.moimName.setText(dataList.get(position).getMeeting_name()); // 나중에 썸네일 위에 쓸 글씨
 
         String img = dataList.get(position).getMeeting_img();
 
@@ -97,8 +98,8 @@ public class MainMoimRecyclerAdapter extends RecyclerView.Adapter<MainMoimRecycl
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-//            moimName = (TextView)itemView.findViewById(R.id.groupName); // 얜 나중에 thumbnail 위에 쓸 글씨
-            moimimg = (ImageView)itemView.findViewById(R.id.mainMoim);
+            moimName = (TextView)itemView.findViewById(R.id.mainMoimName); // 얜 나중에 thumbnail 위에 쓸 글씨
+            moimimg = (ImageView)itemView.findViewById(R.id.mainMoimImg);
             moimList = (LinearLayout)itemView.findViewById(R.id.mainThumbnailLinearLayout);
 
         }

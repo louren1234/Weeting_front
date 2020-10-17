@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout16"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -20,21 +19,36 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/mainThumbnailLinearLayout"
             android:layout_width="412dp"
-            android:layout_height="142dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/mainMoim"
-                android:layout_width="200dp"
+            <LinearLayout
+                android:id="@+id/mainThumbnailLinearLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:contentDescription="random_gruop"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:srcCompat="@drawable/puppy"
-                tools:ignore="HardcodedText" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/mainMoimImg"
+                    android:layout_width="200dp"
+                    android:layout_height="142dp"
+                    android:layout_margin="3dp"
+                    android:contentDescription="random_gruop"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/puppy" />
+
+                <TextView
+                    android:id="@+id/mainMoimName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="모임이름" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

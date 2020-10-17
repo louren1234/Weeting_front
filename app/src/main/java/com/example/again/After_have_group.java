@@ -25,6 +25,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
 //    private ImageView firstRecommendMoim, secondRecommendMoim, firstMyMoim, secondMyMoim;
 
     private Context mcontext;
+    private Context recommendedcontext;
 
     MainMoimThumbnailData.serviceApi serviceApi;
     MainMoimThumbnailData.MaimMoimThumbnailDataResponse dataList;
@@ -123,11 +124,13 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
                     myMoimList = response.body();
 
                     myMoim = myMoimList.getMy_meetings();
-                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim);
+                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), myMoim);
+//                    myMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, myMoim); // 이거로 하면 에러남. context 문제였음. 밑에도 마찬가지.
                     mainMoimrecyclerAdapterinit(myMoimRecyclerAdapter);
 
                     recommendMoim = myMoimList.getRecommend_mettings();
-                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, recommendMoim);
+                    Log.d("MainMoim : ", "메인 모임 오류 : " + myMoimList.getRecommend_mettings());
+                    recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), recommendMoim);
                     mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
 
             }
@@ -146,9 +149,10 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         myMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
     }
 
-    public void mainrecommendrecyclerAdapterinit(MainMoimRecyclerAdapter mainMoimRecyclerAdapter){
-        mainMoimRecyclerAdapter.setOnItemClicklistener(this);
-        recommendMoimRecyclerView.setAdapter(mainMoimRecyclerAdapter);
+    public void mainrecommendrecyclerAdapterinit(MainMoimRecyclerAdapter recommendMoimRecyclerAdapter){
+        recommendMoimRecyclerAdapter.setOnItemClicklistener(this);
+        recommendMoimRecyclerView.setAdapter(recommendMoimRecyclerAdapter);
+        Log.d("MainMoim : ", "권장모임이 안 떠");
     }
 
     @Override

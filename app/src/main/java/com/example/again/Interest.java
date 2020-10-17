@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,9 @@ public class Interest extends AppCompatActivity {
     private RecyclerView myInterestsRecyclerView;
     private MyInterestsRecyclerAdapter myInterestsRecyclerAdapter;
 
+    private TextView myInterests;
+    private Button editMyInterestsButton;
+
     UserData.UserDataResponse userDataResponse;
 
     @Override
@@ -31,11 +36,22 @@ public class Interest extends AppCompatActivity {
         ImageButton back = findViewById(R.id.back);
 
         myInterestsRecyclerView = findViewById(R.id.myInterestRecycler);
+        myInterests = findViewById(R.id.myInterests);
+        editMyInterestsButton = findViewById(R.id.editMyInterestsButton);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        editMyInterestsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditMyInterest.class);
                 startActivity(intent);
                 finish();
             }
@@ -53,8 +69,10 @@ public class Interest extends AppCompatActivity {
                 if ( userDataResponse.getState() == 200){
                     userDataInfo = userDataResponse.list;
 
-                    myInterestsRecyclerAdapter = new MyInterestsRecyclerAdapter(getApplicationContext(), userDataInfo);
-                    myInterestsRecyclerView.setAdapter(myInterestsRecyclerAdapter);
+                    for(UserData userData : userDataInfo) {
+                        myInterests.setText(userData.getUser_interests());
+                    }
+
                 } else {
                     Log.d("모임 interests retrofit 에러", "서버에러");
                 }
