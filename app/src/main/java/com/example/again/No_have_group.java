@@ -117,7 +117,7 @@ public class No_have_group extends AppCompatActivity implements MainMoimRecycler
                 dataList = response.body();
 
                 recommendMoim = dataList.getRecommend_mettings();
-                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(mcontext, recommendMoim);
+                recommendMoimRecyclerAdapter = new MainMoimRecyclerAdapter(getApplicationContext(), recommendMoim);
                 mainrecommendrecyclerAdapterinit(recommendMoimRecyclerAdapter);
 
             }
