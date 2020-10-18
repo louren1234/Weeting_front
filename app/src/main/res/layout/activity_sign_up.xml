@@ -101,13 +101,7 @@
                 android:maxLength="7"
                 android:password="true"
                 />
-            <Button
-                android:id="@+id/sign_upPersonCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="PersonCheck"
-                android:text="인증"
-                />
+
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -162,6 +156,14 @@
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/sign_upPersonCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="PersonCheck"
+            android:text="인증" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"

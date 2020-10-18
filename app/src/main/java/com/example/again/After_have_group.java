@@ -43,7 +43,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
 
         TextView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
-
+        ImageButton chat = findViewById(R.id.chat);
         ImageButton toHome = findViewById(R.id.toHome);
         ImageButton toList = findViewById(R.id.toList);
         ImageButton toMap = findViewById(R.id.toMap);
@@ -92,7 +92,14 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             }
         });
 
-        toMap.setOnClickListener(new View.OnClickListener(){
+//        toMap.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), Create.class);
+//                startActivity(intent);
+//            }
+//        });
+        chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Create.class);

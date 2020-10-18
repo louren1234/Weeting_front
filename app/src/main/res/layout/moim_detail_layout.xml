@@ -28,61 +28,146 @@
                 android:layout_height="100dp"
                 android:scaleType="fitCenter"
                 tools:srcCompat="@drawable/ic_https_black_24dp" />
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
             <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/detailMoimName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                tools:text="detailMoimName" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chatting_in"
+                    android:text="채팅"
+                    android:background="@drawable/long_btn"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/detailMoimDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
                 tools:text="detailMoimDescription" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="7dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="모임장: "
+                    />
+                <TextView
+                    android:id="@+id/detailMoimCaptainNickname"
+                    android:layout_width="match_parent"
+                    android:textSize="15dp"
+                    android:layout_height="wrap_content"
+                    android:text="detailMoimCaptainNickname" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나이: "
+                    />
+                <TextView
+                    android:id="@+id/detailMoimAgeLimitMax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20" />
+                <TextView
+                    android:layout_marginLeft="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="~"
+                    />
+                <TextView
+                    android:layout_marginLeft="7dp"
+                    android:id="@+id/detailMoimAgeLimitMin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="90" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="인원: "
+                    />
+                <TextView
+                    android:id="@+id/detailMoimPresentMembersNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" / "
+                    />
+                <TextView
+                    android:id="@+id/detailMoimRecruitment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5" />
 
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/pin"
+
+                />
             <TextView
                 android:id="@+id/detailMoimLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="detailMoimLocation" />
+        </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/calendar"
 
-            <TextView
-                android:id="@+id/detailMoimCaptainNickname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="detailMoimCaptainNickname" />
-
-            <TextView
-                android:id="@+id/detailMoimAgeLimitMax"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="detailMoimAgeLimitMax" />
-
-            <TextView
-                android:id="@+id/detailMoimRecruitment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="detailMoimRecruitment" />
-
-            <TextView
-                android:id="@+id/detailMoimPresentMembersNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="detailMoimPresentMembersNum" />
-
+                />
             <TextView
                 android:id="@+id/detailMoimTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="detailMoimTime" />
-
-            <TextView
-                android:id="@+id/detailMoimAgeLimitMin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="detailMoimAgeLimitMin" />
-
-            <TextView
-                android:id="@+id/detailMoimName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="detailMoimName" />
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/meetingMemberLayout"
@@ -96,30 +181,37 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/detailMoimDeleteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/long_btn"
             android:text="삭제" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/detailMoimEditButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/long_btn"
             android:text="수정"
+            android:layout_marginTop="10dp"
+
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/moimParticipateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/long_btn"
+            android:layout_marginTop="10dp"
             android:text="참여" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/moimWithDrawButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/long_btn"
+            android:layout_marginTop="10dp"
             android:text="탈퇴" />
 
 

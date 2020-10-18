@@ -31,7 +31,7 @@ public class MoimDetail extends AppCompatActivity {
     private TextView detailMoimName, detailMoimDescription, detailMoimLocation, detailMoimTime, detailMoimRecruitment, detailMoimAgeLimitMin, detailMoimAgeLimitMax, detailMoimPresentMembersNum, detailMoimCaptainNickname;
     private ImageView detailMoimImage;
     private LinearLayout memberLayout;
-    private Button detailMoimEditButton, detailMoimDeleteButton, moimParticipateButton, moimWithdrawButton;
+    private Button detailMoimEditButton, detailMoimDeleteButton, moimParticipateButton, moimWithdrawButton,chatButton;
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
 
@@ -66,7 +66,15 @@ public class MoimDetail extends AppCompatActivity {
         moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
 
         moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+        //chat
+        chatButton = findViewById(R.id.chatting_in);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
+                startActivity(i);
+            }
+        });
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 

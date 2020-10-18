@@ -4,6 +4,8 @@ import android.media.Image;
 
 import com.example.again.LoginData;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 import okhttp3.MultipartBody;
@@ -27,6 +29,8 @@ public class SignUpData {
     String user_nick_name;
     @SerializedName("user_birth")
     Date user_birth;
+    @SerializedName("user_interests")
+    String user_interests;
     @SerializedName("user_img")
     Image img;
 
@@ -102,7 +106,7 @@ public class SignUpData {
         @Multipart
         Call<Response> userSignUP(@Part("user_passwd") RequestBody user_passwd, @Part("user_birth") RequestBody user_birth,
                                   @Part("user_email") RequestBody user_email, @Part("user_name") RequestBody user_name,
-                                  @Part("user_nick_name") RequestBody user_nick_name, @Part MultipartBody.Part user_img
+                                  @Part("user_nick_name") RequestBody user_nick_name, @Part("user_interests") RequestBody user_interests, @Part MultipartBody.Part user_img
 
         );
         @POST("/login/login")
