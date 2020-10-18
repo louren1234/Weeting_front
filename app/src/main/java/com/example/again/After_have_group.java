@@ -68,10 +68,10 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         haveMoim = findViewById(R.id.mainMyMoim);
 
         myMoimRecyclerView = findViewById(R.id.mainMyRecycler); // 이렇게 해야됨 1
-        myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this)); // 이렇게 해야됨 2
+        myMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)); // 이렇게 해야됨 2
 
         recommendMoimRecyclerView = findViewById(R.id.mainRecommedRecycler);
-        recommendMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recommendMoimRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
         checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
@@ -79,7 +79,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });
@@ -89,6 +89,14 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });

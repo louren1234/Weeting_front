@@ -37,7 +37,7 @@ public class Mypage extends AppCompatActivity {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class Mypage extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });
@@ -86,7 +86,7 @@ public class Mypage extends AppCompatActivity {
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EditMyInformation.class);
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
                 startActivity(intent);
             }
         });

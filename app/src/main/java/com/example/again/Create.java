@@ -96,6 +96,73 @@ public class Create extends AppCompatActivity {
 
         tedPermission();
 
+        TextView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMap = findViewById(R.id.toMap);
+//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        toMap.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+//        toCalender.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
+
         interestSpinner = findViewById(R.id.interest);
         m_img = findViewById(R.id.meetingImg);
 

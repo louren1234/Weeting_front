@@ -140,21 +140,15 @@ tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/mainRecommendMoim"
-        android:layout_width="412dp"
-        android:layout_height="142dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mainRecommedRecycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -221,8 +215,8 @@ tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/mainMyMoim"
-        android:layout_width="412dp"
-        android:layout_height="142dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

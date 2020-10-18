@@ -71,7 +71,7 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });
@@ -87,7 +87,7 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
         toHome.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                 startActivity(intent);
             }
         });
