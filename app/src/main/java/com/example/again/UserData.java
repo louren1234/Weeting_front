@@ -102,7 +102,7 @@ public class UserData {
         List<UserData> getList(){ return list; }
     }
 
-    class UserImgorIntroResponse {
+    class UserImgorIntroorInterestsResponse {
         int state;
         String message;
 
@@ -114,19 +114,22 @@ public class UserData {
         @GET("/mypage")
         Call<UserDataResponse> getMyInfo();
 
+        @POST("/mypage/edit/interests")
+        Call<UserImgorIntroorInterestsResponse> updateMyInterests(@Query("user_interests") String user_interests);
+
         @POST("/mypage/edit/img")
-        Call<UserImgorIntroResponse> updateMyImg(@Query("user_img") String user_img);
+        Call<UserImgorIntroorInterestsResponse> updateMyImg(@Query("user_img") String user_img);
 
 //        @FormUrlEncoded
         @Multipart
         @POST("/mypage/edit/img")
-        Call<UserImgorIntroResponse> updateMyNewImg(@Part MultipartBody.Part user_img);
+        Call<UserImgorIntroorInterestsResponse> updateMyNewImg(@Part MultipartBody.Part user_img);
 
 //        @FormUrlEncoded
 //        @POST("/mypage/edit/introduce")
 //        Call<UserImgorIntroResponse> updateMyIntro(@Field("user_introduce") String user_introduce);
         @FormUrlEncoded
         @POST("/mypage/edit/introduce")
-        Call<UserImgorIntroResponse> updateMyIntro(@Field("user_introduce") String user_introduce);
+        Call<UserImgorIntroorInterestsResponse> updateMyIntro(@Field("user_introduce") String user_introduce);
     }
 }

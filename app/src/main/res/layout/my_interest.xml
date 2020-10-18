@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/colorAccent"
+                android:onClick="TempInterest"
                 android:text="수정" />
 
 

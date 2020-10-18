@@ -355,11 +355,11 @@ public class EditMyInformation extends AppCompatActivity {
 
             if (myimg != null) { // 기존 이미지가 존재한다면
 
-                Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
-                calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
+                Call<UserData.UserImgorIntroorInterestsResponse> calls = serviceApi.updateMyIntro(myintro);
+                calls.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                     @Override
-                    public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
-                        UserData.UserImgorIntroResponse response2 = response.body();
+                    public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
+                        UserData.UserImgorIntroorInterestsResponse response2 = response.body();
 
                         if (response2.getState() == 200) {
                             Intent intent = new Intent(getApplicationContext(), Mypage.class);
@@ -372,7 +372,7 @@ public class EditMyInformation extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UserData.UserImgorIntroResponse> call, Throwable t) {
+                    public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
                         Log.e("내 intro 수정 통신 자체 실패", t.getMessage());
                         t.printStackTrace();
                     }
@@ -383,16 +383,16 @@ public class EditMyInformation extends AppCompatActivity {
 //                RequestBody myNullImage
 //                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null));
 
-                Call<UserData.UserImgorIntroResponse> call = serviceApi.updateMyImg(null);
-                call.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
+                Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyImg(null);
+                call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                     @Override
-                    public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
+                    public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
 
-                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
-                        calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
+                        Call<UserData.UserImgorIntroorInterestsResponse> calls = serviceApi.updateMyIntro(myintro);
+                        calls.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                             @Override
-                            public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
-                                UserData.UserImgorIntroResponse response2 = response.body();
+                            public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
+                                UserData.UserImgorIntroorInterestsResponse response2 = response.body();
 
                                 if(response2.getState() == 200){
                                     Intent intent = new Intent(getApplicationContext(), Mypage.class);
@@ -404,7 +404,7 @@ public class EditMyInformation extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<UserData.UserImgorIntroResponse> call, Throwable t) {
+                            public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
                                 Log.e("내 intro 수정 에러", t.getMessage());
                                 t.printStackTrace();
                             }
@@ -412,7 +412,7 @@ public class EditMyInformation extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<UserData.UserImgorIntroResponse> call, Throwable t) {
+                    public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
                         Log.e("내 img 수정 에러", t.getMessage());
                         t.printStackTrace();
                     }
@@ -423,22 +423,22 @@ public class EditMyInformation extends AppCompatActivity {
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile);
             MultipartBody.Part body = MultipartBody.Part.createFormData("user_img", tempFile.getName(), requestFile);
 
-            Call<UserData.UserImgorIntroResponse> call = serviceApi.updateMyNewImg(body);
+            Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyNewImg(body);
 
-            call.enqueue(new Callback<UserData.UserImgorIntroResponse>(){
+            call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>(){
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
-                public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
-                    UserData.UserImgorIntroResponse result = response.body();
+                public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
+                    UserData.UserImgorIntroorInterestsResponse result = response.body();
 
 //                    Toast.makeText(EditMyInformation.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if(result.getState() == 200) {
 
-                        Call<UserData.UserImgorIntroResponse> calls = serviceApi.updateMyIntro(myintro);
-                        calls.enqueue(new Callback<UserData.UserImgorIntroResponse>() {
+                        Call<UserData.UserImgorIntroorInterestsResponse> calls = serviceApi.updateMyIntro(myintro);
+                        calls.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                             @Override
-                            public void onResponse(Call<UserData.UserImgorIntroResponse> call, Response<UserData.UserImgorIntroResponse> response) {
+                            public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
                                 System.out.println("yeah");
                                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
                                 startActivity(intent);
@@ -446,7 +446,7 @@ public class EditMyInformation extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<UserData.UserImgorIntroResponse> call, Throwable t) {
+                            public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
                                 Log.e("내 intro 수정 에러", t.getMessage());
                                 t.printStackTrace();
                             }
@@ -458,7 +458,7 @@ public class EditMyInformation extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<UserData.UserImgorIntroResponse> call, Throwable t) {
+                public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
                     Toast.makeText(EditMyInformation.this, "모임수정 에러", Toast.LENGTH_LONG).show();
                     Log.e("모임수정 에러", t.getMessage());
                     t.printStackTrace();
