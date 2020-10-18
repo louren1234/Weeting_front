@@ -165,9 +165,9 @@ public class MoimDetail extends AppCompatActivity {
                     public void onResponse(Call<TestDeleteData.MoimDetailDataResponse> call, Response<TestDeleteData.MoimDetailDataResponse> response) {
                         TestDeleteData.MoimDetailDataResponse result = response.body();
                         if(result.getStatus() == 200){
-                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
-                            intent.putExtra("category", "all");
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
+//                            intent.putExtra("category", "all");
+//                            startActivity(intent);
                             finish();
                         }
                         else{
@@ -227,13 +227,13 @@ public class MoimDetail extends AppCompatActivity {
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"모임 탈퇴 완료", Toast.LENGTH_SHORT);
                             myToast.show();
-                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-                            intent.putExtra("meetingId", meeting_id);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+//                            intent.putExtra("meetingId", meeting_id);
+//                            startActivity(intent);
                             finish();
 
                         } else{
-                            Log.d("모임 참여 에러 : ", " 서버 에러 ");
+                            Log.d("모임 삭제 에러 : ", " 서버 에러 ");
                         }
                     }
 
