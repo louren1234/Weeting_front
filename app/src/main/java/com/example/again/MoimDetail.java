@@ -31,7 +31,8 @@ public class MoimDetail extends AppCompatActivity {
     private TextView detailMoimName, detailMoimDescription, detailMoimLocation, detailMoimTime, detailMoimRecruitment, detailMoimAgeLimitMin, detailMoimAgeLimitMax, detailMoimPresentMembersNum, detailMoimCaptainNickname;
     private ImageView detailMoimImage;
     private LinearLayout memberLayout;
-    private Button detailMoimEditButton, detailMoimDeleteButton, moimParticipateButton, moimWithdrawButton,chatButton;
+    private Button  moimParticipateButton, chatButton;
+    private TextView detailMoimDeleteButton, moimWithdrawButton, detailMoimEditButton;
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
 
@@ -115,6 +116,7 @@ public class MoimDetail extends AppCompatActivity {
                 if(is_member != 1) {
                     memberLayout.setVisibility(View.GONE);
                     moimWithdrawButton.setVisibility(View.GONE);
+
                 }else if(is_member == 1){
                     moimParticipateButton.setVisibility(View.GONE);
                 }

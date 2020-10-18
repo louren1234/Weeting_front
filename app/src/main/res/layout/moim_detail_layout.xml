@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout12"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,8 @@
                 android:id="@+id/detailMoimImage"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:scaleType="fitCenter"
-                tools:srcCompat="@drawable/ic_https_black_24dp" />
+                android:scaleType="centerCrop"
+                />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,14 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 tools:text="detailMoimName" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/chatting_in"
-                    android:text="채팅"
-                    android:background="@drawable/long_btn"
-                    android:layout_marginLeft="10dp"
-                    />
+
             </LinearLayout>
             <TextView
                 android:layout_marginTop="10dp"
@@ -181,40 +174,62 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/detailMoimDeleteButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/long_btn"
-            android:text="삭제" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/detailMoimEditButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/long_btn"
-            android:text="수정"
-            android:layout_marginTop="10dp"
-
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:orientation="horizontal"
+            >
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/moimParticipateButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/long_btn"
             android:layout_marginTop="10dp"
             android:text="참여" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/moimWithDrawButton"
-            android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chatting_in"
+                android:text="채팅"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/long_btn"
+                android:layout_marginLeft="10dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/long_btn"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_marginLeft="300dp"
+            android:layout_weight="1"
+            >
+        <TextView
+            android:id="@+id/detailMoimEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정"
             android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <TextView
+            android:id="@+id/moimWithDrawButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:text="탈퇴" />
-
-
+        <TextView
+            android:id="@+id/detailMoimDeleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="삭제" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
