@@ -33,6 +33,9 @@ public class MoimDetail extends AppCompatActivity {
     private LinearLayout memberLayout;
     private Button  moimParticipateButton, chatButton;
     private TextView detailMoimDeleteButton, moimWithdrawButton, detailMoimEditButton;
+
+    private int REQUEST_CODE;
+
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
     private int is_captain;
@@ -165,9 +168,9 @@ public class MoimDetail extends AppCompatActivity {
                     public void onResponse(Call<TestDeleteData.MoimDetailDataResponse> call, Response<TestDeleteData.MoimDetailDataResponse> response) {
                         TestDeleteData.MoimDetailDataResponse result = response.body();
                         if(result.getStatus() == 200){
-                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
-                            intent.putExtra("category", "all");
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
+//                            intent.putExtra("category", "all");
+//                            startActivity(intent);
                             finish();
                         }
                         else{
@@ -197,9 +200,9 @@ public class MoimDetail extends AppCompatActivity {
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"모임 참여 완료", Toast.LENGTH_SHORT);
                             myToast.show();
-                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-                            intent.putExtra("meetingId", meeting_id);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+//                            intent.putExtra("meetingId", meeting_id);
+//                            startActivity(intent);
                             finish();
 
                         } else{
@@ -227,9 +230,9 @@ public class MoimDetail extends AppCompatActivity {
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"모임 탈퇴 완료", Toast.LENGTH_SHORT);
                             myToast.show();
-                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-                            intent.putExtra("meetingId", meeting_id);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+//                            intent.putExtra("meetingId", meeting_id);
+//                            startActivity(intent);
                             finish();
 
                         } else{
