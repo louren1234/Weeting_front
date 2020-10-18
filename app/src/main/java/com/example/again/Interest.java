@@ -41,6 +41,8 @@ public class Interest extends AppCompatActivity {
     private TextView myInterests;
     private Button editMyInterestsButton;
 
+    private Dialog dlg;
+
     UserData.UserDataResponse userDataResponse;
 
     @Override
@@ -91,14 +93,18 @@ public class Interest extends AppCompatActivity {
 
                     for(UserData userData : userDataInfo) {
                         getMyInterests = userData.getUser_interests();
-                        sliceMyInterests = getMyInterests.split("/");
+                        try {
+                            sliceMyInterests = getMyInterests.split("/");
 
 //                        for(int i = 0; i < sliceMyInterests.length; i++){
 //                            Log.d("split 테스트 : ", "잘 나오나?" + sliceMyInterests[i]);
 //                        }
 
-                        myInterestsRecyclerAdapter = new MyInterestsRecyclerAdapter(getApplicationContext(), sliceMyInterests);
-                        myInterestsRecyclerView.setAdapter(myInterestsRecyclerAdapter);
+                            myInterestsRecyclerAdapter = new MyInterestsRecyclerAdapter(getApplicationContext(), sliceMyInterests);
+                            myInterestsRecyclerView.setAdapter(myInterestsRecyclerAdapter);
+                        } catch (NullPointerException e) {
+
+                        }
                     }
 
                 } else {
@@ -131,7 +137,7 @@ public class Interest extends AppCompatActivity {
         public void callFunction() {
 
             // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
-            final Dialog dlg = new Dialog(context);
+            dlg = new Dialog(context);
 
             // 액티비티의 타이틀바를 숨긴다.
             dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -159,26 +165,7 @@ public class Interest extends AppCompatActivity {
 //                        e.printStackTrace();
 //                    }
                     // 여기 서버랑 연동해서 수정사항 보내기
-                    serviceApi.updateMyInterests(interests).enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
-                        @Override
-                        public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
-                            UserData.UserImgorIntroorInterestsResponse dataList = response.body();
-
-                            if (dataList.getState() == 200) {
-                                dlg.dismiss();
-                                Toast.makeText(getApplicationContext(), "관심사가 수정되었습니다.", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "다시 시도해주세요.", Toast.LENGTH_LONG).show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
-
-                        }
-                    });
-
+                    SaveInterests();
 
                 }
             });
@@ -186,7 +173,6 @@ public class Interest extends AppCompatActivity {
         }
 
         public void Filter() {
-            int ids = chipGroup.getCheckedChipId();
             interests = "";
             for (int i = 0; i < chipGroup.getChildCount(); i++) {
                 Chip chip = (Chip) chipGroup.getChildAt(i);
@@ -198,7 +184,32 @@ public class Interest extends AppCompatActivity {
                 }
 
             }
+        }
 
+        public void SaveInterests() {
+            Log.d("관심사 : ", "null 검사 : " + interests);
+
+            serviceApi.updateMyInterests(interests).enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
+                @Override
+                public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
+                    UserData.UserImgorIntroorInterestsResponse dataList = response.body();
+
+                    if (dataList.getState() == 200) {
+                        dlg.dismiss();
+                        Toast.makeText(getApplicationContext(), "관심사가 수정되었습니다.", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), Interest.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "다시 시도해주세요.", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<UserData.UserImgorIntroorInterestsResponse> call, Throwable t) {
+
+                }
+            });
         }
     }
 }

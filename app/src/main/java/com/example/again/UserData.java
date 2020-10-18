@@ -114,8 +114,9 @@ public class UserData {
         @GET("/mypage")
         Call<UserDataResponse> getMyInfo();
 
+        @FormUrlEncoded
         @POST("/mypage/edit/interests")
-        Call<UserImgorIntroorInterestsResponse> updateMyInterests(@Query("user_interests") String user_interests);
+        Call<UserImgorIntroorInterestsResponse> updateMyInterests(@Field("user_interests") String user_interests);
 
         @POST("/mypage/edit/img")
         Call<UserImgorIntroorInterestsResponse> updateMyImg(@Query("user_img") String user_img);
