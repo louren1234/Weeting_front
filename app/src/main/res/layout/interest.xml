@@ -85,6 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="원예" />
+
     </com.google.android.material.chip.ChipGroup>
     <androidx.appcompat.widget.AppCompatButton
         android:background="@drawable/long_btn"

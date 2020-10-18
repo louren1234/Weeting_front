@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -60,7 +61,8 @@ import retrofit2.Response;
 public class Create extends AppCompatActivity {
     private EditText m_name, m_description, m_num, m_agemin, m_agemax;
     private TextView m_time, m_location;
-    private Button selectDateButton;
+    private ImageButton selectLocationButton;
+    private ImageButton selectDateButton;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TimePickerDialog.OnTimeSetListener timecallbackMethod;
 
@@ -93,6 +95,73 @@ public class Create extends AppCompatActivity {
         setContentView(R.layout.create);
 
         tedPermission();
+
+        TextView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMap = findViewById(R.id.toMap);
+//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        toMap.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+//        toCalender.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
 
         interestSpinner = findViewById(R.id.interest);
         m_img = findViewById(R.id.meetingImg);
@@ -192,18 +261,22 @@ public class Create extends AppCompatActivity {
         m_description = findViewById(R.id.meetingIntro);
         m_time = findViewById(R.id.meetingDate);
         m_num = findViewById(R.id.meetingNum);
-        m_location = findViewById(R.id.meetingLocation);
+        m_location = findViewById(R.id.textLocation);
         m_agemin = findViewById(R.id.minAge);
         m_agemax = findViewById(R.id.maxAge);
+        selectLocationButton = findViewById(R.id.meetingLocation);
+        selectDateButton = findViewById(R.id.selectDate);
         serviceApi = RetrofitClient.getClient().create(MoimData.ServiceApi.class);
 
-        m_location.setOnClickListener(new View.OnClickListener(){
+
+        selectLocationButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
                 startActivity(intent);
             }
         });
+
 
     }
 
@@ -477,6 +550,7 @@ public class Create extends AppCompatActivity {
                         System.out.println("yeah");
                         Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                         startActivity(intent);
+                        finish();
                     } else if (result.getStatus() == 400) {
                         System.out.println("nooooo");
                     }
@@ -485,7 +559,7 @@ public class Create extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러", t.getMessage());
+                    Log.e("모임생성 에러1", t.getMessage());
                     t.printStackTrace();
                 }
             });
@@ -525,6 +599,7 @@ public class Create extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                         startActivity(intent);
+                        finish();
                     } else if (result.getStatus() == 400) {
                         System.out.println("nooooo");
                     }
@@ -533,7 +608,7 @@ public class Create extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러", t.getMessage());
+                    Log.e("모임생성 에러2", t.getMessage());
                     t.printStackTrace();
                 }
             });

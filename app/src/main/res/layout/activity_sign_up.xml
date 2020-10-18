@@ -29,15 +29,17 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="5dp"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="이름"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
             <EditText
                 android:id="@+id/sign_upName"
@@ -50,6 +52,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="여성들의 다양한 취미 개발과 발전을 위해\n
 오프라인 모임의 장을 만드는 것에\n
 본 어플리케이션의 목적이 있습니다.\n
@@ -58,7 +64,6 @@
 개인 정보는 확인 시에만 이용되고 수집되지 않습니다.
 "
             android:gravity="center"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             />
 
@@ -66,15 +71,18 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            >
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주민등록번호"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:text="주민번호"
+                android:layout_marginEnd="10dp"
+                android:textSize="20sp"
                 />
             <EditText
                 android:id="@+id/sign_upPersonFront"
@@ -88,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 />
@@ -102,20 +110,32 @@
                 android:password="true"
                 />
 
+            <Button
+                android:id="@+id/sign_upPersonCheck"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="7dp"
+                android:onClick="PersonCheck"
+                android:text="인증"
+                />
+
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="아이디"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
 
             <EditText
@@ -128,24 +148,29 @@
                 />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="7dp"
                 android:onClick="nickNameCheck"
                 android:text="확인" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="생일"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
             <EditText
                 android:id="@+id/sign_upBirth"
@@ -168,14 +193,17 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="비밀번호"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
                 android:textSize="20dp"
                 />
             <EditText
@@ -187,19 +215,23 @@
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 비밀번호 확인"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="비밀번호 확인"
+                android:textSize="20sp"
                 />
             <EditText
                 android:id="@+id/sign_upPasswordCheck"
@@ -209,65 +241,102 @@
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이메일"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="20dp"
+                android:layout_marginEnd="10dp"
+                android:textSize="20sp"
                 />
             <EditText
                 android:id="@+id/sign_upEmail"
-                android:layout_width="200dp"
+                android:layout_width="170dp"
                 android:layout_height="30dp"
-                android:hint=" 이메일을 입력해주세요."
+                android:layout_marginEnd="5dp"
+                android:hint=" 메일을 입력해주세요."
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
             <Button
                 android:id="@+id/sign_upEmailOverlap"
-                android:layout_width="50dp"
+                android:layout_width="85dp"
                 android:layout_height="45dp"
+                android:layout_marginEnd="5dp"
                 android:onClick="emailOverlap"
-                android:text="중복" />
+                android:text="중복확인" />
             <Button
                 android:id="@+id/sign_upEmailCheck"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="45dp"
                 android:onClick="emailCheck"
                 android:text="인증" />
         </LinearLayout>
-        <TextView
-            android:layout_marginTop="30dp"
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="관심사 설정"
+                android:textSize="20sp"
+                />
+            <Button
+                android:id="@+id/tempInterest"
+                android:layout_width="280dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:onClick="TempInterest"
+                android:text="관심사" />
+            />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="프로필 사진을 정해주세요"
             android:layout_gravity="center"
             />
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
             android:id="@+id/profile"
             app:srcCompat="@drawable/circle"
             tools:ignore="ContentDescription" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:layout_gravity="center">
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:id="@+id/camera"
                 android:text="camera"
                 />
@@ -278,23 +347,26 @@
                 android:text="gallery"
                 />
         </LinearLayout>
-        <Button
-            android:id="@+id/sign_upCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="확인"
-            android:onClick="SignUpCheck"
-            />
-        <Button
-            android:id="@+id/tempInterest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="관심사"
-            android:onClick="TempInterest"
-            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sign_upCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="SignUpCheck"
+                android:text="회원가입 마치기" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

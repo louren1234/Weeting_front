@@ -145,6 +145,14 @@
 
 
                     <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:gravity="center"
+                        android:text="이미지를 클릭 후 변경해보세요." />
+
+                    <TextView
                         android:id="@+id/myEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -177,12 +185,13 @@
                     <EditText
                         android:id="@+id/myIntroduce"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:textSize="20sp"
-                        tools:text="내 소개를 하g 첨벙첨벙 라이어라이어라이어" />
+                        android:background="@drawable/edittext_rounded_corner_rectangle"
+                        android:hint="내 소개를 해보세요." />
 
                     <Button
                         android:id="@+id/editMyInfoButton"

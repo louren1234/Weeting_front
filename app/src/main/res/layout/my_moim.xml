@@ -133,15 +133,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="내가 모임장"
+                    android:text="내 모임"
                     android:textSize="23sp"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout11"
                 android:layout_width="412dp"
-                android:layout_height="142dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,81 +149,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.382">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    android:contentDescription="random_gruop"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:srcCompat="@drawable/puppy"
-                    tools:ignore="HardcodedText" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1"
-                    android:contentDescription="random_group"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:srcCompat="@drawable/mountain"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="409dp"
-                android:layout_height="73dp"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="368dp">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textSize="23sp"
-                    android:text="내 모임"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <TableLayout
-                android:layout_width="409dp"
-                android:layout_height="142dp"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="442dp">
-                <TableRow
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myMoim"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:ignore="UselessParent">
+                    android:layout_weight="1" />
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
-                        tools:srcCompat="@drawable/game"
-                        tools:ignore="ContentDescription" />
-
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/universe"
-                        tools:ignore="ContentDescription" />
-
-                </TableRow>
-            </TableLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

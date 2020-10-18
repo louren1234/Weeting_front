@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 LoginResponse result = response.body();
                 Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 if(result.getState()==200){
-//                    Intent i = new Intent(getApplicationContext(), After_have_group.class);
-//                    i.putExtra("email", email);
-//                    startActivity(i);
-//                    finish();
-                    checkHaveOrNotHaveMoim();
+                    Intent i = new Intent(getApplicationContext(), After_have_group.class);
+                    i.putExtra("email", email);
+                    startActivity(i);
+                    finish();
+//                    checkHaveOrNotHaveMoim();
                 }
                 else{
                     Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
@@ -104,30 +104,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void checkHaveOrNotHaveMoim() {
-        checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
-            @Override
-            public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
-                MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
-                if (data.data.size() > 0){
-                    Intent i = new Intent(getApplicationContext(), After_have_group.class);
-                    i.putExtra("email", email);
-                    startActivity(i);
-                    finish();
-                }else {
-                    Intent i = new Intent(getApplicationContext(), No_have_group.class);
-                    i.putExtra("email", email);
-                    startActivity(i);
-                    finish();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
-                Log.e("내 모임 불러오기 에러 발생", t.getMessage());
-            }
-        });
-    }
+//    public void checkHaveOrNotHaveMoim() {
+//        checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
+//            @Override
+//            public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
+//                MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
+//                if(data.data != null){
+//                    if (data.data.size() > 0){
+//                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
+//                        i.putExtra("email", email);
+//                        startActivity(i);
+//                        finish();
+//                    }
+//                }
+//                else if (data.data == null) {
+//                    Intent i = new Intent(getApplicationContext(), No_have_group.class);
+//                    i.putExtra("email", email);
+//                    startActivity(i);
+//                    finish();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
+//                Log.e("내 모임 불러오기 에러 발생", t.getMessage());
+//            }
+//        });
+//    }
 
 }

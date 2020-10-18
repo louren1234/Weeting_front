@@ -35,6 +35,7 @@ public class MoimDetail extends AppCompatActivity {
     private TextView detailMoimDeleteButton, moimWithdrawButton, detailMoimEditButton;
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
+    private int is_captain;
 
     private MoimDetailData.MoimDetailDataResponse detailList;
     private MoimDetailData detailListConponent;
@@ -113,12 +114,22 @@ public class MoimDetail extends AppCompatActivity {
                 }
 
                 is_member = detailList.is_member;
+                is_captain = detailList.is_captain;
+
                 if(is_member != 1) {
                     memberLayout.setVisibility(View.GONE);
                     moimWithdrawButton.setVisibility(View.GONE);
-
+                    detailMoimDeleteButton.setVisibility(View.GONE);
+                    detailMoimEditButton.setVisibility(View.GONE);
+                  
                 }else if(is_member == 1){
                     moimParticipateButton.setVisibility(View.GONE);
+                    if(is_captain != 1) {
+                        detailMoimEditButton.setVisibility(View.GONE);
+                        detailMoimDeleteButton.setVisibility(View.GONE);
+                    } else if (is_captain == 1) {
+                        moimWithdrawButton.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -136,6 +147,7 @@ public class MoimDetail extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), UpdateMyMoim.class);
                 intent.putExtra("meetingId", meeting_id);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -156,6 +168,7 @@ public class MoimDetail extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MoimList.class);
                             intent.putExtra("category", "all");
                             startActivity(intent);
+                            finish();
                         }
                         else{
                             Log.d("MoimDetail", "서버에러");
@@ -187,6 +200,7 @@ public class MoimDetail extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                             intent.putExtra("meetingId", meeting_id);
                             startActivity(intent);
+                            finish();
 
                         } else{
                             Log.d("모임 참여 에러 : ", " 서버 에러 ");
@@ -216,6 +230,7 @@ public class MoimDetail extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                             intent.putExtra("meetingId", meeting_id);
                             startActivity(intent);
+                            finish();
 
                         } else{
                             Log.d("모임 참여 에러 : ", " 서버 에러 ");

@@ -48,12 +48,12 @@ public class MainMoimThumbnailData {
     class MaimMoimThumbnailDataResponse {
         int status;
         String message;
-        List<MainMoimThumbnailData> recommend_mettings;
+        List<MainMoimThumbnailData> recommend_meetings;
         List<MainMoimThumbnailData> my_meetings;
 
         int getStatus(){ return status; }
         String getMessage(){ return message; }
-        List<MainMoimThumbnailData> getRecommend_mettings(){ return recommend_mettings; }
+        List<MainMoimThumbnailData> getRecommend_mettings(){ return recommend_meetings; }
         List<MainMoimThumbnailData> getMy_meetings(){ return my_meetings; }
     }
 

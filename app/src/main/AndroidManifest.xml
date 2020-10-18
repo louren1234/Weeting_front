@@ -26,12 +26,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
              /> <!--configChanges는 리로딩방지-->
 
-        <activity android:name=".Test"/>
         <activity android:name=".Create"/>
         <activity android:name=".SignUpActivity"
             />
         <!--            android:theme="@style/Theme.MaterialComponents.CompactMenu"-->
-
+        <activity android:name=".MyMoim"/>
         <activity android:name=".MoimList"/>
         <activity android:name=".After_have_group"/>
         <activity android:name=".AlertSetting"/>
@@ -40,12 +39,9 @@
         <activity android:name=".Interest"/>
         <activity android:name=".Mypage"/>
         <activity android:name=".Qna"/>
-        <activity android:name=".Qna_list"/>
         <activity android:name=".Terms_of_use"/>
-        <activity android:name=".SpinnerTest"/>
         <activity android:name=".MoimDetail"/>
         <activity android:name=".UpdateMyMoim"/>
-        <activity android:name=".No_have_group"/>
         <activity android:name=".EditMyInformation"/>
         <activity android:name=".SearchMoimAddress"/>
         <activity android:name=".SearchList"/>
