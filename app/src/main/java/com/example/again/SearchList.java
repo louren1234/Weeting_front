@@ -42,7 +42,6 @@ public class SearchList extends AppCompatActivity implements RecyclerAdapter.OnD
         context = this;
         searchEdit = findViewById(R.id.edit_search);
         serviceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
-        System.out.println("sdfdffffffffffffffffffffffffffffdddddddddddddddddddddddddddddddddddd");
 
         spinnerCity = (Spinner)findViewById(R.id.city);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));

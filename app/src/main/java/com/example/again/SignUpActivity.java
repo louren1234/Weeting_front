@@ -4,11 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.app.AlertDialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -19,6 +22,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +35,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.example.again.SignUpData;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -56,6 +62,7 @@ import retrofit2.Response;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 
+
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText e_name, e_password, e_nickname, e_mail;
@@ -72,11 +79,15 @@ public class SignUpActivity extends AppCompatActivity {
     String emailNum;
     MultipartBody.Part body;
     String writing_layout, writing_img;
+    static int interestsCount;
+    static String interests;
+    static PreferenceManager preferenceManager;
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         e_name = findViewById(R.id.sign_upName);
         e_password = findViewById(R.id.sign_upPassword);
         e_nickname = findViewById(R.id.sign_upId);
@@ -85,6 +96,13 @@ public class SignUpActivity extends AppCompatActivity {
                 .create(SignUpData.ServiceApi.class);
         tedPermission();
         btn();
+        if(interestsCount>0){
+            try {
+                SignUpCheck();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     public void btn(){
@@ -124,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
         return cancel;
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void SignUpCheck(View view) throws ParseException {
+    public void SignUpCheck() throws ParseException {
         e_name.setError(null);
         e_password.setError(null);
         e_nickname.setError(null);
@@ -162,8 +180,9 @@ public class SignUpActivity extends AppCompatActivity {
                     name);
             r_nickname = RequestBody.create(MediaType.parse("text/plain"), e_nickname.getText().toString());
 
-
             startSignUp(password,birth,email,name,id);
+            preferenceManager = new PreferenceManager();
+            preferenceManager.setString(getApplicationContext(), "name",e_nickname.getText().toString());
             Toast.makeText(getApplicationContext(), "로그인을 해보세요!", Toast.LENGTH_LONG).show();
 
         }
@@ -183,7 +202,9 @@ public class SignUpActivity extends AppCompatActivity {
                 = RequestBody.create(MediaType.parse("text/plain"), name);
         RequestBody user_nick_name
                 = RequestBody.create(MediaType.parse("text/plain"), id);
-        serviceApi.userSignUP(user_passwd,user_birth,user_email,user_name,user_nick_name,user_img).enqueue(new Callback<SignUpData.Response>() {
+        RequestBody user_interests
+                = RequestBody.create(MediaType.parse("text/plain"), interests);
+        serviceApi.userSignUP(user_passwd,user_birth,user_email,user_name,user_nick_name,user_interests,user_img).enqueue(new Callback<SignUpData.Response>() {
             @Override
             public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
                 SignUpData.Response result = response.body();
@@ -475,8 +496,70 @@ public class SignUpActivity extends AppCompatActivity {
 
         return valid;
     }
-    public void TempInterest(View view){
-        InterestPopUp interestPopUp = new InterestPopUp(this);
-        interestPopUp.show();
+    public void TempInterest(View view) throws ParseException {
+        CustomDialog customDialog = new CustomDialog(SignUpActivity.this);
+        customDialog.callFunction();
     }
+    class CustomDialog {
+
+        private Context context;
+        ChipGroup chipGroup;
+        public CustomDialog(Context context) {
+            this.context = context;
+        }
+
+        // 호출할 다이얼로그 함수를 정의한다.
+        public void callFunction() {
+
+            // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
+            final Dialog dlg = new Dialog(context);
+
+            // 액티비티의 타이틀바를 숨긴다.
+            dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            // 커스텀 다이얼로그의 레이아웃을 설정한다.
+            dlg.setContentView(R.layout.interest);
+
+            // 커스텀 다이얼로그를 노출한다.
+            dlg.show();
+
+            // 커스텀 다이얼로그의 각 위젯들을 정의한다.
+            final Button okButton = (Button) dlg.findViewById(R.id.interestComplete);
+            chipGroup = (ChipGroup) dlg.findViewById(R.id.chipgroup);
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // '확인' 버튼 클릭시 메인 액티비티에서 설정한 main_label에
+                    // 커스텀 다이얼로그에서 입력한 메시지를 대입한다.
+                    Filter();
+                    // 커스텀 다이얼로그를 종료한다.
+                    dlg.dismiss();
+                try {
+                    SignUpCheck();
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                }
+            });
+
+        }
+        public void Filter(){
+        int ids = chipGroup.getCheckedChipId();
+        interests = "";
+        for(int i =0 ; i < chipGroup.getChildCount(); i++){
+            Chip chip = (Chip)chipGroup.getChildAt(i);
+            if(chip.isChecked()){
+                System.out.println(chip.getText().toString()+"sssssssssssssss");
+                interests += chip.getText().toString();
+                interests = interests + "/";
+                interestsCount++;
+            }
+
+        }
+
+        }
+}
+
 }

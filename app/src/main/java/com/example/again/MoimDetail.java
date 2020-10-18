@@ -31,7 +31,8 @@ public class MoimDetail extends AppCompatActivity {
     private TextView detailMoimName, detailMoimDescription, detailMoimLocation, detailMoimTime, detailMoimRecruitment, detailMoimAgeLimitMin, detailMoimAgeLimitMax, detailMoimPresentMembersNum, detailMoimCaptainNickname;
     private ImageView detailMoimImage;
     private LinearLayout memberLayout;
-    private Button detailMoimEditButton, detailMoimDeleteButton, moimParticipateButton, moimWithdrawButton;
+    private Button  moimParticipateButton, chatButton;
+    private TextView detailMoimDeleteButton, moimWithdrawButton, detailMoimEditButton;
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
     private int is_captain;
@@ -67,7 +68,15 @@ public class MoimDetail extends AppCompatActivity {
         moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
 
         moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+        //chat
+        chatButton = findViewById(R.id.chatting_in);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
+                startActivity(i);
+            }
+        });
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 
@@ -112,6 +121,7 @@ public class MoimDetail extends AppCompatActivity {
                     moimWithdrawButton.setVisibility(View.GONE);
                     detailMoimDeleteButton.setVisibility(View.GONE);
                     detailMoimEditButton.setVisibility(View.GONE);
+                  
                 }else if(is_member == 1){
                     moimParticipateButton.setVisibility(View.GONE);
                     if(is_captain != 1) {
