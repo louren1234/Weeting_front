@@ -142,45 +142,13 @@ public class MoimData {
 //        this.meeting_img = meeting_img;
     }
 
-    class MoimDataForResponse{
-        @SerializedName("meeting_id")
-        int meeting_id;
-        @SerializedName("meeting_name")
-        String meeting_name;
-
-        public MoimDataForResponse(int meeting_id, String meeting_name){
-            this.meeting_id = meeting_id;
-            this.meeting_name = meeting_name;
-        }
-
-        public int getMeeting_id() {
-            return meeting_id;
-        }
-
-        public void setMeeting_id(int meeting_id) {
-            this.meeting_id = meeting_id;
-        }
-
-        public String getMeeting_name() {
-            return meeting_name;
-        }
-
-        public void setMeeting_name(String meeting_name) {
-            this.meeting_name = meeting_name;
-        }
-    }
-
     class MoimResponse{
         int state;
         String message;
-        MoimDataForResponse data;
-        // List<MoimDataForResponse> 이렇게 하니 expected begin_object but was begin_array 이 에러가 나왔음. object를 기대했는데 array였다 대충 이 말을 거의 한 시간 서치해서 고쳤다.
-        // 갑자기 이 에러가 난 이유는 서버의 응답 중 하나인 data를 object 방식으로 바꿔서 인 것 같다. 원래는 잘 됐었음.
-        // 암튼 class를 만들어서 Object 형식으로 바꿔주니 해결. 뿌듯.
+        List<MoimData> data;
 
         public int getStatus() { return state; }
         public String getMessage() { return message; }
-        public MoimDataForResponse getData() { return data; }
     }
 
     public interface ServiceApi{
