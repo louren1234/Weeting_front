@@ -187,6 +187,7 @@ public class MoimDetailData {
         String message;
         int is_member;
         String meeting_interest;
+        int is_captain;
         List<MoimDetailData> data;
         List<MoimDetailData> meeting_members;
 
@@ -196,6 +197,7 @@ public class MoimDetailData {
         public List<MoimDetailData> getMeeting_members() { return meeting_members; }
 
         public int getIs_member() { return is_member; }
+        public int getIs_captain() { return is_captain; }
         public String getMeeting_interest() { return meeting_interest; }
     }
 

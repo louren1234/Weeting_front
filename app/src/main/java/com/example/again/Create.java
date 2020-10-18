@@ -559,7 +559,7 @@ public class Create extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러", t.getMessage());
+                    Log.e("모임생성 에러1", t.getMessage());
                     t.printStackTrace();
                 }
             });
@@ -608,7 +608,7 @@ public class Create extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러", t.getMessage());
+                    Log.e("모임생성 에러2", t.getMessage());
                     t.printStackTrace();
                 }
             });
