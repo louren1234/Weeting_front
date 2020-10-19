@@ -19,14 +19,14 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         app:srcCompat="@drawable/logodver3" />
 
     <EditText
         android:id="@+id/mainId"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:padding="10dp"
         android:drawableStart="@drawable/ic_person_black_24dp"

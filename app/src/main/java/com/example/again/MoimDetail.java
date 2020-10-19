@@ -227,9 +227,9 @@ public class MoimDetail extends AppCompatActivity {
 
                             Toast myToast = Toast.makeText(getApplicationContext(),"모임 탈퇴 완료", Toast.LENGTH_SHORT);
                             myToast.show();
-//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-//                            intent.putExtra("meetingId", meeting_id);
-//                            startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
+                            intent.putExtra("meetingId", meeting_id);
+                            startActivity(intent);
                             finish();
 
                         } else{

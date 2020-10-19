@@ -23,17 +23,13 @@ tools:context=".MainActivity">
         android:layout_height="115dp"
         android:gravity="bottom">
 
-        <TextView
-            android:id="@+id/mainpage"
-            android:layout_width="270dp"
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:gravity="center_vertical"
-            android:text="@string/weeting"
-            android:textColor="@color/mainColor"
-            android:textSize="40sp"
-            app:autoSizeMaxTextSize="40sp"
-            app:autoSizeTextType="uniform" />
+            app:srcCompat="@drawable/logonotmain" />
 
         <View
             android:layout_width="0dp"
