@@ -199,30 +199,56 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textLocation"
+                        <EditText
+                            android:id="@+id/textFirstLocation"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
                             android:background="@drawable/edittext_rounded_corner_rectangle"
                             android:ems="10"
-                            android:text="서울특별시"
+                            android:gravity="center_vertical"
                             android:importantForAutofill="no"
                             android:inputType="textPersonName"
-                            tools:ignore="HardcodedText,LabelFor" />
+                            tools:ignore="HardcodedText,LabelFor"
+                            android:hint="시/도를 입력하세요." />
 
-                        <ImageButton
-                            android:id="@+id/meetingLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/pin" />
+                        <EditText
+                            android:id="@+id/textSecondLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edittext_rounded_corner_rectangle"
+                            android:ems="10"
+                            android:gravity="center_vertical"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            tools:ignore="HardcodedText,LabelFor"
+                            android:hint="시/군/구를 입력하세요." />
+
+                        <EditText
+                            android:id="@+id/textThirdLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edittext_rounded_corner_rectangle"
+                            android:ems="10"
+                            android:gravity="center_vertical"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            tools:ignore="HardcodedText,LabelFor"
+                            android:hint="읍/면/동을 입력하세요." />
+
+                        <EditText
+                            android:id="@+id/textLastLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/edittext_rounded_corner_rectangle"
+                            android:ems="10"
+                            android:gravity="center_vertical"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            tools:ignore="HardcodedText,LabelFor"
+                            android:hint="자세한 주소를 입력하세요." />
+
 
                     </LinearLayout>
 

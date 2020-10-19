@@ -108,13 +108,6 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             }
         });
 
-//        toMap.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), Create.class);
-//                startActivity(intent);
-//            }
-//        });
         chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

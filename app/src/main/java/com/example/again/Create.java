@@ -59,9 +59,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Create extends AppCompatActivity {
-    private EditText m_name, m_description, m_num, m_agemin, m_agemax;
-    private TextView m_time, m_location;
-    private ImageButton selectLocationButton;
+    private EditText m_name, m_description, m_num, m_agemin, m_agemax, selectFirstLocation, selectSecondLocation, selectThirdLocation, selectLastLocation;
+    private TextView m_time;
+//    private ImageButton selectLocationButton;
     private ImageButton selectDateButton;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TimePickerDialog.OnTimeSetListener timecallbackMethod;
@@ -140,7 +140,7 @@ public class Create extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Create.class);
                 startActivity(intent);
             }
         });
@@ -251,21 +251,23 @@ public class Create extends AppCompatActivity {
         m_description = findViewById(R.id.meetingIntro);
         m_time = findViewById(R.id.meetingDate);
         m_num = findViewById(R.id.meetingNum);
-        m_location = findViewById(R.id.textLocation);
         m_agemin = findViewById(R.id.minAge);
         m_agemax = findViewById(R.id.maxAge);
-        selectLocationButton = findViewById(R.id.meetingLocation);
+        selectFirstLocation = findViewById(R.id.textFirstLocation);
+        selectSecondLocation = findViewById(R.id.textSecondLocation);
+        selectThirdLocation = findViewById(R.id.textThirdLocation);
+        selectLastLocation = findViewById(R.id.textLastLocation);
         selectDateButton = findViewById(R.id.selectDate);
         serviceApi = RetrofitClient.getClient().create(MoimData.ServiceApi.class);
 
 
-        selectLocationButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
-                startActivity(intent);
-            }
-        });
+//        selectLocationButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }
@@ -275,9 +277,12 @@ public class Create extends AppCompatActivity {
         m_description.setError(null);
         m_time.setError(null);
         m_num.setError(null);
-        m_location.setError(null);
         m_agemin.setError(null);
         m_agemax.setError(null);
+        selectFirstLocation.setError(null);
+        selectSecondLocation.setError(null);
+        selectThirdLocation.setError(null);
+        selectLastLocation.setError(null);
 
         String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
@@ -288,8 +293,11 @@ public class Create extends AppCompatActivity {
         String num = m_num.getText().toString();
         String agemin = m_agemin.getText().toString();
         String agemax = m_agemax.getText().toString();
-        String location = m_location.getText().toString();
-
+        String firstLocation = selectFirstLocation.getText().toString();
+        String secondLocation = selectSecondLocation.getText().toString();
+        String thirdLocation = selectThirdLocation.getText().toString();
+        String lastLocation = selectLastLocation.getText().toString();
+        String location = firstLocation + " " + secondLocation + " " + thirdLocation + " " + lastLocation;
 
 //        BitmapDrawable drawable = (BitmapDrawable) m_img.getDrawable();
 //        Bitmap bitmap = drawable.getBitmap();

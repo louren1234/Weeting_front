@@ -96,7 +96,7 @@ public class MyMoim extends AppCompatActivity implements RecyclerAdapter.OnDataD
         chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Create.class);
                 startActivity(intent);
             }
         });

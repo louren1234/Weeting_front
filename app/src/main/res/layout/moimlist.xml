@@ -35,7 +35,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="20dp"
                         android:gravity="center_vertical"
-                        app:srcCompat="@drawable/logonotmain" />
+                        android:src="@drawable/logonotmain" />
 
                     <View
                         android:layout_width="0dp"
@@ -73,7 +73,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="home"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/home"
+                        android:src="@drawable/home"
                         tools:ignore="HardcodedText" />
 
                     <ImageButton
@@ -84,7 +84,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="list"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/list"
+                        android:src="@drawable/list"
                         tools:ignore="HardcodedText" />
 
 
@@ -98,7 +98,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="mypage"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/user"
+                        android:src="@drawable/user"
                         tools:ignore="HardcodedText" />
 
                     <ImageButton
@@ -109,7 +109,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="list"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/ic_chat"
+                        android:src="@drawable/ic_chat"
                         tools:ignore="HardcodedText" />
 
                 </LinearLayout>
@@ -119,6 +119,7 @@
             <LinearLayout
                 android:layout_width="409dp"
                 android:layout_height="578dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
