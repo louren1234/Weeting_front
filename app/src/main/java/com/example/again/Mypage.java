@@ -42,13 +42,11 @@ public class Mypage extends AppCompatActivity {
         myId = findViewById(R.id.mypageMyId);
         myIntroduce = findViewById(R.id.mypageMyIntroduce);
 
-        TextView main = findViewById(R.id.mainpage);
+        ImageView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
-
+        ImageButton chat = findViewById(R.id.chat);
         ImageButton toHome = findViewById(R.id.toHome);
-        ImageButton toList = findViewById(R.id.toList); // 얘까지만 하면 안 동그래짐
-        ImageButton toMap = findViewById(R.id.toMap); // 얘까지 해줘야 동그래짐
-//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
+        ImageButton toList = findViewById(R.id.toList);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
         LinearLayout editmyinform = findViewById(R.id.myinform);
@@ -65,6 +63,7 @@ public class Mypage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         search.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -91,21 +90,13 @@ public class Mypage extends AppCompatActivity {
             }
         });
 
-        toMap.setOnClickListener(new View.OnClickListener(){
+        chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Create.class);
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 startActivity(intent);
             }
         });
-
-//        toCalender.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
-//                startActivity(intent);
-//            }
-//        });
 
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override

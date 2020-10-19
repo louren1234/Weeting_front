@@ -132,6 +132,63 @@ public class UpdateMyMoim extends AppCompatActivity {
         this.InitializeListener();
         selectDateButton = findViewById(R.id.selectDate);
 
+        ImageView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+        ImageButton chat = findViewById(R.id.chat);
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
+
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
             @Override

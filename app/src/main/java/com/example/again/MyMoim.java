@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,13 +32,11 @@ public class MyMoim extends AppCompatActivity implements RecyclerAdapter.OnDataD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_moim);
 
-        TextView main = findViewById(R.id.mainpage);
+        ImageView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
         ImageButton chat = findViewById(R.id.chat);
         ImageButton toHome = findViewById(R.id.toHome);
         ImageButton toList = findViewById(R.id.toList);
-        ImageButton toMap = findViewById(R.id.toMap);
-//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
         myMoimRecyclerView = findViewById(R.id.myMoim);
@@ -101,14 +100,6 @@ public class MyMoim extends AppCompatActivity implements RecyclerAdapter.OnDataD
                 startActivity(intent);
             }
         });
-
-//        toCalender.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
-//                startActivity(intent);
-//            }
-//        });
 
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override

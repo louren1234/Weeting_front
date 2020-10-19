@@ -21,19 +21,17 @@
                 android:id="@+id/linearLayout2"
                 android:layout_width="408dp"
                 android:layout_height="115dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
                 android:gravity="bottom">
 
-                <TextView
+                <ImageView
                     android:id="@+id/mainpage"
-                    android:layout_width="270dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:gravity="center_vertical"
-                    android:text="@string/weeting"
-                    android:textColor="@color/mainColor"
-                    android:textSize="40sp"
-                    app:autoSizeMaxTextSize="40sp"
-                    app:autoSizeTextType="uniform" />
+                    app:srcCompat="@drawable/logonotmain" />
 
                 <View
                     android:layout_width="0dp"
@@ -85,27 +83,8 @@
                     app:srcCompat="@drawable/list"
                     tools:ignore="HardcodedText" />
 
-                <ImageButton
-                    android:id="@+id/toMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="map"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/pin"
-                    tools:ignore="HardcodedText" />
 
-                <ImageButton
-                    android:id="@+id/toCalender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="calender"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/calendar"
-                    tools:ignore="HardcodedText" />
+
 
                 <ImageButton
                     android:id="@+id/toMypage"
@@ -116,6 +95,17 @@
                     android:contentDescription="mypage"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/user"
+                    tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:id="@+id/chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="list"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_chat"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
