@@ -59,13 +59,11 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
 
         mcontext = this;
 
-        TextView main = findViewById(R.id.mainpage);
+        ImageView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
-
+        ImageButton chat = findViewById(R.id.chat);
         ImageButton toHome = findViewById(R.id.toHome);
         ImageButton toList = findViewById(R.id.toList);
-        ImageButton toMap = findViewById(R.id.toMap);
-//        ImageButton toCalender = (ImageButton) findViewById(R.id.toCalender);
         ImageButton toMypage = findViewById(R.id.toMypage);
 
         main.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +73,7 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
                 startActivity(intent);
             }
         });
+
 
         search.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -101,21 +100,13 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
             }
         });
 
-        toMap.setOnClickListener(new View.OnClickListener(){
+        chat.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Create.class);
                 startActivity(intent);
             }
         });
-
-//        toCalender.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), ToCalender.class);
-//                startActivity(intent);
-//            }
-//        });
 
         toMypage.setOnClickListener(new View.OnClickListener(){
             @Override

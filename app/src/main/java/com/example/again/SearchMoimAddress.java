@@ -1,10 +1,12 @@
 package com.example.again;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -24,6 +26,7 @@ public class SearchMoimAddress extends AppCompatActivity {
     private WebSettings webSettings;
     private FrameLayout webViewFrame;
     private Handler handler;
+    private Dialog dialog1;
 
 
 
@@ -41,6 +44,8 @@ public class SearchMoimAddress extends AppCompatActivity {
 
         initWeb();
 
+        Log.d("웹뷰 : ", "어디까지 되는거지 ? 1");
+
         handler = new Handler();
     }
 
@@ -51,10 +56,43 @@ public class SearchMoimAddress extends AppCompatActivity {
         webSettings.setSupportMultipleWindows(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-        addressWebView.setWebChromeClient(new WebChromeClientSet(this));
+        Log.d("웹뷰 : ", "어디까지 되는거지 ? 2");
+
+        webSettings.setDatabaseEnabled(false);
+        webSettings.setAllowFileAccess(false);
+        webSettings.setDomStorageEnabled(false);
+        webSettings.setAppCacheEnabled(false);
+
+        addressWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, Message resultMsg) {
+                // TODO Auto-generated method stub
+                WebView newWebView = new WebView(getApplicationContext());
+                WebSettings webSettings = newWebView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                dialog1 = new Dialog(getApplicationContext());
+                dialog1.setContentView(newWebView);
+
+                ViewGroup.LayoutParams params = dialog1.getWindow().getAttributes();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                dialog1.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+                dialog1.show();
+                newWebView.setWebChromeClient(new WebChromeClient() {
+                    @Override
+                    public void onCloseWindow(WebView window) {
+
+                    }
+                });
+                ((WebView.WebViewTransport) resultMsg.obj).setWebView(newWebView);
+                resultMsg.sendToTarget();
+                return true;
+
+            }
+        });
         addressWebView.addJavascriptInterface(new AndroidBridge(), "Testapp");
         addressWebView.loadUrl("http://52.35.235.199:3000/daum_address.php");
-        addressWebView.loadUrl("javascript:daum");
+//        addressWebView.loadUrl("javascript:daum");
 
         addressWebView.setWebViewClient(new WebViewClient(){
             @Override
@@ -99,16 +137,17 @@ public class SearchMoimAddress extends AppCompatActivity {
 //                return true;
 //            }
 //        });
+        Log.d("웹뷰 : ", "어디까지 되는거지 ? 4");
     }
 
-    private class AndroidBridge {
+    private class AndroidBridge extends WebViewClient {
         @JavascriptInterface
         public void setAddress(final String arg1, final String arg2, final String arg3){
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     textAddress.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
-
+                    Log.d("웹뷰 : ", "어디까지 되는거지 ? 3");
                     initWeb();
                 }
             });

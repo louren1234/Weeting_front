@@ -75,9 +75,8 @@ import retrofit2.Response;
 
 public class UpdateMyMoim extends AppCompatActivity {
     private String myimg = null;
-    private EditText m_name, m_description, m_num, m_agemin, m_agemax;
-    private TextView m_time, m_location;
-    private ImageButton selectLocationButton;
+    private EditText m_name, m_description, m_num, m_agemin, m_agemax, selectFirstLocation, selectSecondLocation, selectThirdLocation, selectLastLocation;
+    private TextView m_time;
     private ImageButton selectDateButton;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TimePickerDialog.OnTimeSetListener timecallbackMethod;
@@ -131,6 +130,63 @@ public class UpdateMyMoim extends AppCompatActivity {
         this.InitializeView();
         this.InitializeListener();
         selectDateButton = findViewById(R.id.selectDate);
+
+        ImageView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+        ImageButton chat = findViewById(R.id.chat);
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
 
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
@@ -197,19 +253,23 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_description = findViewById(R.id.meetingIntro);
         m_time = findViewById(R.id.meetingDate);
         m_num = findViewById(R.id.meetingNum);
-        m_location = findViewById(R.id.textLocation);
         m_agemin = findViewById(R.id.minAge);
         m_agemax = findViewById(R.id.maxAge);
-        selectLocationButton = findViewById(R.id.meetingLocation);
+        selectFirstLocation = findViewById(R.id.textFirstLocation);
+        selectSecondLocation = findViewById(R.id.textSecondLocation);
+        selectThirdLocation = findViewById(R.id.textThirdLocation);
+        selectLastLocation = findViewById(R.id.textLastLocation);
+        selectDateButton = findViewById(R.id.selectDate);
+
         serviceApi = RetrofitClient.getClient().create(MoimEditData.serviceApi.class);
 
-        selectLocationButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
-                startActivity(intent);
-            }
-        });
+//        selectLocationButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
+//                startActivity(intent);
+//            }
+//        });
 
         final MoimDetailData.serviceApi MoimInfogetApiInterface = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
         Call<MoimDetailData.MoimDetailDataResponse> getMoimInfocall = MoimInfogetApiInterface.getMoimDetail(meeting_id);
@@ -231,12 +291,68 @@ public class UpdateMyMoim extends AppCompatActivity {
                     myimg = moimDetailData.getMeeting_img();
                     m_name.setText(moimDetailData.getMeeting_name());
                     m_description.setText(moimDetailData.getMeeting_description());
-                    m_location.setText(moimDetailData.getMeeting_location());
                     m_time.setText(String.valueOf(moimDetailData.getMeeting_time()));
+
+                    String firstlocation;
+                    String secondlocation;
+                    String thridlocation;
+                    String lastlocation = "";
+
+                    String location = moimDetailData.getMeeting_location();
+                    String locationList[] = location.split(" ");
+
+                    try {
+                        firstlocation = locationList[0];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        firstlocation = " ";
+                    }
+
+                    try {
+                        secondlocation = locationList[1];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        secondlocation = " ";
+                    }
+
+                    try {
+                        thridlocation = locationList[2];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        thridlocation = " ";
+                    }
+
+                    try {
+                        for (int i = 3; i < locationList.length; i++) {
+                            lastlocation = lastlocation + " " + locationList[i];
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        lastlocation = " ";
+                    }
+
+                        selectFirstLocation.setText(firstlocation);
+                        selectSecondLocation.setText(secondlocation);
+                        selectThirdLocation.setText(thridlocation);
+                        selectLastLocation.setText(lastlocation);
+
+//                    try {
+//                        selectFirstLocation.setText(firstlocation);
+//                        selectSecondLocation.setText(secondlocation);
+//                        selectThirdLocation.setText(thridlocation);
+//                        selectLastLocation.setText(lastlocation);
+//                    } catch (NullPointerException e) {
+//                        firstlocation = " ";
+//                        secondlocation = " ";
+//                        thridlocation = " ";
+//                        lastlocation =" ";
+//                        selectFirstLocation.setText(firstlocation);
+//                        selectSecondLocation.setText(secondlocation);
+//                        selectThirdLocation.setText(thridlocation);
+//                        selectLastLocation.setText(lastlocation);
+//                    }
+
                     m_num.setText(String.valueOf(moimDetailData.getMeeting_recruitment()));
                     m_agemin.setText(String.valueOf(moimDetailData.getAge_limit_min()));
                     m_agemax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
                     interestSpinner.setSelection(moimDetailData.getFk_meeting_interest() - 1);
+
                 }
 
             }
@@ -262,9 +378,12 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_description.setError(null);
         m_time.setError(null);
         m_num.setError(null);
-        m_location.setError(null);
         m_agemin.setError(null);
         m_agemax.setError(null);
+        selectFirstLocation.setError(null);
+        selectSecondLocation.setError(null);
+        selectThirdLocation.setError(null);
+        selectLastLocation.setError(null);
 
         final String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
@@ -275,7 +394,11 @@ public class UpdateMyMoim extends AppCompatActivity {
         final String num = m_num.getText().toString();
         final String agemin = m_agemin.getText().toString();
         final String agemax = m_agemax.getText().toString();
-        final String location = m_location.getText().toString();
+        final String firstLocation = selectFirstLocation.getText().toString();
+        final String secondLocation = selectSecondLocation.getText().toString();
+        final String thirdLocation = selectThirdLocation.getText().toString();
+        final String lastLocation = selectLastLocation.getText().toString();
+        final String location = firstLocation + " " + secondLocation + " " + thirdLocation + " " + lastLocation;
         final String time = m_time.getText().toString();
 //        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
 //        Date timeDate = trans.parse(time);
@@ -295,7 +418,7 @@ public class UpdateMyMoim extends AppCompatActivity {
                 if( numInt < 5 ){
                     Toast.makeText(getApplicationContext(), "모임원은 5명 이상으로 설정해주세요.", Toast.LENGTH_LONG).show();
                 } else {
-                    startEditMoim(new MoimEditData(m_interest, name, description, time, location, numInt, ageminInt, agemaxInt, meeting_id));
+                    startEditMoim(new MoimEditData(m_interest, name, description, location, time, numInt, ageminInt, agemaxInt, meeting_id));
                 }
             }
         }

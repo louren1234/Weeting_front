@@ -67,7 +67,7 @@ public class MoimData {
         this.meeting_description = meeting_description;
     }
 
-//    public void setMeeting_time(Date meeting_time) {
+    //    public void setMeeting_time(Date meeting_time) {
 //        this.meeting_time = meeting_time;
 //    }
     public void setMeeting_time(String meeting_time) {
@@ -108,7 +108,7 @@ public class MoimData {
     String meeting_description;
     @SerializedName("meeting_time")
 //    Date meeting_time;
-    String meeting_time;
+            String meeting_time;
     @SerializedName("meeting_location")
     String meeting_location;
     @SerializedName("meeting_recruitment")
