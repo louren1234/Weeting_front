@@ -30,7 +30,7 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
     private LinearLayout noHaveMoimLayout;
     private LinearLayout haveMoim;
     private Button myMoimButton;
-    private Button makeGroup;
+    private Button makeGroup, createMoim;
 
     private Context mcontext;
     private Context recommendedcontext;
@@ -74,6 +74,8 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
 
         serviceApi = RetrofitClient.getClient().create(MainMoimThumbnailData.serviceApi.class);
         checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
+
+        createMoim = findViewById(R.id.createMoim);
 
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +147,14 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
         makeGroup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+        createMoim.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), Create.class);
                 startActivity(intent);
             }
