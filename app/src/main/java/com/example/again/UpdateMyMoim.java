@@ -333,8 +333,12 @@ public class UpdateMyMoim extends AppCompatActivity {
                     m_description.setText(moimDetailData.getMeeting_description());
                     m_time.setText(String.valueOf(moimDetailData.getMeeting_time()));
 
-                    if (moimDetailData.getMeeting_location().equals("장소 미정")) {
+                    Log.d("주소 확인 : ", moimDetailData.getMeeting_location());
 
+                    if (moimDetailData.getMeeting_location().equals("장소 미정")) {
+                        selectNoAddress.setChecked(true);
+
+                    } else {
                         selectAddress.setChecked(true);
 
                         String firstlocation;
@@ -343,7 +347,7 @@ public class UpdateMyMoim extends AppCompatActivity {
                         String lastlocation = "";
 
                         String location = moimDetailData.getMeeting_location();
-                        String locationList[] = location.split(" ");
+                        String[] locationList = location.split(" ");
 
                         try {
                             firstlocation = locationList[0];
@@ -371,13 +375,21 @@ public class UpdateMyMoim extends AppCompatActivity {
                             lastlocation = " ";
                         }
 
-                        selectFirstLocation.setText(firstlocation);
-                        selectSecondLocation.setText(secondlocation);
-                        selectThirdLocation.setText(thridlocation);
-                        selectLastLocation.setText(lastlocation);
+//                        if (firstlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(firstlocation);
+//                            spinnerCity.setSelection(spinnerPosition);
+//                        }
 
-                    } else {
-                        selectNoAddress.setChecked(true);
+//                        if (secondlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(secondlocation);
+//                            spinnerSigungu.setSelection(spinnerPosition);
+//                        }
+//
+//                        if (thridlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(thridlocation);
+//                            spinnerDong.setSelection(spinnerPosition);
+//                        }
+                        selectLastLocation.setText(moimDetailData.getMeeting_location());
                     }
 
 
@@ -771,7 +783,7 @@ public class UpdateMyMoim extends AppCompatActivity {
 //                RequestBody meeting_img
 //                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null) );
 
-                serviceApi.editNullImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, null).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
+                serviceApi.editNullImgMoim(meeting_interest, meeting_name, meeting_description, meeting_location, meeting_time, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, null).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                     @Override
                     public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {
                         MoimEditData.MoimEditDataResponse result = response.body();

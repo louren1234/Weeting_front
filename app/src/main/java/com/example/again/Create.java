@@ -77,6 +77,8 @@ public class Create extends AppCompatActivity {
 
     private Spinner spinnerCity, spinnerSigungu, spinnerDong;
     private ArrayAdapter<String> arrayAdapter;
+    private ArrayAdapter<String> SGGAdapter;
+    private ArrayAdapter<String> DongAdapter;
     String address;
     String location;
 
@@ -327,10 +329,10 @@ public class Create extends AppCompatActivity {
                 address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
             }
             else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
-                address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
+                address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString() + " " + " ";
             }
             else if(spinnerCity.getSelectedItemPosition()!=0){
-                address = spinnerCity.getSelectedItem().toString();
+                address = spinnerCity.getSelectedItem().toString() + " " + " " + " " + " ";
             }
             if (spinnerCity.getSelectedItemPosition() == 0) {
                 Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
@@ -636,7 +638,7 @@ public class Create extends AppCompatActivity {
 
 
 //        serviceApi.createMoim(data.getMeeting_interest(), data.getMeeting_name(), data.getMeeting_description(), data.getMeeting_time(), data.getMeeting_location(), data.getMeeting_recruitment(), data.getAge_limit_min(), data.getAge_limit_max() , body).enqueue(new Callback<MoimData.MoimResponse>(){
-            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
+            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_location, meeting_time, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
                 public void onResponse(Call<MoimData.MoimResponse> call, Response<MoimData.MoimResponse> response) {
