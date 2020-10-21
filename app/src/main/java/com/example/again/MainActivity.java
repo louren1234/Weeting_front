@@ -2,7 +2,9 @@ package com.example.again;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -85,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), After_have_group.class);
                     i.putExtra("email", email);
                     startActivity(i);
+                    SharedPreferences sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+                    String s = sp.getString("name", "");
+                    System.out.println(s+"sssssssssssssss");
                     finish();
 //                    checkHaveOrNotHaveMoim();
                 }
