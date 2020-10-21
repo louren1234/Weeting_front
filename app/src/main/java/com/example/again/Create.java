@@ -295,28 +295,14 @@ public class Create extends AppCompatActivity {
             }
         });
 
+        showAddress.setVisibility(View.GONE);
+
 //        selectNoAddress.setOnClickListener();
         selectAddressOrNot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.selectAddress) {
                     showAddress.setVisibility(View.VISIBLE);
-                    address = "";
-                    if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
-                        address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
-                    }
-                    else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
-                        address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString() + " " + " ";
-                    }
-                    else if(spinnerCity.getSelectedItemPosition()!=0){
-                        address = spinnerCity.getSelectedItem().toString() + " " + " " + " " + " ";
-                    }
-                    if (spinnerCity.getSelectedItemPosition() == 0) {
-                        Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
-                    }
-
-                    String lastLocation = selectLastLocation.getText().toString();
-                    location = address + " " + lastLocation;
                 }
                 else if(checkedId == R.id.selectNoAddress) {
                     showAddress.setVisibility(View.GONE);
@@ -334,6 +320,26 @@ public class Create extends AppCompatActivity {
         m_num.setError(null);
         m_agemin.setError(null);
         m_agemax.setError(null);
+
+        if (selectAddress.isChecked()) {
+            address = "";
+            if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
+                address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
+            }
+            else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
+                address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
+            }
+            else if(spinnerCity.getSelectedItemPosition()!=0){
+                address = spinnerCity.getSelectedItem().toString();
+            }
+            if (spinnerCity.getSelectedItemPosition() == 0) {
+                Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        String lastLocation = selectLastLocation.getText().toString();
+        location = address + " " + lastLocation;
+
             String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
             Log.d(TAG, "interest 안에 뭐가 들어있니 : " + m_interest);
@@ -872,7 +878,7 @@ public class Create extends AppCompatActivity {
                             break;
                     }
                 } else {
-
+                    setDongSpinnerAdapterItem(R.array.spinner_region_other_dong);
                 }
 
             }
