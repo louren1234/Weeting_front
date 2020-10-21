@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="40dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logover3" />
 
     <ImageView
         android:id="@+id/imageView2"

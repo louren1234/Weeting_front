@@ -158,11 +158,12 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
+                        android:scrollHorizontally="false"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="모임을 소개해보세요."
                         android:importantForAutofill="no"
-                        android:inputType="textPersonName"
+                        android:inputType="none"
                         tools:ignore="HardcodedText,LabelFor" />
 
                     <EditText
@@ -181,7 +182,7 @@
                         tools:ignore="HardcodedText,LabelFor" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/selectLocationButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -201,53 +202,63 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <EditText
-                        android:id="@+id/textFirstLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/edittext_rounded_corner_rectangle"
-                        android:ems="10"
-                        android:gravity="center_vertical"
-                        android:importantForAutofill="no"
-                        android:inputType="textPersonName"
-                        tools:ignore="HardcodedText,LabelFor"
-                        android:hint="시/도를 입력하세요." />
 
-                        <EditText
-                            android:id="@+id/textSecondLocation"
+                        <RadioGroup
+                            android:id="@+id/selectAddressOrNot"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/edittext_rounded_corner_rectangle"
-                            android:ems="10"
-                            android:gravity="center_vertical"
-                            android:importantForAutofill="no"
-                            android:inputType="textPersonName"
-                            tools:ignore="HardcodedText,LabelFor"
-                            android:hint="시/군/구를 입력하세요." />
+                            android:layout_height="match_parent" >
 
-                        <EditText
-                            android:id="@+id/textThirdLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/edittext_rounded_corner_rectangle"
-                            android:ems="10"
-                            android:gravity="center_vertical"
-                            android:importantForAutofill="no"
-                            android:inputType="textPersonName"
-                            tools:ignore="HardcodedText,LabelFor"
-                            android:hint="읍/면/동을 입력하세요." />
+                            <RadioButton
+                                android:id="@+id/selectNoAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="장소 미정" />
 
-                        <EditText
-                            android:id="@+id/textLastLocation"
+                            <RadioButton
+                                android:id="@+id/selectAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="장소 선택하기" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/showAddress"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/edittext_rounded_corner_rectangle"
-                            android:ems="10"
-                            android:gravity="center_vertical"
-                            android:importantForAutofill="no"
-                            android:inputType="textPersonName"
-                            tools:ignore="HardcodedText,LabelFor"
-                            android:hint="자세한 주소를 입력하세요." />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:hint="시군구" />
+
+                            <Spinner
+                                android:id="@+id/region"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true" />
+
+                            <Spinner
+                                android:id="@+id/neighborhood"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true" />
+
+                            <EditText
+                                android:id="@+id/textLastLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edittext_rounded_corner_rectangle"
+                                android:ems="10"
+                                android:gravity="center_vertical"
+                                android:hint="자세한 주소를 입력하세요."
+                                android:importantForAutofill="no"
+                                android:inputType="textPersonName"
+                                tools:ignore="HardcodedText,LabelFor" />
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
