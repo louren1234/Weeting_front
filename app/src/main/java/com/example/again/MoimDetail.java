@@ -68,15 +68,7 @@ public class MoimDetail extends AppCompatActivity {
         moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
 
         moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        //chat
-        chatButton = findViewById(R.id.chatting_in);
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
-                startActivity(i);
-            }
-        });
+
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 
@@ -150,7 +142,17 @@ public class MoimDetail extends AppCompatActivity {
                 finish();
             }
         });
-
+        //chat
+        chatButton = findViewById(R.id.chatting_in);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
+                i.putExtra("meetingId",meeting_id);
+                startActivity(i);
+                finish();
+            }
+        });
         detailMoimDeleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){

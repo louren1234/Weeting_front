@@ -170,6 +170,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:text="생일"
+                android:textSize="20sp"
+                />
+            <EditText
+                android:id="@+id/sign_upBirth"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:hint="YYYY-MM-DD"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext_rounded_corner_rectangle"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="비밀번호"
                 android:textSize="20dp"
                 />
@@ -207,8 +235,15 @@
                 android:hint="비밀번호를 확인해주세요."
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
-        </LinearLayout>
 
+        </LinearLayout>
+        <TextView
+            android:id="@+id/password_complete"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:textColor="#FF0000"
+            android:layout_marginLeft="135dp"
+            />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"

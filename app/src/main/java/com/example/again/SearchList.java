@@ -61,15 +61,19 @@ public class SearchList extends AppCompatActivity implements RecyclerAdapter.OnD
 
     public void SearchMoim(View view){
         address = "";
+        //시 군 동 모두 선택
         if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
             address = spinnerCity.getSelectedItem().toString()+" " + spinnerSigungu.getSelectedItem().toString()+" " + spinnerDong.getSelectedItem().toString();
         }
+        //시 군 선택
         else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
             address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
         }
+        //시만 선택
         else if(spinnerCity.getSelectedItemPosition()!=0){
             address = spinnerCity.getSelectedItem().toString();
         }
+        //시 선택 x
         if (spinnerCity.getSelectedItemPosition() == 0) {
             Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
         }

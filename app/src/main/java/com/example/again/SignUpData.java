@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Date;
 
+import kotlin.jvm.JvmMultifileClass;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -28,11 +29,10 @@ public class SignUpData {
     @SerializedName("user_nick_name")
     String user_nick_name;
     @SerializedName("user_birth")
-    Date user_birth;
+    String user_birth;
     @SerializedName("user_interests")
     String user_interests;
-    @SerializedName("user_img")
-    Image img;
+
 
 
     public String getUser_email() {
@@ -67,21 +67,29 @@ public class SignUpData {
         this.user_nick_name = user_nick_name;
     }
 
-    public Date getUser_birth() {
+    public String getUser_birth() {
         return user_birth;
     }
 
-    public void setUser_birth(Date user_birth) {
+    public String getUser_interests() {
+        return user_interests;
+    }
+
+    public void setUser_interests(String user_interests) {
+        this.user_interests = user_interests;
+    }
+
+    public void setUser_birth(String user_birth) {
         this.user_birth = user_birth;
     }
 
-    public SignUpData(String user_passwd, Date user_birth, String user_email, String user_name, String user_nick_name, Image img) {
+    public SignUpData(String user_passwd, String user_birth, String user_email, String user_name, String user_nick_name, String user_interests) {
         this.user_passwd = user_passwd;
         this.user_birth = user_birth;
         this.user_email = user_email;
         this.user_name = user_name;
         this.user_nick_name = user_nick_name;
-        this.img = img;
+        this.user_interests = user_interests;
     }
     class Response{
         int state;
@@ -108,6 +116,9 @@ public class SignUpData {
                                   @Part("user_email") RequestBody user_email, @Part("user_name") RequestBody user_name,
                                   @Part("user_nick_name") RequestBody user_nick_name, @Part("user_interests") RequestBody user_interests, @Part MultipartBody.Part user_img
 
+        );
+        @POST("/login/join")
+        Call<Response> userSignUP2(@Body SignUpData data
         );
         @POST("/login/login")
         Call<LoginResponse> userLogin(@Body LoginData data);

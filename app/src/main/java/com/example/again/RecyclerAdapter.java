@@ -69,7 +69,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.ViewHolder holder, int position) {
         final MoimCategoryResultData moimCategoryResultData = dataList.get(position);
-
         holder.moimName.setText(dataList.get(position).getMeeting_name());
         holder.moimNum.setText(String.valueOf(dataList.get(position).getPresent_members()));
         holder.moimLocation.setText(dataList.get(position).getMeeting_location());

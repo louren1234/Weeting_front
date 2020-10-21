@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -65,9 +67,10 @@ import retrofit2.http.Multipart;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText e_name, e_password, e_nickname, e_mail;
+    private EditText e_name, e_password, e_nickname, e_mail, e_password_check , e_birth;
     private SignUpData.ServiceApi serviceApi;
     boolean cancel;
+    boolean nickTF, emailTF, emailOverTF ,personTF;
     File file;
     static int genderValid;
     RequestBody reqFile, r_email,r_password,r_name,r_nickname;
@@ -77,21 +80,24 @@ public class SignUpActivity extends AppCompatActivity {
     int writingLayoutId = 0, writingImgId=0;
     static int writing_imgLayoutCount =0;
     String emailNum;
+    TextView pwd_comploete;
     MultipartBody.Part body;
     String writing_layout, writing_img;
     static int interestsCount;
     static String interests;
-    static PreferenceManager preferenceManager;
+    SharedPreferences sp;
     @SuppressLint("WrongThread")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
+        nickTF = false; emailOverTF = false; emailOverTF = false; personTF=false;
         e_name = findViewById(R.id.sign_upName);
         e_password = findViewById(R.id.sign_upPassword);
         e_nickname = findViewById(R.id.sign_upId);
         e_mail= findViewById(R.id.sign_upEmail);
+        e_password_check = findViewById(R.id.sign_upPasswordCheck);
+        e_birth = findViewById(R.id.sign_upBirth);
         serviceApi = RetrofitClient.getClient()
                 .create(SignUpData.ServiceApi.class);
         tedPermission();
@@ -125,114 +131,174 @@ public class SignUpActivity extends AppCompatActivity {
         e_password.setError(null);
         e_nickname.setError(null);
         e_mail.setError(null);
+        e_password_check.setError(null);
+        e_birth.setError(null);
         String name = e_name.getText().toString();
         String password = e_password.getText().toString();
         String id = e_nickname.getText().toString();
         String email = e_mail.getText().toString();
+        String passwordC = e_password_check.getText().toString();
+        String birth = e_birth.getText().toString();
         View focusView = null;
-        if (name.isEmpty() || password.isEmpty() || id.isEmpty()||email.isEmpty()) {
+        if (name.isEmpty() || password.isEmpty() || id.isEmpty()||email.isEmpty() || passwordC.isEmpty() || birth.isEmpty()) {
 //            e_nickname.setError("이름을 입력해주세요");
 //            focusView=e_nickname;
 //            cancel=true;
+            cancel = false;
             Toast.makeText(getApplicationContext(),"비어있는 칸이 있습니다.",Toast.LENGTH_LONG).show();
         }
+
         else{
             cancel = true;
         }
+
         return cancel;
     }
+    public boolean PwdCheck(){
+        boolean pwdTF = false;
+        if (e_password_check.getText().toString().equals(e_password)) {
+            pwd_comploete = findViewById(R.id.password_complete);
+            pwd_comploete.setText("비밀번호가 일치합니다.");
+            pwdTF = true;
+        } else {
+            pwd_comploete.setText("비밀번호가 일치하지 않습니다.");
+            Toast.makeText(getApplicationContext(), "비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
+        }
+        return pwdTF;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void SignUpCheck() throws ParseException {
         e_name.setError(null);
         e_password.setError(null);
         e_nickname.setError(null);
         e_mail.setError(null);
-        String birth = "2017-07-30 10:10:10";
+        e_password_check.setError(null);
+        e_birth.setError(null);
+
         SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date birth_date = trans.parse(birth);
         String name = e_name.getText().toString();
         String password = e_password.getText().toString();
+        String passwordC = e_password_check.getText().toString();
         String id = e_nickname.getText().toString();
         String email = e_mail.getText().toString();
+        String birth = e_birth.getText().toString();
 
 //        Drawable drawable = imageView.getDrawable();
 //        Drawable drawable = getResources().getDrawable(R.drawable.img2);
         View focusView = null;
-        if (name.isEmpty() || password.isEmpty() || id.isEmpty()||email.isEmpty()) {
-//            e_nickname.setError("이름을 입력해주세요");
-//            focusView=e_nickname;
-//            cancel=true;
-            Toast.makeText(getApplicationContext(),"비어있는 칸이 있습니다.",Toast.LENGTH_LONG).show();
-            //String user_email, String user_name, String user_passwd, String user_nick_name, Date user_birth
-        }
+
+       if(SignUpValid()==false || PwdCheck()==false){
+           if(SignUpValid()){
+               PwdCheck();
+           }
+           else if(PwdCheck()){
+               SignUpValid();
+           }
+       }
         else{
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
+            try{
+                reqFile = RequestBody.create(MediaType.parse("image/jpeg"),tempFile);
+                body = MultipartBody.Part.createFormData(
+                        "user_img", "/weetingImg/", reqFile
+                );
+            }catch (NullPointerException e){
+                System.out.println("null");
+            }
 
-            reqFile = RequestBody.create(MediaType.parse("image/jpeg"),tempFile);
-            body = MultipartBody.Part.createFormData(
-                    "user_img", "/weetingImg/", reqFile
-            );
             r_email = RequestBody.create(MediaType.parse("text/plain"),
                     email);
             r_password = RequestBody.create(MediaType.parse("text/plain"), password);
             r_name = RequestBody.create(MediaType.parse("text/plain"),
                     name);
             r_nickname = RequestBody.create(MediaType.parse("text/plain"), e_nickname.getText().toString());
-
-            startSignUp(password,birth,email,name,id);
-            preferenceManager = new PreferenceManager();
-            preferenceManager.setString(getApplicationContext(), "name",e_nickname.getText().toString());
+            sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putString("name",e_nickname.getText().toString());
+            edit.commit();
+                    startSignUp(password, birth, email, name, id);
             Toast.makeText(getApplicationContext(), "로그인을 해보세요!", Toast.LENGTH_LONG).show();
 
         }
     }
     private void startSignUp(String password, String birth, String email, String name, String id){
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
-        MultipartBody.Part user_img = MultipartBody.Part.createFormData("user_img", tempFile.getName(), requestFile);
+        try {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+            MultipartBody.Part user_img = MultipartBody.Part.createFormData("user_img", tempFile.getName(), requestFile);
 
-        RequestBody user_passwd
-                = RequestBody.create(MediaType.parse("text/plain"), password );
-        RequestBody user_birth
-                = RequestBody.create(MediaType.parse("text/plain"), birth);
-        RequestBody user_email
-                = RequestBody.create(MediaType.parse("text/plain"), email);
-        RequestBody user_name
-                = RequestBody.create(MediaType.parse("text/plain"), name);
-        RequestBody user_nick_name
-                = RequestBody.create(MediaType.parse("text/plain"), id);
-        RequestBody user_interests
-                = RequestBody.create(MediaType.parse("text/plain"), interests);
-        serviceApi.userSignUP(user_passwd,user_birth,user_email,user_name,user_nick_name,user_interests,user_img).enqueue(new Callback<SignUpData.Response>() {
-            @Override
-            public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
-                SignUpData.Response result = response.body();
+            RequestBody user_passwd
+                    = RequestBody.create(MediaType.parse("text/plain"), password);
+            RequestBody user_birth
+                    = RequestBody.create(MediaType.parse("text/plain"), birth);
+            RequestBody user_email
+                    = RequestBody.create(MediaType.parse("text/plain"), email);
+            RequestBody user_name
+                    = RequestBody.create(MediaType.parse("text/plain"), name);
+            RequestBody user_nick_name
+                    = RequestBody.create(MediaType.parse("text/plain"), id);
+            RequestBody user_interests
+                    = RequestBody.create(MediaType.parse("text/plain"), interests);
+            serviceApi.userSignUP(user_passwd, user_birth, user_email, user_name, user_nick_name, user_interests, user_img).enqueue(new Callback<SignUpData.Response>() {
+                @Override
+                public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
+                    SignUpData.Response result = response.body();
 
-                Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_LONG).show();
-                if(result.getStatus()==200){
-                    System.out.println("sdfsdfsdfdfdfsfsdfsd");
-                    finish();
-                }
-                else if(result.getStatus() == 400){
-                    System.out.println("gggggggggggggggggggggg");
-                }
-                if(response.isSuccessful()){
+                    Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_LONG).show();
+                    if (result.getStatus() == 200) {
+                        System.out.println("sdfsdfsdfdfdfsfsdfsd");
+                        finish();
+                    } else if (result.getStatus() == 400) {
+                        System.out.println("gggggggggggggggggggggg");
+                    }
+                    if (response.isSuccessful()) {
 
+                    } else {
+                        ResponseBody error = response.errorBody();
+                        System.out.println(error.toString());
+                    }
                 }
-                else{
-                    ResponseBody error =response.errorBody();
-                    System.out.println(error.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<SignUpData.Response> call, Throwable t) {
-                Toast.makeText(SignUpActivity.this,"회원가입 에러",Toast.LENGTH_LONG).show();
-                Log.e("회원가입 에러",t.getMessage());
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<SignUpData.Response> call, Throwable t) {
+                    Toast.makeText(SignUpActivity.this, "회원가입 에러", Toast.LENGTH_LONG).show();
+                    Log.e("회원가입 에러", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }catch (NullPointerException e) {
+
+            SignUpData signUpData = new SignUpData(password, birth, email, name, id, interests);
+            serviceApi.userSignUP2(signUpData).enqueue(new Callback<SignUpData.Response>() {
+                @Override
+                public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
+                    SignUpData.Response result = response.body();
+
+                    Toast.makeText(SignUpActivity.this, result.getMessage(), Toast.LENGTH_LONG).show();
+                    if (result.getStatus() == 200) {
+                        System.out.println("sdfsdfsdfdfdfsfsdfsd");
+                        finish();
+                    } else if (result.getStatus() == 400) {
+                        System.out.println("gggggggggggggggggggggg");
+                    }
+                    if (response.isSuccessful()) {
+
+                    } else {
+                        ResponseBody error = response.errorBody();
+                        System.out.println(error.toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SignUpData.Response> call, Throwable t) {
+                    Toast.makeText(SignUpActivity.this, "회원가입 에러", Toast.LENGTH_LONG).show();
+                    Log.e("회원가입 에러", t.getMessage());
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
 
@@ -287,6 +353,8 @@ public class SignUpActivity extends AppCompatActivity {
             setImage();
         }
         if(requestCode==PICK_CAMERA && resultCode== Activity.RESULT_OK){
+            Uri photoUri = Uri.fromFile(tempFile);
+            Log.d("tag", "takePhoto photoUri : " + photoUri);
             setImage();
         }
     }
@@ -306,22 +374,39 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
             e.printStackTrace();
         }
+
         if (tempFile != null) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,"{package_name}.fileprovider",tempFile));
-            startActivityForResult(intent, PICK_CAMERA);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+                Uri photoUri = FileProvider.getUriForFile(this,
+                        "com.example.again.fileprovider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_CAMERA);
+
+            } else {
+
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_CAMERA);
+
+            }
         }
     }
     private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
+        String imageFileName = "weeting_" + timeStamp + "_";
 
-        // 이미지 파일 이름 + 시간
-//        String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        String imageFileName = "weetingImg01_";
-        // 이미지가 저장될 폴더 이름
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/weetingImg/");
+        // 이미지가 저장될 폴더 이름 ( weeting )
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/weeting/");
         if (!storageDir.exists()) storageDir.mkdirs();
-        // 빈 파일 생성
+
+        // 파일 생성
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        Log.d("camero", "createImageFile : " + image.getAbsolutePath());
+
         return image;
+
     }
     public void nickNameCheck(View view){
         e_nickname = findViewById(R.id.sign_upId);
@@ -331,6 +416,7 @@ public class SignUpActivity extends AppCompatActivity {
                 SignUpData.Response response1 = response.body();
                 if(response1.getStatus()==200){
                     Toast.makeText(SignUpActivity.this,"중복된 아이디가 아닙니다.",Toast.LENGTH_LONG).show();
+                    nickTF = true;
                 }
                 else if(response1.getStatus()==300){
                     Toast.makeText(SignUpActivity.this,"중복된 아이디입니다. 다른 아이디를 사용해주세요.",Toast.LENGTH_LONG).show();
@@ -356,6 +442,7 @@ public class SignUpActivity extends AppCompatActivity {
                 SignUpData.Response response1 = response.body();
                 if(response1.getStatus()==200){
                     Toast.makeText(SignUpActivity.this,"중복된 이메일이 아닙니다.",Toast.LENGTH_LONG).show();
+                    emailOverTF = true;
                 }
                 else if(response1.getStatus()==300){
                     Toast.makeText(SignUpActivity.this,"중복된 이메일입니다.",Toast.LENGTH_LONG).show();
@@ -394,8 +481,10 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             emailNum = editText.getText().toString();
-                            if(emailNum.equals(response1.getToken()))
+                            if(emailNum.equals(response1.getToken())){
                                 Toast.makeText(SignUpActivity.this,"이메일 인증 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                emailTF = true;
+                            }
                             else
                                 Toast.makeText(SignUpActivity.this,"인증번호가 다릅니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
                             return;
@@ -427,6 +516,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void PersonCheck(View view){
         if(PersonCheckTF()){
             Toast.makeText(getApplicationContext(),"주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
+            personTF = true;
         }
         else
             Toast.makeText(getApplicationContext(),"유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
