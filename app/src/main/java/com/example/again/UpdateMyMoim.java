@@ -24,6 +24,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -93,6 +96,16 @@ public class UpdateMyMoim extends AppCompatActivity {
     //카메라 각도 관련 변수
     private Boolean isCamera = false;
 
+    //주소 관련 변수
+    private RadioGroup selectAddressOrNot;
+    private RadioButton selectAddress, selectNoAddress;
+    private LinearLayout showAddress;
+
+    private Spinner spinnerCity, spinnerSigungu, spinnerDong;
+    private ArrayAdapter<String> arrayAdapter;
+    String address;
+    String location;
+
     private Spinner interestSpinner;
     private MoimEditData.serviceApi serviceApi;
     private MoimEditSameImageData.serviceApi SameImageserviceApi;
@@ -114,6 +127,14 @@ public class UpdateMyMoim extends AppCompatActivity {
 
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
+
+        spinnerCity = (Spinner)findViewById(R.id.city);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCity.setAdapter(arrayAdapter);
+
+        spinnerSigungu = (Spinner)findViewById(R.id.region);
+        spinnerDong = (Spinner)findViewById(R.id.neighborhood);
 
         tedPermission();
 
@@ -255,11 +276,12 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_num = findViewById(R.id.meetingNum);
         m_agemin = findViewById(R.id.minAge);
         m_agemax = findViewById(R.id.maxAge);
-        selectFirstLocation = findViewById(R.id.textFirstLocation);
-        selectSecondLocation = findViewById(R.id.textSecondLocation);
-        selectThirdLocation = findViewById(R.id.textThirdLocation);
         selectLastLocation = findViewById(R.id.textLastLocation);
         selectDateButton = findViewById(R.id.selectDate);
+        selectAddressOrNot = findViewById(R.id.selectAddressOrNot);
+        selectAddress = findViewById(R.id.selectAddress);
+        selectNoAddress = findViewById(R.id.selectNoAddress);
+        showAddress = findViewById(R.id.showAddress);
 
         serviceApi = RetrofitClient.getClient().create(MoimEditData.serviceApi.class);
 
@@ -270,6 +292,35 @@ public class UpdateMyMoim extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+
+        selectAddressOrNot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.selectAddress) {
+                    showAddress.setVisibility(View.VISIBLE);
+                    address = "";
+                    if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
+                        address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
+                    }
+                    else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
+                        address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
+                    }
+                    else if(spinnerCity.getSelectedItemPosition()!=0){
+                        address = spinnerCity.getSelectedItem().toString();
+                    }
+                    if (spinnerCity.getSelectedItemPosition() == 0) {
+                        Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
+                    }
+
+                    String lastLocation = selectLastLocation.getText().toString();
+                    location = address + " " + lastLocation;
+                }
+                else if(checkedId == R.id.selectNoAddress) {
+                    showAddress.setVisibility(View.GONE);
+                    location = "장소 미정";
+                }
+            }
+        });
 
         final MoimDetailData.serviceApi MoimInfogetApiInterface = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
         Call<MoimDetailData.MoimDetailDataResponse> getMoimInfocall = MoimInfogetApiInterface.getMoimDetail(meeting_id);
@@ -293,44 +344,54 @@ public class UpdateMyMoim extends AppCompatActivity {
                     m_description.setText(moimDetailData.getMeeting_description());
                     m_time.setText(String.valueOf(moimDetailData.getMeeting_time()));
 
-                    String firstlocation;
-                    String secondlocation;
-                    String thridlocation;
-                    String lastlocation = "";
+                    if (moimDetailData.getMeeting_location().equals("장소 미정")) {
 
-                    String location = moimDetailData.getMeeting_location();
-                    String locationList[] = location.split(" ");
+                        selectAddress.setChecked(true);
 
-                    try {
-                        firstlocation = locationList[0];
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        firstlocation = " ";
-                    }
+                        String firstlocation;
+                        String secondlocation;
+                        String thridlocation;
+                        String lastlocation = "";
 
-                    try {
-                        secondlocation = locationList[1];
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        secondlocation = " ";
-                    }
+                        String location = moimDetailData.getMeeting_location();
+                        String locationList[] = location.split(" ");
 
-                    try {
-                        thridlocation = locationList[2];
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        thridlocation = " ";
-                    }
-
-                    try {
-                        for (int i = 3; i < locationList.length; i++) {
-                            lastlocation = lastlocation + " " + locationList[i];
+                        try {
+                            firstlocation = locationList[0];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            firstlocation = " ";
                         }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        lastlocation = " ";
-                    }
+
+                        try {
+                            secondlocation = locationList[1];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            secondlocation = " ";
+                        }
+
+                        try {
+                            thridlocation = locationList[2];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            thridlocation = " ";
+                        }
+
+                        try {
+                            for (int i = 3; i < locationList.length; i++) {
+                                lastlocation = lastlocation + " " + locationList[i];
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            lastlocation = " ";
+                        }
 
                         selectFirstLocation.setText(firstlocation);
                         selectSecondLocation.setText(secondlocation);
                         selectThirdLocation.setText(thridlocation);
                         selectLastLocation.setText(lastlocation);
+
+                    } else {
+                        selectNoAddress.setChecked(true);
+                    }
+
+
 
 //                    try {
 //                        selectFirstLocation.setText(firstlocation);
@@ -380,10 +441,6 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_num.setError(null);
         m_agemin.setError(null);
         m_agemax.setError(null);
-        selectFirstLocation.setError(null);
-        selectSecondLocation.setError(null);
-        selectThirdLocation.setError(null);
-        selectLastLocation.setError(null);
 
         final String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
@@ -394,16 +451,11 @@ public class UpdateMyMoim extends AppCompatActivity {
         final String num = m_num.getText().toString();
         final String agemin = m_agemin.getText().toString();
         final String agemax = m_agemax.getText().toString();
-        final String firstLocation = selectFirstLocation.getText().toString();
-        final String secondLocation = selectSecondLocation.getText().toString();
-        final String thirdLocation = selectThirdLocation.getText().toString();
-        final String lastLocation = selectLastLocation.getText().toString();
-        final String location = firstLocation + " " + secondLocation + " " + thirdLocation + " " + lastLocation;
         final String time = m_time.getText().toString();
 //        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
 //        Date timeDate = trans.parse(time);
 
-        if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
+        if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() || location == null ||
                 num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
             Toast.makeText(getApplicationContext(), "빈 칸 존재", Toast.LENGTH_LONG).show();
         }
