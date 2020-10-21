@@ -25,21 +25,17 @@
                     android:id="@+id/linearLayout2"
                     android:layout_width="408dp"
                     android:layout_height="115dp"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
                     android:gravity="bottom">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/mainpage"
-                        android:layout_width="270dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="20dp"
                         android:gravity="center_vertical"
-                        android:text="weeting"
-                        android:textColor="@color/mainColor"
-                        android:textSize="40sp"
-                        app:autoSizeMaxTextSize="40sp"
-                        app:autoSizeTextType="uniform"
-                        tools:ignore="HardcodedText" />
+                        android:src="@drawable/logonotmain" />
 
                     <View
                         android:layout_width="0dp"
@@ -65,7 +61,6 @@
                     android:id="@+id/linearLayout3"
                     android:layout_width="414dp"
                     android:layout_height="34dp"
-                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -92,27 +87,8 @@
                         android:src="@drawable/list"
                         tools:ignore="HardcodedText" />
 
-                    <ImageButton
-                        android:id="@+id/toMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="map"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/pin"
-                        tools:ignore="HardcodedText" />
 
-                    <ImageButton
-                        android:id="@+id/toCalender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="calender"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/calendar"
-                        tools:ignore="HardcodedText" />
+
 
                     <ImageButton
                         android:id="@+id/toMypage"
@@ -125,6 +101,17 @@
                         android:src="@drawable/user"
                         tools:ignore="HardcodedText" />
 
+                    <ImageButton
+                        android:id="@+id/chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="list"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_chat"
+                        tools:ignore="HardcodedText" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -132,6 +119,7 @@
             <LinearLayout
                 android:layout_width="409dp"
                 android:layout_height="578dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView

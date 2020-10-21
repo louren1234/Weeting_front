@@ -19,11 +19,15 @@ import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -75,9 +79,8 @@ import retrofit2.Response;
 
 public class UpdateMyMoim extends AppCompatActivity {
     private String myimg = null;
-    private EditText m_name, m_description, m_num, m_agemin, m_agemax;
-    private TextView m_time, m_location;
-    private ImageButton selectLocationButton;
+    private EditText m_name, m_description, m_num, m_agemin, m_agemax, selectFirstLocation, selectSecondLocation, selectThirdLocation, selectLastLocation;
+    private TextView m_time;
     private ImageButton selectDateButton;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TimePickerDialog.OnTimeSetListener timecallbackMethod;
@@ -93,6 +96,16 @@ public class UpdateMyMoim extends AppCompatActivity {
     private File imageFile;
     //카메라 각도 관련 변수
     private Boolean isCamera = false;
+
+    //주소 관련 변수
+    private RadioGroup selectAddressOrNot;
+    private RadioButton selectAddress, selectNoAddress;
+    private LinearLayout showAddress;
+
+    private Spinner spinnerCity, spinnerSigungu, spinnerDong;
+    private ArrayAdapter<String> arrayAdapter;
+    String address;
+    String location;
 
     private Spinner interestSpinner;
     private MoimEditData.serviceApi serviceApi;
@@ -116,7 +129,17 @@ public class UpdateMyMoim extends AppCompatActivity {
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 
+        spinnerCity = (Spinner)findViewById(R.id.city);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCity.setAdapter(arrayAdapter);
+
+        spinnerSigungu = (Spinner)findViewById(R.id.region);
+        spinnerDong = (Spinner)findViewById(R.id.neighborhood);
+
         tedPermission();
+
+        initAddressSpinner();
 
         interestSpinner = findViewById(R.id.interest);
         m_img = findViewById(R.id.meetingImg);
@@ -131,6 +154,63 @@ public class UpdateMyMoim extends AppCompatActivity {
         this.InitializeView();
         this.InitializeListener();
         selectDateButton = findViewById(R.id.selectDate);
+
+        ImageView main = findViewById(R.id.mainpage);
+        ImageButton search = findViewById(R.id.search);
+        ImageButton chat = findViewById(R.id.chat);
+        ImageButton toHome = findViewById(R.id.toHome);
+        ImageButton toList = findViewById(R.id.toList);
+        ImageButton toMypage = findViewById(R.id.toMypage);
+
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+
+        search.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                startActivity(intent);
+            }
+        });
+
+        toHome.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), After_have_group.class);
+                startActivity(intent);
+            }
+        });
+
+        toList.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MoimList.class);
+                intent.putExtra("category", "all");
+                startActivity(intent);
+            }
+        });
+
+        chat.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Create.class);
+                startActivity(intent);
+            }
+        });
+
+        toMypage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                startActivity(intent);
+            }
+        });
 
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
@@ -197,17 +277,37 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_description = findViewById(R.id.meetingIntro);
         m_time = findViewById(R.id.meetingDate);
         m_num = findViewById(R.id.meetingNum);
-        m_location = findViewById(R.id.textLocation);
         m_agemin = findViewById(R.id.minAge);
         m_agemax = findViewById(R.id.maxAge);
-        selectLocationButton = findViewById(R.id.meetingLocation);
+        selectLastLocation = findViewById(R.id.textLastLocation);
+        selectDateButton = findViewById(R.id.selectDate);
+        selectAddressOrNot = findViewById(R.id.selectAddressOrNot);
+        selectAddress = findViewById(R.id.selectAddress);
+        selectNoAddress = findViewById(R.id.selectNoAddress);
+        showAddress = findViewById(R.id.showAddress);
+
+//        showAddress.setVisibility(View.GONE);
+
         serviceApi = RetrofitClient.getClient().create(MoimEditData.serviceApi.class);
 
-        selectLocationButton.setOnClickListener(new View.OnClickListener(){
+//        selectLocationButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        selectAddressOrNot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
-                startActivity(intent);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.selectAddress) {
+                    showAddress.setVisibility(View.VISIBLE);
+                }
+                else if(checkedId == R.id.selectNoAddress) {
+                    showAddress.setVisibility(View.GONE);
+                    location = "장소 미정";
+                }
             }
         });
 
@@ -231,12 +331,90 @@ public class UpdateMyMoim extends AppCompatActivity {
                     myimg = moimDetailData.getMeeting_img();
                     m_name.setText(moimDetailData.getMeeting_name());
                     m_description.setText(moimDetailData.getMeeting_description());
-                    m_location.setText(moimDetailData.getMeeting_location());
                     m_time.setText(String.valueOf(moimDetailData.getMeeting_time()));
+
+                    Log.d("주소 확인 : ", moimDetailData.getMeeting_location());
+
+                    if (moimDetailData.getMeeting_location().equals("장소 미정")) {
+                        selectNoAddress.setChecked(true);
+
+                    } else {
+                        selectAddress.setChecked(true);
+
+                        String firstlocation;
+                        String secondlocation;
+                        String thridlocation;
+                        String lastlocation = "";
+
+                        String location = moimDetailData.getMeeting_location();
+                        String[] locationList = location.split(" ");
+
+                        try {
+                            firstlocation = locationList[0];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            firstlocation = " ";
+                        }
+
+                        try {
+                            secondlocation = locationList[1];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            secondlocation = " ";
+                        }
+
+                        try {
+                            thridlocation = locationList[2];
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            thridlocation = " ";
+                        }
+
+                        try {
+                            for (int i = 3; i < locationList.length; i++) {
+                                lastlocation = lastlocation + " " + locationList[i];
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            lastlocation = " ";
+                        }
+
+//                        if (firstlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(firstlocation);
+//                            spinnerCity.setSelection(spinnerPosition);
+//                        }
+
+//                        if (secondlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(secondlocation);
+//                            spinnerSigungu.setSelection(spinnerPosition);
+//                        }
+//
+//                        if (thridlocation != null) {
+//                            int spinnerPosition = arrayAdapter.getPosition(thridlocation);
+//                            spinnerDong.setSelection(spinnerPosition);
+//                        }
+                        selectLastLocation.setText(moimDetailData.getMeeting_location());
+                    }
+
+
+
+//                    try {
+//                        selectFirstLocation.setText(firstlocation);
+//                        selectSecondLocation.setText(secondlocation);
+//                        selectThirdLocation.setText(thridlocation);
+//                        selectLastLocation.setText(lastlocation);
+//                    } catch (NullPointerException e) {
+//                        firstlocation = " ";
+//                        secondlocation = " ";
+//                        thridlocation = " ";
+//                        lastlocation =" ";
+//                        selectFirstLocation.setText(firstlocation);
+//                        selectSecondLocation.setText(secondlocation);
+//                        selectThirdLocation.setText(thridlocation);
+//                        selectLastLocation.setText(lastlocation);
+//                    }
+
                     m_num.setText(String.valueOf(moimDetailData.getMeeting_recruitment()));
                     m_agemin.setText(String.valueOf(moimDetailData.getAge_limit_min()));
                     m_agemax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
                     interestSpinner.setSelection(moimDetailData.getFk_meeting_interest() - 1);
+
                 }
 
             }
@@ -262,9 +440,25 @@ public class UpdateMyMoim extends AppCompatActivity {
         m_description.setError(null);
         m_time.setError(null);
         m_num.setError(null);
-        m_location.setError(null);
         m_agemin.setError(null);
         m_agemax.setError(null);
+
+        address = "";
+        if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
+            address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
+        }
+        else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
+            address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
+        }
+        else if(spinnerCity.getSelectedItemPosition()!=0){
+            address = spinnerCity.getSelectedItem().toString();
+        }
+        if (spinnerCity.getSelectedItemPosition() == 0) {
+            Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
+        }
+
+        String lastLocation = selectLastLocation.getText().toString();
+        location = address + " " + lastLocation;
 
         final String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
@@ -275,12 +469,11 @@ public class UpdateMyMoim extends AppCompatActivity {
         final String num = m_num.getText().toString();
         final String agemin = m_agemin.getText().toString();
         final String agemax = m_agemax.getText().toString();
-        final String location = m_location.getText().toString();
         final String time = m_time.getText().toString();
 //        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
 //        Date timeDate = trans.parse(time);
 
-        if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
+        if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() || location == null ||
                 num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
             Toast.makeText(getApplicationContext(), "빈 칸 존재", Toast.LENGTH_LONG).show();
         }
@@ -295,7 +488,7 @@ public class UpdateMyMoim extends AppCompatActivity {
                 if( numInt < 5 ){
                     Toast.makeText(getApplicationContext(), "모임원은 5명 이상으로 설정해주세요.", Toast.LENGTH_LONG).show();
                 } else {
-                    startEditMoim(new MoimEditData(m_interest, name, description, time, location, numInt, ageminInt, agemaxInt, meeting_id));
+                    startEditMoim(new MoimEditData(m_interest, name, description, location, time, numInt, ageminInt, agemaxInt, meeting_id));
                 }
             }
         }
@@ -590,7 +783,7 @@ public class UpdateMyMoim extends AppCompatActivity {
 //                RequestBody meeting_img
 //                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null) );
 
-                serviceApi.editNullImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, null).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
+                serviceApi.editNullImgMoim(meeting_interest, meeting_name, meeting_description, meeting_location, meeting_time, meeting_recruitment, age_limit_min, age_limit_max, meeting_id, null).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                     @Override
                     public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {
                         MoimEditData.MoimEditDataResponse result = response.body();
@@ -708,6 +901,201 @@ public class UpdateMyMoim extends AppCompatActivity {
     public void timeSet(){
         TimePickerDialog timedialog = new TimePickerDialog(this, timecallbackMethod, 8, 10, true);
         timedialog.show();
+    }
+
+    private void initAddressSpinner() {
+        spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 시군구, 동의 스피너를 초기화한다.
+                switch (position) {
+                    case 0:
+                        spinnerSigungu.setAdapter(null);
+                        break;
+                    case 1:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_seoul);
+                        break;
+                    case 2:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_busan);
+                        break;
+                    case 3:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_daegu);
+                        break;
+                    case 4:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_incheon);
+                        break;
+                    case 5:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_gwangju);
+                        break;
+                    case 6:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_daejeon);
+                        break;
+                    case 7:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_ulsan);
+                        break;
+                    case 8:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_sejong);
+                        break;
+                    case 9:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_gyeonggi);
+                        break;
+                    case 10:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_gangwon);
+                        break;
+                    case 11:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_chung_buk);
+                        break;
+                    case 12:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_chung_nam);
+
+                        break;
+                    case 13:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_jeon_buk);
+                        break;
+                    case 14:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_jeon_nam);
+                        break;
+                    case 15:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_gyeong_buk);
+                        break;
+                    case 16:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_gyeong_nam);
+                        break;
+                    case 17:
+                        setSigunguSpinnerAdapterItem(R.array.spinner_region_jeju);
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerSigungu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 서울특별시 선택시
+                if(spinnerCity.getSelectedItemPosition() == 1 && spinnerSigungu.getSelectedItemPosition() > -1) {
+                    switch(position) {
+                        //25
+                        case 0:
+                            break;
+                        case 1:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gangnam);
+                            break;
+                        case 2:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gangdong);
+                            break;
+                        case 3:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gangbuk);
+                            break;
+                        case 4:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gangseo);
+                            break;
+                        case 5:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gwanak);
+                            break;
+                        case 6:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gwangjin);
+                            break;
+                        case 7:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_guro);
+                            break;
+                        case 8:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_geumcheon);
+                            break;
+                        case 9:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_nowon);
+                            break;
+                        case 10:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_dobong);
+                            break;
+                        case 11:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_dongdaemun);
+                            break;
+                        case 12:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_dongjag);
+                            break;
+                        case 13:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_mapo);
+                            break;
+                        case 14:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_seodaemun);
+                            break;
+                        case 15:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_seocho);
+                            break;
+                        case 16:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_seongdong);
+                            break;
+                        case 17:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_seongbuk);
+                            break;
+                        case 18:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_songpa);
+                            break;
+                        case 19:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_yangcheon);
+                            break;
+                        case 20:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_yeongdeungpo);
+                            break;
+                        case 21:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_yongsan);
+                            break;
+                        case 22:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_eunpyeong);
+                            break;
+                        case 23:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_jongno);
+                            break;
+                        case 24:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_jung);
+                            break;
+                        case 25:
+                            setDongSpinnerAdapterItem(R.array.spinner_region_seoul_jungnanggu);
+                            break;
+                    }
+                } else {
+                    setDongSpinnerAdapterItem(R.array.spinner_region_other_dong);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSigunguSpinnerAdapterItem(int array_resource) {
+        if (arrayAdapter != null) {
+            spinnerSigungu.setAdapter(null);
+            arrayAdapter = null;
+        }
+
+        if (spinnerCity.getSelectedItemPosition() > 1) {
+            spinnerDong.setAdapter(null);
+        }
+
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(array_resource));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSigungu.setAdapter(arrayAdapter);
+    }
+
+    private void setDongSpinnerAdapterItem(int array_resource) {
+        if (arrayAdapter != null) {
+            spinnerDong.setAdapter(null);
+            arrayAdapter = null;
+        }
+
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(array_resource));
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDong.setAdapter(arrayAdapter);
     }
 
 

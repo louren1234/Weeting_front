@@ -306,7 +306,7 @@ public class SearchList extends AppCompatActivity implements RecyclerAdapter.OnD
                             break;
                     }
                 } else {
-
+                    setDongSpinnerAdapterItem(R.array.spinner_region_other_dong);
                 }
 
             }

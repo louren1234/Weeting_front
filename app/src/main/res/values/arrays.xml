@@ -884,4 +884,8 @@
         <item>제주시</item>
     </string-array>
 
+    <string-array name="spinner_region_other_dong">
+        <item>선택 없음</item>
+    </string-array>
+
 </resources>

@@ -20,19 +20,17 @@
             android:id="@+id/linearLayout2"
             android:layout_width="408dp"
             android:layout_height="115dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
             android:gravity="bottom">
 
-            <TextView
+            <ImageView
                 android:id="@+id/mainpage"
-                android:layout_width="270dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:gravity="center_vertical"
-                android:text="@string/weeting"
-                android:textColor="@color/mainColor"
-                android:textSize="40sp"
-                app:autoSizeMaxTextSize="40sp"
-                app:autoSizeTextType="uniform" />
+                app:srcCompat="@drawable/logonotmain" />
 
             <View
                 android:layout_width="0dp"
@@ -84,27 +82,8 @@
                 app:srcCompat="@drawable/list"
                 tools:ignore="HardcodedText" />
 
-            <ImageButton
-                android:id="@+id/toMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="map"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/pin"
-                tools:ignore="HardcodedText" />
 
-            <ImageButton
-                android:id="@+id/toCalender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="calender"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/calendar"
-                tools:ignore="HardcodedText" />
+
 
             <ImageButton
                 android:id="@+id/toMypage"
@@ -115,6 +94,17 @@
                 android:contentDescription="mypage"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/user"
+                tools:ignore="HardcodedText" />
+
+            <ImageButton
+                android:id="@+id/chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:contentDescription="list"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_chat"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
@@ -142,6 +132,7 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
+                        android:gravity="center_vertical"
                         android:textSize="20sp"/>
 
                     <EditText
@@ -167,11 +158,12 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
+                        android:scrollHorizontally="false"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="모임을 소개해보세요."
                         android:importantForAutofill="no"
-                        android:inputType="textPersonName"
+                        android:inputType="none"
                         tools:ignore="HardcodedText,LabelFor" />
 
                     <EditText
@@ -190,7 +182,7 @@
                         tools:ignore="HardcodedText,LabelFor" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/selectLocationButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
@@ -208,29 +200,66 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textLocation"
+
+                        <RadioGroup
+                            android:id="@+id/selectAddressOrNot"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edittext_rounded_corner_rectangle"
-                            android:ems="10"
-                            android:text="서울특별시"
-                            android:importantForAutofill="no"
-                            android:inputType="textPersonName"
-                            tools:ignore="HardcodedText,LabelFor" />
+                            android:layout_height="match_parent" >
 
-                        <ImageButton
-                            android:id="@+id/meetingLocation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@android:color/transparent"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/pin" />
+                            <RadioButton
+                                android:id="@+id/selectNoAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="장소 미정" />
+
+                            <RadioButton
+                                android:id="@+id/selectAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="장소 선택하기" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/showAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:id="@+id/city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:hint="시군구" />
+
+                            <Spinner
+                                android:id="@+id/region"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true" />
+
+                            <Spinner
+                                android:id="@+id/neighborhood"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true" />
+
+                            <EditText
+                                android:id="@+id/textLastLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@drawable/edittext_rounded_corner_rectangle"
+                                android:ems="10"
+                                android:gravity="center_vertical"
+                                android:hint="자세한 주소를 입력하세요."
+                                android:importantForAutofill="no"
+                                android:inputType="textPersonName"
+                                tools:ignore="HardcodedText,LabelFor" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -261,9 +290,10 @@
                             android:layout_height="40dp"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
+                            android:gravity="center_vertical"
                             android:background="@drawable/edittext_rounded_corner_rectangle"
                             android:ems="10"
-                            android:hint="2020-08-04"
+                            android:hint="달력 아이콘을 클릭하여 날짜 설정을 해보세요."
                             android:importantForAutofill="no"
                             android:inputType="date"
                             tools:ignore="HardcodedText,LabelFor" />
