@@ -19,8 +19,8 @@ tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="408dp"
-        android:layout_height="115dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:gravity="bottom">
@@ -40,8 +40,8 @@ tools:context=".MainActivity">
 
         <ImageButton
             android:id="@+id/search"
-            android:layout_width="31dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="settings"
@@ -55,8 +55,8 @@ tools:context=".MainActivity">
     <LinearLayout
 
         android:id="@+id/linearLayout3"
-        android:layout_width="414dp"
-        android:layout_height="34dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -111,10 +111,11 @@ tools:context=".MainActivity">
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="73dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="152dp">
 
@@ -142,8 +143,8 @@ tools:context=".MainActivity">
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="73dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="1dp"
@@ -174,9 +175,10 @@ tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/noHaveMoimLayout"
-        android:layout_width="409dp"
-        android:layout_height="165dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <!--layout에서 gravity는 layout 안에 있는 것을 정렬하고 layout_gravity는 layout 안에 있는 요소들이 layout에서 정렬될 때 쓰이는 것 같다.
         즉, gravity : 어떤 요소 안의 것들을 정렬시킴 / layout_gravity : 어떤 요소 안의 것들이 그걸 감싸고 있는 요소에 맞춰 정렬됨
