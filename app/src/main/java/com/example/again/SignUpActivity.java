@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -51,7 +53,9 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -67,7 +71,8 @@ import retrofit2.http.Multipart;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText e_name, e_password, e_nickname, e_mail, e_password_check , e_birth;
+    private EditText e_name, e_password, e_nickname, e_mail, e_password_check;
+    TextView e_birth;
     private SignUpData.ServiceApi serviceApi;
     boolean cancel;
     boolean nickTF, emailTF, emailOverTF ,personTF;
@@ -85,8 +90,10 @@ public class SignUpActivity extends AppCompatActivity {
     String writing_layout, writing_img;
     static int interestsCount;
     static String interests;
+    Calendar calendar;
+    private DatePickerDialog.OnDateSetListener callbackMethod;
     SharedPreferences sp;
-    @SuppressLint("WrongThread")
+    @SuppressLint({"WrongThread", "WrongViewCast"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +133,29 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
+    public void OnClickHandler(View view){
+            Date d;
+            SimpleDateFormat dateFormat;
+    Calendar c = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(SignUpActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // TODO Auto-generated method stub
+                try {
+                    Date d = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String birth = dateFormat.format(d);
+                    e_birth.setText(birth);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setCalendarViewShown(false);
+        datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        datePickerDialog.show();
+    }
     private boolean SignUpValid(){
         e_name.setError(null);
         e_password.setError(null);
@@ -145,7 +175,6 @@ public class SignUpActivity extends AppCompatActivity {
 //            focusView=e_nickname;
 //            cancel=true;
             cancel = false;
-            Toast.makeText(getApplicationContext(),"비어있는 칸이 있습니다.",Toast.LENGTH_LONG).show();
         }
 
         else{
@@ -156,15 +185,21 @@ public class SignUpActivity extends AppCompatActivity {
     }
     public boolean PwdCheck(){
         boolean pwdTF = false;
-        if (e_password_check.getText().toString().equals(e_password)) {
-            pwd_comploete = findViewById(R.id.password_complete);
+        pwd_comploete = findViewById(R.id.password_complete);
+        if (e_password_check.getText().toString().equals(e_password.getText().toString())) {
             pwd_comploete.setText("비밀번호가 일치합니다.");
             pwdTF = true;
         } else {
             pwd_comploete.setText("비밀번호가 일치하지 않습니다.");
-            Toast.makeText(getApplicationContext(), "비밀번호를 확인해주세요", Toast.LENGTH_LONG).show();
         }
         return pwdTF;
+    }
+    public boolean btnCheck(){
+        boolean btnTF = false;
+        if(emailOverTF && emailTF && nickTF && personTF){
+            btnTF=true;
+        }
+        return btnTF;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -187,16 +222,6 @@ public class SignUpActivity extends AppCompatActivity {
 //        Drawable drawable = imageView.getDrawable();
 //        Drawable drawable = getResources().getDrawable(R.drawable.img2);
         View focusView = null;
-
-       if(SignUpValid()==false || PwdCheck()==false){
-           if(SignUpValid()){
-               PwdCheck();
-           }
-           else if(PwdCheck()){
-               SignUpValid();
-           }
-       }
-        else{
             Intent i = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(i);
             try{
@@ -220,8 +245,6 @@ public class SignUpActivity extends AppCompatActivity {
             edit.commit();
                     startSignUp(password, birth, email, name, id);
             Toast.makeText(getApplicationContext(), "로그인을 해보세요!", Toast.LENGTH_LONG).show();
-
-        }
     }
     private void startSignUp(String password, String birth, String email, String name, String id){
 
@@ -535,9 +558,9 @@ public class SignUpActivity extends AppCompatActivity {
         rightSid = editBack.getText().toString();
         Boolean valid = false;
         genderValid = 0;
-        if (leftSid.length()+rightSid.length() != 13) throw new IllegalArgumentException("주민등록번호 자리수 13자리를 확인하기 바랍니다.");
-
+        if (leftSid.length()+rightSid.length() != 13) ;
         // 입력받은 주민번호 앞자리 유효성 검증============================
+            Toast.makeText(getApplicationContext(),"주민등록번호 자리수 13자리를 확인하기 바랍니다.", Toast.LENGTH_LONG).show();
 
 
         int yy = Integer.parseInt(leftSid.substring(0, 2));
@@ -587,8 +610,37 @@ public class SignUpActivity extends AppCompatActivity {
         return valid;
     }
     public void TempInterest(View view) throws ParseException {
+        PwdCheck();
+        SignUpValid();
+        btnCheck();
+        if(btnCheck()==false){
+            if(nickTF==false){
+                Toast.makeText(getApplicationContext(), "닉네임 중복을 확인해주세요.", Toast.LENGTH_LONG).show();
+            }
+            if (emailTF==false){
+                Toast.makeText(getApplicationContext(), "이메일 인증이 안되어있습니다.", Toast.LENGTH_LONG).show();
+            }
+            if(personTF==false){
+                Toast.makeText(getApplicationContext(), "주민번호 인증이 안되어있습니다.", Toast.LENGTH_LONG).show();
+            }
+            if(emailOverTF==false){
+                Toast.makeText(getApplicationContext(), "이메일 중복을 확인해주세요.", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        if(SignUpValid()==false && PwdCheck()==true){
+            Toast.makeText(getApplicationContext(), "비어있는 칸이 있습니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
+        }
+        else if(PwdCheck()==false && SignUpValid() == true){
+            Toast.makeText(getApplicationContext(), "비밀번호 확인을 다시 입력해주세요.", Toast.LENGTH_LONG).show();
+        }
+        else if(SignUpValid()==false && PwdCheck() == false){
+            Toast.makeText(getApplicationContext(), "입력칸들을 다시 확인해주세요. 비밀번호 확인을 다시 입력해주세요.", Toast.LENGTH_LONG).show();
+        }
+        if(btnCheck()&&SignUpValid()&&PwdCheck()){
         CustomDialog customDialog = new CustomDialog(SignUpActivity.this);
         customDialog.callFunction();
+        }
     }
     class CustomDialog {
 

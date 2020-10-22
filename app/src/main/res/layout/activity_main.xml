@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/main_background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -12,9 +12,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:layout_marginBottom="40dp"
         app:srcCompat="@drawable/logover3" />
 
@@ -55,21 +54,6 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
         >
-        <TextView
-            android:id="@+id/mainFindId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디 찾기"
-            android:clickable="true"
-            />
-        <TextView
-            android:id="@+id/mainFindPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="비밀번호 찾기"
-            android:clickable="true"
-            />
 
     </LinearLayout>
 

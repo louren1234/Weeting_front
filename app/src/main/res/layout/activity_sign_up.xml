@@ -89,9 +89,8 @@
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
-                android:inputType="number"
+                android:inputType="textPassword"
                 android:maxLength="7"
-                android:password="true"
                 />
 
             <Button
@@ -173,14 +172,29 @@
                 android:text="생일"
                 android:textSize="20sp"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/sign_upBirth"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:hint="YYYY-MM-DD"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
-                />
+                android:ems="10"
+                android:hint="달력 아이콘을 클릭하여 날짜 설정을 해보세요."
+                android:importantForAutofill="no"
+                android:inputType="date"
+                tools:ignore="HardcodedText,LabelFor" />
+
+            <ImageButton
+                android:id="@+id/selectDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:onClick="OnClickHandler"
+                app:srcCompat="@drawable/calendar" />
         </LinearLayout>
 
 
@@ -205,10 +219,12 @@
                 android:id="@+id/sign_upPassword"
                 android:layout_width="200dp"
                 android:layout_height="30dp"
+                android:inputType="textPassword"
                 android:hint=" 비밀번호를 입력해주세요."
                 android:layout_gravity="center"
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
+
         </LinearLayout>
 
         <LinearLayout
@@ -232,16 +248,19 @@
                 android:id="@+id/sign_upPasswordCheck"
                 android:layout_width="200dp"
                 android:layout_height="30dp"
+                android:inputType="textPassword"
                 android:hint="비밀번호를 확인해주세요."
                 android:background="@drawable/edittext_rounded_corner_rectangle"
                 />
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/password_complete"
             android:layout_width="200dp"
             android:layout_height="30dp"
             android:textColor="#FF0000"
+            android:text=""
             android:layout_marginLeft="135dp"
             />
         <LinearLayout
