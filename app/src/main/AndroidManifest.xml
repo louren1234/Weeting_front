@@ -2,6 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.again">
 
+    <queries>
+        <!-- WebView -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
+
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+
+        <!-- Gallery -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+        </intent>
+    </queries>
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--카메라 권한-->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -40,7 +59,6 @@
         <activity android:name=".After_have_group"/>
         <activity android:name=".AlertSetting"/>
         <activity android:name=".Faq"/>
-        <activity android:name=".Group_location_map"/>
         <activity android:name=".Interest"/>
         <activity android:name=".Mypage"/>
         <activity android:name=".Qna"/>
@@ -50,6 +68,7 @@
         <activity android:name=".EditMyInformation"/>
         <activity android:name=".SearchMoimAddress"/>
         <activity android:name=".SearchList"/>
+        <activity android:name=".CameraTest"/>
         <activity android:name=".ChatActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -62,7 +81,7 @@
         <!-- 사진 촬영을 위한 provide -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.again.fileprovider"
+            android:authorities="com.example.again.provider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
@@ -70,6 +89,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+
+
     </application>
+
 
 </manifest>

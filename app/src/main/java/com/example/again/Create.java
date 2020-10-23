@@ -110,6 +110,8 @@ public class Create extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create);
 
+        tedPermission();
+
         spinnerCity = (Spinner)findViewById(R.id.city);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -119,8 +121,6 @@ public class Create extends AppCompatActivity {
         spinnerDong = (Spinner)findViewById(R.id.neighborhood);
 
         initAddressSpinner();
-
-        tedPermission();
 
         ImageView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
@@ -467,9 +467,8 @@ public class Create extends AppCompatActivity {
      */
     private void goToAlbum() {
         isCamera = false;
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
@@ -478,6 +477,8 @@ public class Create extends AppCompatActivity {
      *  카메라에서 이미지 가져오기
      */
     private void takePhoto() {
+        Toast.makeText(getApplicationContext(), "여기까지 들어오는지", Toast.LENGTH_LONG).show(); // 안 들어옴.
+
         isCamera = true;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -494,17 +495,25 @@ public class Create extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.again.fileprovider", tempFile);
+                        "com.example.again.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             } else {
 
                 Uri photoUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+//                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             }
+
         }
     }
 
