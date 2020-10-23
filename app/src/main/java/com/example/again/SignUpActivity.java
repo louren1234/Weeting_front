@@ -344,8 +344,8 @@ public class SignUpActivity extends AppCompatActivity {
                 .check();
     }
     public void goToAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_ALBUM);
     }
 
@@ -388,33 +388,42 @@ public class SignUpActivity extends AppCompatActivity {
         imageView.setImageBitmap(originalBm);
     }
     private void takePhoto(){
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
             tempFile = createImageFile();
         } catch (IOException e) {
-            Toast.makeText(this, "이미지 처리 오류", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-
         if (tempFile != null) {
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.again.fileprovider", tempFile);
+                        "com.example.again.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_CAMERA);
+                }
 
             } else {
 
                 Uri photoUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_CAMERA);
+//                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_CAMERA);
+                }
 
             }
+
         }
+
     }
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());

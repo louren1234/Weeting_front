@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:id="@+id/meetingList"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -38,12 +38,12 @@
                 android:orientation="horizontal"
                 tools:ignore="UseCompoundDrawables">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/groupIcon"-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:scaleType="centerCrop"-->
-<!--                    tools:ignore="ContentDescription" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/groupIcon"-->
+                <!--                    android:layout_width="25dp"-->
+                <!--                    android:layout_height="25dp"-->
+                <!--                    android:scaleType="centerCrop"-->
+                <!--                    tools:ignore="ContentDescription" />-->
 
                 <TextView
                     android:id="@+id/groupArea"

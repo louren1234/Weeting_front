@@ -6,118 +6,117 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="408dp"
-            android:layout_height="115dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"
-            android:gravity="bottom">
-
-            <ImageView
-                android:id="@+id/mainpage"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:gravity="center_vertical"
-                app:srcCompat="@drawable/logonotmain" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/search"
-                android:layout_width="31dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="settings"
-                android:gravity="center_vertical"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/search"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:id="@+id/linearLayout3"
-            android:layout_width="414dp"
-            android:layout_height="34dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/toHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="home"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/home"
-                tools:ignore="HardcodedText" />
-
-            <ImageButton
-                android:id="@+id/toList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="list"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/list"
-                tools:ignore="HardcodedText" />
-
-
-
-
-            <ImageButton
-                android:id="@+id/toMypage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="mypage"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/user"
-                tools:ignore="HardcodedText" />
-
-            <ImageButton
-                android:id="@+id/chat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:contentDescription="list"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_chat"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:gravity="bottom">
+
+                <ImageView
+                    android:id="@+id/mainpage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center_vertical"
+                    app:srcCompat="@drawable/logonotmain" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/search"
+                    android:layout_width="31dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="settings"
+                    android:gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/search"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/toHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="home"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/home"
+                    tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:id="@+id/toList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="list"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/list"
+                    tools:ignore="HardcodedText" />
+
+
+                <ImageButton
+                    android:id="@+id/toMypage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="mypage"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/user"
+                    tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:id="@+id/chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="list"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_chat"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -133,7 +132,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
                         android:gravity="center_vertical"
-                        android:textSize="20sp"/>
+                        android:textSize="20sp" />
 
                     <EditText
                         android:id="@+id/meetingName"
@@ -158,12 +157,12 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
-                        android:scrollHorizontally="false"
                         android:background="@drawable/edittext_rounded_corner_rectangle"
                         android:ems="10"
                         android:hint="모임을 소개해보세요."
                         android:importantForAutofill="no"
                         android:inputType="none"
+                        android:scrollHorizontally="false"
                         tools:ignore="HardcodedText,LabelFor" />
 
                     <EditText
@@ -206,7 +205,7 @@
                         <RadioGroup
                             android:id="@+id/selectAddressOrNot"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" >
+                            android:layout_height="match_parent">
 
                             <RadioButton
                                 android:id="@+id/selectNoAddress"
@@ -290,9 +289,9 @@
                             android:layout_height="40dp"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:gravity="center_vertical"
                             android:background="@drawable/edittext_rounded_corner_rectangle"
                             android:ems="10"
+                            android:gravity="center_vertical"
                             android:hint="달력 아이콘을 클릭하여 날짜 설정을 해보세요."
                             android:importantForAutofill="no"
                             android:inputType="date"
@@ -304,8 +303,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@android:color/transparent"
-                            android:scaleType="centerInside"
                             android:onClick="OnClickHandler"
+                            android:scaleType="centerInside"
                             app:srcCompat="@drawable/calendar" />
 
                     </LinearLayout>
@@ -369,8 +368,8 @@
                         android:layout_marginTop="7dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="7dp"
-                        android:textSize="20sp"
-                        android:text="모임 썸네일을 설정해보세요." />
+                        android:text="모임 썸네일을 설정해보세요."
+                        android:textSize="20sp" />
 
                     <ImageView
                         android:id="@+id/meetingImg"
@@ -388,16 +387,15 @@
                         android:id="@+id/submit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorAccent"
                         android:onClick="editMoimValid"
                         android:text="만들기"
-                        android:backgroundTint="@color/colorAccent"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
 
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <!--    <LinearLayout-->
     <!--        android:id="@+id/linearLayout"-->
