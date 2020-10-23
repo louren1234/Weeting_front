@@ -68,7 +68,6 @@
         <activity android:name=".EditMyInformation"/>
         <activity android:name=".SearchMoimAddress"/>
         <activity android:name=".SearchList"/>
-        <activity android:name=".CameraTest"/>
         <activity android:name=".ChatActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
