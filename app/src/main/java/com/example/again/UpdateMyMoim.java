@@ -460,6 +460,10 @@ public class UpdateMyMoim extends AppCompatActivity {
         String lastLocation = selectLastLocation.getText().toString();
         location = address + " " + lastLocation;
 
+        if (selectNoAddress.isChecked()) {
+            location = "장소 미정";
+        }
+
         final String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
         Log.d(TAG, "interest 안에 뭐가 들어있니 : " + m_interest);

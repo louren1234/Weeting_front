@@ -323,7 +323,7 @@ public class Create extends AppCompatActivity {
         m_agemin.setError(null);
         m_agemax.setError(null);
 
-        if (selectAddress.isChecked()) {
+//        if (selectAddress.isChecked()) {
             address = "";
             if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
                 address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
@@ -337,10 +337,14 @@ public class Create extends AppCompatActivity {
             if (spinnerCity.getSelectedItemPosition() == 0) {
                 Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
             }
-        }
+//        }
 
         String lastLocation = selectLastLocation.getText().toString();
         location = address + " " + lastLocation;
+
+        if (selectNoAddress.isChecked()) {
+            location = "장소 미정";
+        }
 
             String m_interest = interestSpinner.getSelectedItem().toString();
 //        int interest = categoryHashMap.get(m_interest);
@@ -647,7 +651,7 @@ public class Create extends AppCompatActivity {
 
 
 //        serviceApi.createMoim(data.getMeeting_interest(), data.getMeeting_name(), data.getMeeting_description(), data.getMeeting_time(), data.getMeeting_location(), data.getMeeting_recruitment(), data.getAge_limit_min(), data.getAge_limit_max() , body).enqueue(new Callback<MoimData.MoimResponse>(){
-            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_location, meeting_time, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
+            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
                 public void onResponse(Call<MoimData.MoimResponse> call, Response<MoimData.MoimResponse> response) {
