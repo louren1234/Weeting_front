@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -105,12 +107,37 @@ public class Create extends AppCompatActivity {
     Calendar calendar;
     int year, month, day, hour, minute;
 
+    //카메라 권한
+    int permssionCheckCamera;
+    int permssionCheckWriteExternalStorage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create);
 
-        tedPermission();
+//        tedPermission();
+
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(getApplicationContext(), "카메라 권한 허가", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "카메라 권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+
 
         spinnerCity = (Spinner)findViewById(R.id.city);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
@@ -193,18 +220,21 @@ public class Create extends AppCompatActivity {
         this.InitializeListener();
         selectDateButton = findViewById(R.id.selectDate);
 
+        permssionCheckCamera = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
+        permssionCheckWriteExternalStorage = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(selectCamorAlbum[which].equals("앨범")){
                     // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                    if(isPermission) goToAlbum();
+                    if(permssionCheckCamera == PackageManager.PERMISSION_GRANTED && permssionCheckWriteExternalStorage == PackageManager.PERMISSION_GRANTED) goToAlbum();
                     else Toast.makeText(getApplicationContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
 
                 } else if (selectCamorAlbum[which].equals("카메라")) {
                     // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                    if(isPermission)  takePhoto();
+                    if(permssionCheckCamera == PackageManager.PERMISSION_GRANTED && permssionCheckWriteExternalStorage == PackageManager.PERMISSION_GRANTED)  takePhoto();
                     else Toast.makeText(getApplicationContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
                 }
             }
@@ -565,32 +595,32 @@ public class Create extends AppCompatActivity {
     /**
      *  권한 설정
      */
-    private void tedPermission() {
-
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-                isPermission = true;
-
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-                isPermission = false;
-
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-
-    }
+//    private void tedPermission() {
+//
+//        PermissionListener permissionListener = new PermissionListener() {
+//            @Override
+//            public void onPermissionGranted() {
+//                // 권한 요청 성공
+//                isPermission = true;
+//
+//            }
+//
+//            @Override
+//            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//                // 권한 요청 실패
+//                isPermission = false;
+//
+//            }
+//        };
+//
+//        TedPermission.with(this)
+//                .setPermissionListener(permissionListener)
+//                .setRationaleMessage(getResources().getString(R.string.permission_2))
+//                .setDeniedMessage(getResources().getString(R.string.permission_1))
+//                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+//                .check();
+//
+//    }
 
     public void startCreateMoim(MoimData data) {
 
