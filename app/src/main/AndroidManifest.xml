@@ -57,7 +57,6 @@
         <activity android:name=".MyMoim"/>
         <activity android:name=".MoimList"/>
         <activity android:name=".After_have_group"/>
-        <activity android:name=".AlertSetting"/>
         <activity android:name=".Faq"/>
         <activity android:name=".Interest"/>
         <activity android:name=".Mypage"/>
@@ -69,6 +68,7 @@
         <activity android:name=".SearchMoimAddress"/>
         <activity android:name=".SearchList"/>
         <activity android:name=".ChatActivity"/>
+        <activity android:name=".ImageResizeUtils"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

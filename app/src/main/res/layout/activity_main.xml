@@ -43,7 +43,7 @@
             android:layout_gravity="center"
             android:drawableStart="@drawable/ic_person_black_24dp"
             android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:hint="아이디"
+            android:hint="이메일"
             android:inputType="text"
             android:padding="10dp" />
 

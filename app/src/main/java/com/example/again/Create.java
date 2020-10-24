@@ -758,6 +758,7 @@ public class Create extends AppCompatActivity {
         int nowMonth = calendar.get(Calendar.MONTH);
         int nowDay = calendar.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, nowYear, nowMonth, nowDay);
+        dialog.getDatePicker().setMinDate(System.currentTimeMillis());
         dialog.show();
     }
 

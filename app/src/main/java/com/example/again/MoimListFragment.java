@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,6 +27,7 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
     List<MoimCategoryResultData> moimDataInfo;
     RecyclerAdapter moimRecyclerAdapter;
     RecyclerView moimRecyclerView;
+    TextView ifmoimnull;
 
     public MoimListFragment() {
 
@@ -43,6 +45,9 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
 //
         Bundle bundle = getArguments();
         String categoryName = bundle.getString("category");
+
+        ifmoimnull = (TextView) rootView.findViewById(R.id.ifmoimnull);
+        ifmoimnull.setVisibility(View.GONE);
 
         moimRecyclerView = (RecyclerView) rootView.findViewById(R.id.fragmentRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -62,6 +67,10 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
 
                     moimRecyclerAdapter = new RecyclerAdapter(getContext(), moimDataInfo);
                     recyclerAdapterinit(moimRecyclerAdapter);
+
+                    if(moimRecyclerAdapter.getItemCount() == 0) {
+                        ifmoimnull.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -86,6 +95,10 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
 
                     moimRecyclerAdapter = new RecyclerAdapter(getContext(), moimDataInfo);
                     recyclerAdapterinit(moimRecyclerAdapter);
+
+                    if(moimRecyclerAdapter.getItemCount() == 0) {
+                        ifmoimnull.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override

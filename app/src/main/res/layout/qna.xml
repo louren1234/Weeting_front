@@ -92,6 +92,7 @@
                         android:layout_height="500dp"
                         android:background="@drawable/edittext_qna_box"
                         android:ems="10"
+                        android:gravity="top"
                         android:importantForAutofill="no"
                         android:inputType="textPersonName"
                         tools:ignore="HardcodedText,LabelFor"

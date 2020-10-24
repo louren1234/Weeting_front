@@ -197,7 +197,12 @@ public class EditMyInformation extends AppCompatActivity {
                     myimg = userData.getUser_img();
                     myintro = userData.getUser_introduce();
                     myEmail.setText(userData.getUser_email());
-                    myBirth.setText(userData.getUser_birth());
+
+                    String birth = userData.getUser_birth();
+                    int index = birth.indexOf("T");
+                    String shortbirth = birth.substring(0, index);
+
+                    myBirth.setText(shortbirth);
                     myIntroduce.setText(userData.getUser_introduce());
                     myNickname.setText(userData.getUser_nick_name());
                 }
@@ -466,7 +471,7 @@ public class EditMyInformation extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 }else {
-                                    Log.e("이미지 null & introduction보냄", "오류");
+                                    Log.e("이미지 null&introduction보냄", "오류");
                                 }
                             }
 

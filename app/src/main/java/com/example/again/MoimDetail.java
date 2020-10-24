@@ -37,6 +37,8 @@ public class MoimDetail extends AppCompatActivity {
     private int is_member;
     private int is_captain;
 
+    private int moim_recruitment, moim_Present_members;
+
     private MoimDetailData.MoimDetailDataResponse detailList;
     private MoimDetailData detailListConponent;
 
@@ -94,6 +96,9 @@ public class MoimDetail extends AppCompatActivity {
                             .fallback(R.drawable.nullimage)
                             .into(detailMoimImage);
 
+                    moim_recruitment = moimDetailData.getMeeting_recruitment();
+                    moim_Present_members = moimDetailData.getPresent_members();
+
                     detailMoimName.setText(moimDetailData.getMeeting_name());
                     detailMoimDescription.setText(moimDetailData.getMeeting_description());
                     detailMoimLocation.setText(moimDetailData.getMeeting_location());
@@ -103,6 +108,8 @@ public class MoimDetail extends AppCompatActivity {
                     detailMoimAgeLimitMax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
                     detailMoimPresentMembersNum.setText(String.valueOf(moimDetailData.getPresent_members()));
                     detailMoimCaptainNickname.setText(String.valueOf(moimDetailData.getCaptain_nick_name()));
+
+
                 }
 
                 is_member = detailList.is_member;
@@ -190,6 +197,11 @@ public class MoimDetail extends AppCompatActivity {
         moimParticipateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
+                if(moim_recruitment <= moim_Present_members) {
+                    Toast.makeText(MoimDetail.this, "모임 인원이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                }
+                else {
                 serviceApi.participateMoim(meeting_id).enqueue(new Callback<MoimDetailData.MoimDetailDataResponse>() {
                     @Override
                     public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
@@ -214,6 +226,7 @@ public class MoimDetail extends AppCompatActivity {
                         Log.d("모임 참여 에러 : ", " retrofit 에러 ");
                     }
                 });
+            }
             }
         });
 

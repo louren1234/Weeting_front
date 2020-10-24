@@ -32,41 +32,52 @@ public class MainActivity extends AppCompatActivity {
     String email, password;
     SignUpData.ServiceApi serviceApi;
     MoimCategoryResultData.serviceApi checkMoimServiceApi;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 해시 키 받아오는 코드
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo("com.example.again", PackageManager.GET_SIGNATURES);
-//            for(Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash : ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-
         serviceApi = RetrofitClient.getClient().create(SignUpData.ServiceApi.class);
         checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
         e_mail = findViewById(R.id.mainId);
         e_password = findViewById(R.id.mainPassword);
+
+        sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
+        email = sp.getString("email", null);
+        password = sp.getString("password", null);
+
+        if (email !=null || password != null){
+            LoginData autologin = new LoginData(email, password);
+            Log.d("자동로그인 테스트1", autologin.getUser_email() + " " + autologin.getUser_passwd());
+            serviceApi.userLogin(autologin).enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    LoginResponse result = response.body();
+                    Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    if(result.getState()==200){
+
+                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
+                        i.putExtra("email", email);
+                        startActivity(i);
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "로그인 에러 발생", Toast.LENGTH_LONG).show();
+                    Log.e("로그인 에러 발생",t.getMessage());
+                }
+
+            });
+        }
     }
 
-//    public void findId(View view){
-//        Intent i = new Intent(getApplicationContext(),FIndIdActivity.class);
-//        startActivity(i);
-//    }
-//    public void findPassword(View view){
-//        Intent i = new Intent(getApplicationContext(),FindPasswordActivity.class);
-//        startActivity(i);
-//
-//    }
     public void mainSignUp(View view){
         Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(i);
@@ -78,16 +89,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"빈칸이 있습니다.",Toast.LENGTH_LONG).show();
         }
         LoginData data = new LoginData(email,password);
-        serviceApi.userLogin(data).enqueue(new Callback<LoginResponse>() {
+        Login(data);
+    }
+
+    public void Login(LoginData logindata) {
+        Log.d("자동로그인 테스트2", logindata.getUser_email() + " " + logindata.getUser_passwd());
+        serviceApi.userLogin(logindata).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 if(result.getState()==200){
+
+                    sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.commit();
+
                     Intent i = new Intent(getApplicationContext(), After_have_group.class);
                     i.putExtra("email", email);
                     startActivity(i);
-                    SharedPreferences sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
                     String s = sp.getString("name", "");
                     System.out.println(s+"sssssssssssssss");
                     finish();
@@ -105,37 +129,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
     }
-
-//    public void checkHaveOrNotHaveMoim() {
-//        checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
-//            @Override
-//            public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
-//                MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
-//                if(data.data != null){
-//                    if (data.data.size() > 0){
-//                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
-//                        i.putExtra("email", email);
-//                        startActivity(i);
-//                        finish();
-//                    }
-//                }
-//                else if (data.data == null) {
-//                    Intent i = new Intent(getApplicationContext(), No_have_group.class);
-//                    i.putExtra("email", email);
-//                    startActivity(i);
-//                    finish();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
-//                Log.e("내 모임 불러오기 에러 발생", t.getMessage());
-//            }
-//        });
-//    }
 
 }
