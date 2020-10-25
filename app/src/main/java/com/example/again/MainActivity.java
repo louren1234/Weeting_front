@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(getApplicationContext(), After_have_group.class);
                         i.putExtra("email", email);
                         startActivity(i);
+                        finish();
                     }
                     else{
                         Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
