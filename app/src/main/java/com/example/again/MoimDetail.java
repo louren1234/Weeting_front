@@ -74,8 +74,6 @@ public class MoimDetail extends AppCompatActivity {
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
 
-        Log.d("MoimDetail", "모임 아이디가 뭘까? : " + meeting_id);
-
         serviceApi = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
         Call<MoimDetailData.MoimDetailDataResponse> call = serviceApi.getMoimDetail(meeting_id);
 
@@ -135,7 +133,6 @@ public class MoimDetail extends AppCompatActivity {
             @Override
             public void onFailure(Call<MoimDetailData.MoimDetailDataResponse> call, Throwable t) {
                 Toast.makeText(MoimDetail.this, "모임 디테일 에러", Toast.LENGTH_LONG).show();
-                Log.e("모임 디테일 에러", t.getMessage());
                 t.printStackTrace();
             }
         });
@@ -168,15 +165,11 @@ public class MoimDetail extends AppCompatActivity {
                 TestDeleteData.serviceApi testapiInterface = RetrofitClient.getClient().create(TestDeleteData.serviceApi.class);
 
                 Call<TestDeleteData.MoimDetailDataResponse> calls = testapiInterface.deleteMoim(data);
-//                Log.d("MoimDetail", "테스트" + meeting_id);
                 calls.enqueue(new Callback<TestDeleteData.MoimDetailDataResponse>() {
                     @Override
                     public void onResponse(Call<TestDeleteData.MoimDetailDataResponse> call, Response<TestDeleteData.MoimDetailDataResponse> response) {
                         TestDeleteData.MoimDetailDataResponse result = response.body();
                         if(result.getStatus() == 200){
-//                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
-//                            intent.putExtra("category", "all");
-//                            startActivity(intent);
                             finish();
                         }
                         else{
@@ -209,7 +202,7 @@ public class MoimDetail extends AppCompatActivity {
 
                         if ( response1.getStatus() == 200 ){
 
-                            Toast myToast = Toast.makeText(getApplicationContext(),"모임 참여 완료", Toast.LENGTH_SHORT);
+                            Toast myToast = Toast.makeText(getApplicationContext(),"모임에 참여되었습니다.", Toast.LENGTH_SHORT);
                             myToast.show();
                             Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                             intent.putExtra("meetingId", meeting_id);

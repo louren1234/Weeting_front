@@ -263,13 +263,11 @@ public class UpdateMyMoim extends AppCompatActivity {
 //                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), categoryArrayListData,  R.layout.support_simple_spinner_dropdown_item, new String[]{"interest_name", "interest_id"}, new int[]{android.R.id.text1, android.R.id.text2});
                 interestSpinner.setAdapter(adapter);
 
-                Log.d("스피너 성공?", dataList.toString());
             }
 
             @Override
             public void onFailure(Call<MoimCategoryData.MoimCategoryResponse> call, Throwable t) {
 
-                Log.d("스피너 실패", t.toString());
             }
         });
 
@@ -286,17 +284,7 @@ public class UpdateMyMoim extends AppCompatActivity {
         selectNoAddress = findViewById(R.id.selectNoAddress);
         showAddress = findViewById(R.id.showAddress);
 
-//        showAddress.setVisibility(View.GONE);
-
         serviceApi = RetrofitClient.getClient().create(MoimEditData.serviceApi.class);
-
-//        selectLocationButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
-//                startActivity(intent);
-//            }
-//        });
 
         selectAddressOrNot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -333,39 +321,16 @@ public class UpdateMyMoim extends AppCompatActivity {
                     m_description.setText(moimDetailData.getMeeting_description());
                     m_time.setText(String.valueOf(moimDetailData.getMeeting_time()));
 
-                    Log.d("주소 확인 : ", moimDetailData.getMeeting_location());
-
                     if (moimDetailData.getMeeting_location().equals("장소 미정")) {
                         selectNoAddress.setChecked(true);
 
                     } else {
                         selectAddress.setChecked(true);
 
-                        String firstlocation;
-                        String secondlocation;
-                        String thridlocation;
                         String lastlocation = "";
 
                         String location = moimDetailData.getMeeting_location();
                         String[] locationList = location.split(" ");
-
-                        try {
-                            firstlocation = locationList[0];
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            firstlocation = " ";
-                        }
-
-                        try {
-                            secondlocation = locationList[1];
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            secondlocation = " ";
-                        }
-
-                        try {
-                            thridlocation = locationList[2];
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            thridlocation = " ";
-                        }
 
                         try {
                             for (int i = 3; i < locationList.length; i++) {
@@ -375,57 +340,23 @@ public class UpdateMyMoim extends AppCompatActivity {
                             lastlocation = " ";
                         }
 
-//                        if (firstlocation != null) {
-//                            int spinnerPosition = arrayAdapter.getPosition(firstlocation);
-//                            spinnerCity.setSelection(spinnerPosition);
-//                        }
 
-//                        if (secondlocation != null) {
-//                            int spinnerPosition = arrayAdapter.getPosition(secondlocation);
-//                            spinnerSigungu.setSelection(spinnerPosition);
-//                        }
-//
-//                        if (thridlocation != null) {
-//                            int spinnerPosition = arrayAdapter.getPosition(thridlocation);
-//                            spinnerDong.setSelection(spinnerPosition);
-//                        }
                         selectLastLocation.setText(moimDetailData.getMeeting_location());
                     }
-
-
-
-//                    try {
-//                        selectFirstLocation.setText(firstlocation);
-//                        selectSecondLocation.setText(secondlocation);
-//                        selectThirdLocation.setText(thridlocation);
-//                        selectLastLocation.setText(lastlocation);
-//                    } catch (NullPointerException e) {
-//                        firstlocation = " ";
-//                        secondlocation = " ";
-//                        thridlocation = " ";
-//                        lastlocation =" ";
-//                        selectFirstLocation.setText(firstlocation);
-//                        selectSecondLocation.setText(secondlocation);
-//                        selectThirdLocation.setText(thridlocation);
-//                        selectLastLocation.setText(lastlocation);
-//                    }
 
                     m_num.setText(String.valueOf(moimDetailData.getMeeting_recruitment()));
                     m_agemin.setText(String.valueOf(moimDetailData.getAge_limit_min()));
                     m_agemax.setText(String.valueOf(moimDetailData.getAge_limit_max()));
                     interestSpinner.setSelection(moimDetailData.getFk_meeting_interest() - 1);
-
                 }
 
             }
             @Override
             public void onFailure(Call<MoimDetailData.MoimDetailDataResponse> call, Throwable t) {
                 Toast.makeText(UpdateMyMoim.this, "모임 디테일 에러", Toast.LENGTH_LONG).show();
-                Log.e("모임 디테일 에러", t.getMessage());
                 t.printStackTrace();
             }
         });
-
 
 
     }
@@ -465,17 +396,12 @@ public class UpdateMyMoim extends AppCompatActivity {
         }
 
         final String m_interest = interestSpinner.getSelectedItem().toString();
-//        int interest = categoryHashMap.get(m_interest);
-        Log.d(TAG, "interest 안에 뭐가 들어있니 : " + m_interest);
-
         final String name = m_name.getText().toString();
         final String description = m_description.getText().toString();
         final String num = m_num.getText().toString();
         final String agemin = m_agemin.getText().toString();
         final String agemax = m_agemax.getText().toString();
         final String time = m_time.getText().toString();
-//        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
-//        Date timeDate = trans.parse(time);
 
         if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() || location == null ||
                 num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
@@ -485,7 +411,6 @@ public class UpdateMyMoim extends AppCompatActivity {
             int numInt = Integer.parseInt(num);
             int ageminInt = Integer.parseInt(agemin);
             int agemaxInt = Integer.parseInt(agemax);
-//            int interest = Integer.parseInt(m_interest);
             if ( ageminInt > agemaxInt ) {
                 Toast.makeText(getApplicationContext(), "최소 인원이 최대 인원보다 크게 설정되어 있습니다.", Toast.LENGTH_LONG).show();
             } else {
@@ -525,7 +450,7 @@ public class UpdateMyMoim extends AppCompatActivity {
             case PICK_FROM_ALBUM: {
 
                 Uri photoUri = data.getData();
-                Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + photoUri);
+//                Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + photoUri);
 
                 cropImage(photoUri);
 
@@ -534,7 +459,7 @@ public class UpdateMyMoim extends AppCompatActivity {
             case PICK_FROM_CAMERA: {
 
                 Uri photoUri = Uri.fromFile(tempFile);
-                Log.d(TAG, "takePhoto photoUri : " + photoUri);
+//                Log.d(TAG, "takePhoto photoUri : " + photoUri);
 
                 cropImage(photoUri);
 
@@ -553,7 +478,7 @@ public class UpdateMyMoim extends AppCompatActivity {
      */
     private void cropImage(Uri photoUri) {
 
-        Log.d(TAG, "tempFile : " + tempFile);
+//        Log.d(TAG, "tempFile : " + tempFile);
 
         /**
          *  갤러리에서 선택한 경우에는 tempFile 이 없으므로 새로 생성해줍니다.
@@ -589,7 +514,6 @@ public class UpdateMyMoim extends AppCompatActivity {
      *  카메라에서 이미지 가져오기
      */
     private void takePhoto() {
-        Toast.makeText(getApplicationContext(), "여기까지 들어오는지", Toast.LENGTH_LONG).show(); // 안 들어옴.
 
         isCamera = true;
 
@@ -703,9 +627,6 @@ public class UpdateMyMoim extends AppCompatActivity {
 
     public void startEditMoim(MoimEditData data) {
 
-        Log.d(TAG, "updateImage : 여기까진 들어왔음 startUpdateMoim");
-        Log.d(TAG, "데이터가 들어있니?" + data.getMeeting_location()); // 있는데ㅡㅡ
-
         RequestBody meeting_interest
                 = RequestBody.create(MediaType.parse("text/plain"), data.getMeeting_interest() );
         RequestBody meeting_name
@@ -733,37 +654,6 @@ public class UpdateMyMoim extends AppCompatActivity {
 
             if ( myimg != null ) { // 이미지가 기존 이미지라면
 
-//                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), tempFile );
-//                body = MultipartBody.Part.createFormData("meeting_img", tempFile.getName(), requestFile);
-
-//                SameImageserviceApi = RetrofitClient.getClient().create(MoimEditSameImageData.serviceApi.class);
-////                SameImageserviceApi.editSameImgMoim(data.getMeeting_interest(), data.getMeeting_name(), data.getMeeting_description(), data.getMeeting_time(), data.getMeeting_location(), data.getMeeting_recruitment(), data.getAge_limit_min(), data.getAge_limit_max(), data.getMeeting_id()).enqueue(new Callback<MoimEditSameImageData.MoimEditSameImageDataResponse>(){
-//                SameImageserviceApi.editSameImgMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, meeting_id).enqueue(new Callback<MoimEditSameImageData.MoimEditSameImageDataResponse>(){
-//                    @Override
-//                    public void onResponse(Call<MoimEditSameImageData.MoimEditSameImageDataResponse> call, Response<MoimEditSameImageData.MoimEditSameImageDataResponse> response) {
-//                        MoimEditSameImageData.MoimEditSameImageDataResponse result = response.body();
-//
-//                        Toast.makeText(UpdateMyMoim.this, result.getMessage(), Toast.LENGTH_LONG).show();
-//
-//                        if(result.getState() == 200) {
-//                            System.out.println("yeah");
-//                            Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
-//                            intent.putExtra("meetingId", meetingid);
-//                            startActivity(intent);
-//                        }
-//                        else if(result.getState() == 400) {
-//                            System.out.println("nooooo");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<MoimEditSameImageData.MoimEditSameImageDataResponse> call, Throwable t) {
-//                        Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
-//                        Log.e("모임수정 에러", t.getMessage());
-//                        t.printStackTrace();
-//                    }
-//                });
-
                 serviceApi.editSameImgMoim(data).enqueue(new Callback<MoimEditData.MoimEditDataResponse>(){
                     @Override
                     public void onResponse(Call<MoimEditData.MoimEditDataResponse> call, Response<MoimEditData.MoimEditDataResponse> response) {
@@ -779,14 +669,13 @@ public class UpdateMyMoim extends AppCompatActivity {
                             finish();
                         }
                         else if(result.getState() == 400) {
-                            System.out.println("nooooo");
+                            Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<MoimEditData.MoimEditDataResponse> call, Throwable t) {
                         Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
-                        Log.e("모임수정 에러", t.getMessage());
                         t.printStackTrace();
                     }
                 });
@@ -804,21 +693,19 @@ public class UpdateMyMoim extends AppCompatActivity {
                         Toast.makeText(UpdateMyMoim.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                         if(result.getState() == 200) {
-                            System.out.println("yeah");
                             Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                             intent.putExtra("meetingId", meetingid);
                             startActivity(intent);
                             finish();
                         }
                         else if(result.getState() == 400) {
-                            System.out.println("nooooo");
+                            Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<MoimEditData.MoimEditDataResponse> call, Throwable t) {
                         Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
-                        Log.e("모임수정 에러", t.getMessage());
                         t.printStackTrace();
                     }
                 });
@@ -838,21 +725,18 @@ public class UpdateMyMoim extends AppCompatActivity {
                     Toast.makeText(UpdateMyMoim.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if(result.getState() == 200) {
-                        System.out.println("yeah");
                         Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                         intent.putExtra("meetingId", meetingid);
                         startActivity(intent);
                         finish();
                     }
                     else if(result.getState() == 400) {
-                        System.out.println("nooooo");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MoimEditData.MoimEditDataResponse> call, Throwable t) {
                     Toast.makeText(UpdateMyMoim.this, "모임수정 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임수정 에러", t.getMessage());
                     t.printStackTrace();
                 }
             });

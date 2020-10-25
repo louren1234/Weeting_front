@@ -96,10 +96,6 @@ public class Interest extends AppCompatActivity {
                         try {
                             sliceMyInterests = getMyInterests.split("/");
 
-//                        for(int i = 0; i < sliceMyInterests.length; i++){
-//                            Log.d("split 테스트 : ", "잘 나오나?" + sliceMyInterests[i]);
-//                        }
-
                             myInterestsRecyclerAdapter = new MyInterestsRecyclerAdapter(getApplicationContext(), sliceMyInterests);
                             myInterestsRecyclerView.setAdapter(myInterestsRecyclerAdapter);
                         } catch (NullPointerException e) {
@@ -108,7 +104,7 @@ public class Interest extends AppCompatActivity {
                     }
 
                 } else {
-                    Log.d("모임 interests retrofit 에러", "서버에러");
+                    Log.d("모임interests retrofit 에러", "서버에러");
                 }
             }
 
@@ -177,7 +173,6 @@ public class Interest extends AppCompatActivity {
             for (int i = 0; i < chipGroup.getChildCount(); i++) {
                 Chip chip = (Chip) chipGroup.getChildAt(i);
                 if (chip.isChecked()) {
-                    System.out.println(chip.getText().toString() + "sssssssssssssss");
                     interests += chip.getText().toString();
                     interests = interests + "/";
                     interestsCount++;
@@ -187,7 +182,6 @@ public class Interest extends AppCompatActivity {
         }
 
         public void SaveInterests() {
-            Log.d("관심사 : ", "null 검사 : " + interests);
 
             serviceApi.updateMyInterests(interests).enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                 @Override

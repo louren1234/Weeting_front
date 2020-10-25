@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (email !=null || password != null){
             LoginData autologin = new LoginData(email, password);
-            Log.d("자동로그인 테스트1", autologin.getUser_email() + " " + autologin.getUser_passwd());
             serviceApi.userLogin(autologin).enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Login(LoginData logindata) {
-        Log.d("자동로그인 테스트2", logindata.getUser_email() + " " + logindata.getUser_passwd());
         serviceApi.userLogin(logindata).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

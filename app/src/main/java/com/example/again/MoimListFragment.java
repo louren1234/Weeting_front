@@ -36,13 +36,9 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-//        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.moimlist, container, false);
         View rootView = inflater.inflate(R.layout.moimlist_fragment, container, false);
 
         MoimCategoryResultData.serviceApi moimApiInterface = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
-//
-////        final Context context = rootView.getContext();
-//
         Bundle bundle = getArguments();
         String categoryName = bundle.getString("category");
 
@@ -60,8 +56,6 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
                 public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
 
                     moimDataList = response.body();
-
-                    Log.d("MoimList 성공", moimDataList.toString());
 
                     moimDataInfo = moimDataList.data;
 
@@ -82,7 +76,6 @@ public class MoimListFragment extends Fragment implements RecyclerAdapter.OnData
         }
         else {
             Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getCategoryResultMoim(categoryName);
-//            Call<MoimCategoryResultData.MoimCategoryResultDataResponse> moimCall = moimApiInterface.getAllMoim();
             moimCall.enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
                 @Override
                 public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {

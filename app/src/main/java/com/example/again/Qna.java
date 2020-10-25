@@ -30,7 +30,6 @@ public class Qna extends AppCompatActivity {
 
     private QnaData.serviceApi serviceApi;
     private EditText m_content;
-//    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class Qna extends AppCompatActivity {
         setContentView(R.layout.qna);
 
         ImageButton back = findViewById(R.id.back);
-//        Button qna_list = findViewById(R.id.myqna);
 
         m_content = findViewById(R.id.content);
 
@@ -53,22 +51,6 @@ public class Qna extends AppCompatActivity {
             }
         });
 
-//        qna_list.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), Qna_list.class);
-//                startActivity(intent);
-//            }
-//        });
-
-//        sendQna.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String content = contents.getText().toString();
-//
-//                contents.setText("");
-//            }
-//        });
     }
 
     public void createQnaValid(View view) throws ParseException {
@@ -92,11 +74,9 @@ public class Qna extends AppCompatActivity {
                 Toast.makeText(Qna.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                 if(result.getStatus() == 200) {
-                    System.out.println("yeah");
                     finish();
                 }
                 else if(result.getStatus() == 400) {
-                    System.out.println("nooooo");
                 }
             }
 

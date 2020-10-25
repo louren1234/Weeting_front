@@ -305,7 +305,6 @@ public class EditMyInformation extends AppCompatActivity {
      *  카메라에서 이미지 가져오기
      */
     private void takePhoto() {
-        Toast.makeText(getApplicationContext(), "여기까지 들어오는지", Toast.LENGTH_LONG).show(); // 안 들어옴.
 
         isCamera = true;
 
@@ -421,8 +420,6 @@ public class EditMyInformation extends AppCompatActivity {
 
         myintro = myIntroduce.getText().toString();
 
-        Log.d(TAG, "이미지 값 : " + myimg + " 자기소개 " + myintro);
-
         if( tempFile == null || tempFile.length() <= 0) { // 새로운 이미지 업데이트가 없고
 
             if (myimg != null) { // 기존 이미지가 존재한다면
@@ -451,9 +448,6 @@ public class EditMyInformation extends AppCompatActivity {
                 });
 
             } else { // 기존 이미지도 null이라면
-
-//                RequestBody myNullImage
-//                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null));
 
                 Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyImg(null);
                 call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
@@ -498,12 +492,9 @@ public class EditMyInformation extends AppCompatActivity {
             Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyNewImg(body);
 
             call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>(){
-                //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
                 public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
                     UserData.UserImgorIntroorInterestsResponse result = response.body();
-
-//                    Toast.makeText(EditMyInformation.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if(result.getState() == 200) {
 

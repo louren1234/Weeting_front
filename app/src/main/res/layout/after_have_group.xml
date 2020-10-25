@@ -34,7 +34,7 @@
                     android:id="@+id/mainpage"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:gravity="center_vertical"
                     app:srcCompat="@drawable/logonotmain" />
 
@@ -126,7 +126,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:text="추천모임"
                     android:textSize="23sp"
                     tools:ignore="HardcodedText" />
@@ -158,7 +158,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:text="내 모임"
                     android:textSize="23sp"
                     tools:ignore="HardcodedText" />
@@ -172,14 +172,14 @@
                     android:id="@+id/createMoim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="모임 만들기" />
 
                 <Button
                     android:id="@+id/myMoimButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="내 모임 더보기"
                     tools:ignore="HardcodedText" />
             </LinearLayout>

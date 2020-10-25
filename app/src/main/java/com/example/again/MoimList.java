@@ -44,15 +44,6 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
 
         serviceApi = RetrofitClient.getClient().create(MoimCategoryData.serviceApi.class);
 
-//        ImageView create = findViewById(R.id.toMap);
-//        create.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), Create.class);
-//                startActivity(intent);
-//            }
-//        });
-
         categoryRecyclerView = findViewById(R.id.category);
 
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -116,16 +107,8 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
             }
         });
 
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); 이렇게 하면 안됨. 1 내 생각엔 this를 못 읽어오는 것 같음. 직접 레이아웃 지정해주는게 맞는듯. 아,
-//        recyclerView.setLayoutManager(layoutManager); 이렇게 하면 안됨. 2
-
         Intent intent = getIntent();
         categoryName = intent.getExtras().getString("category");
-
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//        fragmentTransaction.add(R.id.fragment, new MoimListFragment());
-//        fragmentTransaction.commit();
 
         if(fragment == null){
             fragment = new MoimListFragment();
@@ -147,8 +130,6 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
             public void onResponse(Call<MoimCategoryData.MoimCategoryResponse> call, Response<MoimCategoryData.MoimCategoryResponse> response) {
 
                 categoryDataList = response.body();
-
-                Log.d("카테고리 불러오기 성공", categoryDataList.toString());
 
                 categoryDataInfo = categoryDataList.data;
 
@@ -173,13 +154,7 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
     //카테고리 클릭 시
     @Override
     public void onCategoryClick(View view, MoimCategoryData moimCategoryData){
-        Log.d("카테고리 클릭 함수는 들어오는지", "제발 들어오길");
-//        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
-//        Intent intent = new Intent(getApplicationContext(), MoimList.class);
-//        intent.putExtra("category", moimCategoryData.getInterests_name());
-//        startActivity(intent);
-//        Log.e("RecyclerVIew :: ", moimCategoryData.toString());
-//
+
         if(fragment == null) {
             fragment = new MoimListFragment();
         }
@@ -189,7 +164,6 @@ public class MoimList extends FragmentActivity implements InterestListRecyclerAd
         fragment.setArguments(bundle);
 
         fragment.refreshFragment();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 }
 

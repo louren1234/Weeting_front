@@ -118,7 +118,6 @@ public class MyMoim extends AppCompatActivity implements RecyclerAdapter.OnDataD
 
     @Override
     public void onItemClick(View view, MoimCategoryResultData moimCategoryResultData){
-//        MoimCategoryResultData data = moimRecyclerAdapter.getItem(position);
         Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
         intent.putExtra("meetingId", moimCategoryResultData.getMeeting_id());
         startActivity(intent);
