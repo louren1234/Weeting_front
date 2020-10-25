@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     EditText e_mail, e_password;
+    LinearLayout buttons;
     String email, password;
     SignUpData.ServiceApi serviceApi;
     MoimCategoryResultData.serviceApi checkMoimServiceApi;
@@ -43,11 +45,16 @@ public class MainActivity extends AppCompatActivity {
         checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
         e_mail = findViewById(R.id.mainId);
         e_password = findViewById(R.id.mainPassword);
+        buttons = findViewById(R.id.buttons);
 
         sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
 
         email = sp.getString("email", null);
         password = sp.getString("password", null);
+
+        e_mail.setVisibility(View.GONE);
+        e_password.setVisibility(View.GONE);
+        buttons.setVisibility(View.GONE);
 
         if (email !=null || password != null){
             LoginData autologin = new LoginData(email, password);
@@ -75,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             });
+        } else {
+            e_mail.setVisibility(View.VISIBLE);
+            e_password.setVisibility(View.VISIBLE);
+            buttons.setVisibility(View.VISIBLE);
         }
     }
 
