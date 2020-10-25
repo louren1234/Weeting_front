@@ -21,7 +21,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="HardcodedText"
-                tools:srcCompat="@drawable/puppy" />
+                tools:srcCompat="@drawable/nullimage" />
 
             <TextView
                 android:id="@+id/mainMoimName"
