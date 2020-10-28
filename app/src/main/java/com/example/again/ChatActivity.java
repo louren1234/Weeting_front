@@ -25,9 +25,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.ArrayList;
 
 import okhttp3.internal.Internal;
+
+import static com.example.again.MoimDetail.meetingId;
 
 
 public class ChatActivity extends AppCompatActivity{
@@ -42,25 +46,27 @@ public class ChatActivity extends AppCompatActivity{
     String tempItem;
     ChatData chatData;
     Internal internal;
-    private Socket mSocket;
     Boolean hasConnection;
-    public ChatActivity() throws URISyntaxException {
-    }
+    int meeting_id;
 
+    private Socket mSocket;{
+//        Intent intent = getIntent();
+//        meeting_id = intent.getExtras().getInt("meetingId");
+        String url = "http://52.35.235.199:3000/chat/"+meetingId;
+        try {
+            mSocket = IO.socket(url);
+
+            System.out.println("http://52.35.235.199:3000/chat/"+meetingId);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_body);
         arrayList = new ArrayList<>();
-        Intent intent = getIntent();
-        final int meeting_id = intent.getExtras().getInt("meetingId");
+        mSocket.connect();
 
-        try {
-            mSocket = IO.socket("http://52.35.235.199:3000/chat/"+meeting_id);
-            System.out.println("http://52.35.235.199:3000/chat/"+meeting_id);
-            System.out.println(mSocket+"ffffffffffffffffffffffffffffffffffffff");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
         hasConnection = false;
 //        preferences = getSharedPreferences()
         recyclerView = findViewById(R.id.chatRecycler);
@@ -70,13 +76,13 @@ public class ChatActivity extends AppCompatActivity{
         recyclerView.setAdapter(chatAdapter);
         chatSendBtn = findViewById(R.id.chat_send_btn);
         sendText = findViewById(R.id.chatScripts);
-        mSocket.on("new user",onNewUser);
-        mSocket.connect();
+//        mSocket.on("new user",onNewUser);
         if(mSocket.connected()){
             System.out.println("kkkkkkkkkkkkkkkkkkkkkk");
-
-        }else
+        }
+        else{
             System.out.println("jjjjjjjjjjjjjjjjjjjjjjj");
+        }
         mSocket.on("receive message",onMessageReceived);
         SharedPreferences sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
         JSONObject userId = new JSONObject();
@@ -125,30 +131,35 @@ public class ChatActivity extends AppCompatActivity{
             });
         }
     };
-    private Emitter.Listener onNewUser = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            mSocket.emit("new user", new Object[]{new Runnable() {
-                @Override
-                public void run() {
-                    int length = args.length;
-                    if (length == 0) {
-                        return;
-                    }
-                    String userName = args[0].toString();
-                    try {
-                        SharedPreferences sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
-                        tempItem = sp.getString("name","");
-                        JSONObject object = new JSONObject(userName);
-                        userName = object.getString("name");
-                        object.put("name", tempItem);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }});
-        }
-    };
+//    private Emitter.Listener onNewUser = new Emitter.Listener() {
+//        @Override
+//        public void call(Object... args) {
+//            mSocket.emit(runOnUiThread(new Ru));
+//        }
+
+//            mSocket.emit(String.valueOf(new Object[]{new Runnable() {
+//                @Override
+//                public void run() {
+//                    int length = args.length;
+//                    if (length == 0) {
+//                        return;
+//                    }
+//                    String userName = args[0].toString();
+//                    try {
+//                        SharedPreferences sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
+//                        tempItem = sp.getString("name","");
+//                        JSONObject object = new JSONObject();
+//                        userName = object.getString("user_nick_name");
+//                        object.put("user_nick_name", tempItem);
+//                        object.put("room_num", meeting_id);
+//                        object.put("chats","");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }}));
+
+//    };
     public void SendMessage() throws JSONException {
         SharedPreferences sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
         tempItem = sp.getString("name","");

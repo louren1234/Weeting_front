@@ -558,9 +558,9 @@ public class SignUpActivity extends AppCompatActivity {
         rightSid = editBack.getText().toString();
         Boolean valid = false;
         genderValid = 0;
-        if (leftSid.length()+rightSid.length() != 13) ;
-        // 입력받은 주민번호 앞자리 유효성 검증============================
+        if (leftSid.length()+rightSid.length() != 13)
             Toast.makeText(getApplicationContext(),"주민등록번호 자리수 13자리를 확인하기 바랍니다.", Toast.LENGTH_LONG).show();
+        // 입력받은 주민번호 앞자리 유효성 검증============================
 
 
         int yy = Integer.parseInt(leftSid.substring(0, 2));

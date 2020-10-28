@@ -36,7 +36,7 @@ public class MoimDetail extends AppCompatActivity {
     private MoimDetailData.serviceApi serviceApi;
     private int is_member;
     private int is_captain;
-
+    static int meetingId;
     private MoimDetailData.MoimDetailDataResponse detailList;
     private MoimDetailData detailListConponent;
 
@@ -68,10 +68,10 @@ public class MoimDetail extends AppCompatActivity {
         moimMemberRecyclerView = findViewById(R.id.meetingMemberRecyclerView);
 
         moimMemberRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+        meetingId = 0;
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
-
+        meetingId = meeting_id;
         Log.d("MoimDetail", "모임 아이디가 뭘까? : " + meeting_id);
 
         serviceApi = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
