@@ -1,6 +1,8 @@
 package com.example.again;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 
@@ -53,6 +56,7 @@ public class Mypage extends AppCompatActivity {
         LinearLayout interest = findViewById(R.id.interest);
         LinearLayout qna = findViewById(R.id.qna);
         LinearLayout terms_of_use = findViewById(R.id.terms_of_use);
+        LinearLayout logout = findViewById(R.id.logout);
 
         setInfo();
 
@@ -140,6 +144,22 @@ public class Mypage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        logout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("email", null);
+                editor.putString("password", null);
+                editor.commit();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     protected void setInfo(){
