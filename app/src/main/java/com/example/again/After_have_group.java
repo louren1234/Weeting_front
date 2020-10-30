@@ -115,8 +115,6 @@ public class After_have_group extends AppCompatActivity implements MainMoimRecyc
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-                startActivity(intent);
             }
         });
 
