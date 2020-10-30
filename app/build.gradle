@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.again"
-        minSdkVersion 26
+        minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -50,7 +50,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:1.6.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
     compile 'com.squareup.retrofit:retrofit:1.6.0'
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -1,6 +1,8 @@
 package com.example.again;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,8 +39,12 @@ public class MoimDetail extends AppCompatActivity {
     private int is_member;
     private int is_captain;
     static int meetingId;
+    String tempItem;
+    private int moim_recruitment, moim_Present_members;
+
     private MoimDetailData.MoimDetailDataResponse detailList;
     private MoimDetailData detailListConponent;
+    SignUpData.ServiceApi serviceApi2;
 
     List<MoimDetailData> moimMemberInfo;
     RecyclerView moimMemberRecyclerView;
@@ -48,6 +54,7 @@ public class MoimDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.moim_detail_layout);
+        serviceApi2 = RetrofitClient.getClient().create(SignUpData.ServiceApi.class);
 
         detailMoimName = findViewById(R.id.detailMoimName);
         detailMoimDescription = findViewById(R.id.detailMoimDescription);
@@ -71,8 +78,10 @@ public class MoimDetail extends AppCompatActivity {
         meetingId = 0;
         Intent intent = getIntent();
         final int meeting_id = intent.getExtras().getInt("meetingId");
+
         meetingId = meeting_id;
         Log.d("MoimDetail", "모임 아이디가 뭘까? : " + meeting_id);
+
 
         serviceApi = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
         Call<MoimDetailData.MoimDetailDataResponse> call = serviceApi.getMoimDetail(meeting_id);
@@ -93,6 +102,9 @@ public class MoimDetail extends AppCompatActivity {
                             .error(R.drawable.error)
                             .fallback(R.drawable.nullimage)
                             .into(detailMoimImage);
+
+                    moim_recruitment = moimDetailData.getMeeting_recruitment();
+                    moim_Present_members = moimDetailData.getPresent_members();
 
                     detailMoimName.setText(moimDetailData.getMeeting_name());
                     detailMoimDescription.setText(moimDetailData.getMeeting_description());
@@ -128,7 +140,6 @@ public class MoimDetail extends AppCompatActivity {
             @Override
             public void onFailure(Call<MoimDetailData.MoimDetailDataResponse> call, Throwable t) {
                 Toast.makeText(MoimDetail.this, "모임 디테일 에러", Toast.LENGTH_LONG).show();
-                Log.e("모임 디테일 에러", t.getMessage());
                 t.printStackTrace();
             }
         });
@@ -144,13 +155,47 @@ public class MoimDetail extends AppCompatActivity {
         });
         //chat
         chatButton = findViewById(R.id.chatting_in);
+        SharedPreferences sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
+        tempItem = sp.getString("name","");
+        serviceApi = RetrofitClient.getClient().create(MoimDetailData.serviceApi.class);
+//        serviceApi2 = RetrofitClient.getClient().create(SignUpData.ServiceApi.class);
+
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ChatActivity.class);
-                i.putExtra("meetingId",meeting_id);
+                serviceApi2.nickname(tempItem).enqueue(new Callback<SignUpData.Response>() {
+
+                    @Override
+                    public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SignUpData.Response> call, Throwable t) {
+
+                    }
+                });
+                Intent i = new Intent(getApplicationContext(), ChatWebActivity.class);
                 startActivity(i);
-                finish();
+//                serviceApi2.nickname(tempItem).enqueue(new Callback<SignUpData.Response>() {
+//                    @Override
+//                    public void onResponse(Call<SignUpData.Response> call, Response<SignUpData.Response> response) {
+//                        SignUpData.Response response1 = response.body();
+//                        System.out.println(response1.getMessage());
+//                        if(response1.getStatus()==200){
+//                            Intent i = new Intent(getApplicationContext(), ChatWebActivity.class);
+//                            i.putExtra("meetingId",meeting_id);
+//                            startActivity(i);
+//                            finish();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<SignUpData.Response> call, Throwable t) {
+//
+//                    }
+//                });
+
             }
         });
         detailMoimDeleteButton.setOnClickListener(new View.OnClickListener(){
@@ -161,15 +206,11 @@ public class MoimDetail extends AppCompatActivity {
                 TestDeleteData.serviceApi testapiInterface = RetrofitClient.getClient().create(TestDeleteData.serviceApi.class);
 
                 Call<TestDeleteData.MoimDetailDataResponse> calls = testapiInterface.deleteMoim(data);
-//                Log.d("MoimDetail", "테스트" + meeting_id);
                 calls.enqueue(new Callback<TestDeleteData.MoimDetailDataResponse>() {
                     @Override
                     public void onResponse(Call<TestDeleteData.MoimDetailDataResponse> call, Response<TestDeleteData.MoimDetailDataResponse> response) {
                         TestDeleteData.MoimDetailDataResponse result = response.body();
                         if(result.getStatus() == 200){
-//                            Intent intent = new Intent(getApplicationContext(), MoimList.class);
-//                            intent.putExtra("category", "all");
-//                            startActivity(intent);
                             finish();
                         }
                         else{
@@ -190,6 +231,11 @@ public class MoimDetail extends AppCompatActivity {
         moimParticipateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
+                if(moim_recruitment <= moim_Present_members) {
+                    Toast.makeText(MoimDetail.this, "모임 인원이 꽉 찼습니다.", Toast.LENGTH_LONG).show();
+                }
+                else {
                 serviceApi.participateMoim(meeting_id).enqueue(new Callback<MoimDetailData.MoimDetailDataResponse>() {
                     @Override
                     public void onResponse(Call<MoimDetailData.MoimDetailDataResponse> call, Response<MoimDetailData.MoimDetailDataResponse> response) {
@@ -197,7 +243,7 @@ public class MoimDetail extends AppCompatActivity {
 
                         if ( response1.getStatus() == 200 ){
 
-                            Toast myToast = Toast.makeText(getApplicationContext(),"모임 참여 완료", Toast.LENGTH_SHORT);
+                            Toast myToast = Toast.makeText(getApplicationContext(),"모임에 참여되었습니다.", Toast.LENGTH_SHORT);
                             myToast.show();
                             Intent intent = new Intent(getApplicationContext(), MoimDetail.class);
                             intent.putExtra("meetingId", meeting_id);
@@ -214,6 +260,7 @@ public class MoimDetail extends AppCompatActivity {
                         Log.d("모임 참여 에러 : ", " retrofit 에러 ");
                     }
                 });
+            }
             }
         });
 

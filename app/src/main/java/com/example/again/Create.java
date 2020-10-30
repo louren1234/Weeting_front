@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -105,10 +107,37 @@ public class Create extends AppCompatActivity {
     Calendar calendar;
     int year, month, day, hour, minute;
 
+    //카메라 권한
+    int permssionCheckCamera;
+    int permssionCheckWriteExternalStorage;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create);
+
+//        tedPermission();
+
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(getApplicationContext(), "카메라 권한 허가", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(getApplicationContext(), "카메라 권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setRationaleMessage(getResources().getString(R.string.permission_2))
+                .setDeniedMessage(getResources().getString(R.string.permission_1))
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+
 
         spinnerCity = (Spinner)findViewById(R.id.city);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[])getResources().getStringArray(R.array.spinner_region));
@@ -119,8 +148,6 @@ public class Create extends AppCompatActivity {
         spinnerDong = (Spinner)findViewById(R.id.neighborhood);
 
         initAddressSpinner();
-
-        tedPermission();
 
         ImageView main = findViewById(R.id.mainpage);
         ImageButton search = findViewById(R.id.search);
@@ -193,40 +220,25 @@ public class Create extends AppCompatActivity {
         this.InitializeListener();
         selectDateButton = findViewById(R.id.selectDate);
 
+        permssionCheckCamera = ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA);
+        permssionCheckWriteExternalStorage = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         mSelectCamOrAlbum = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         mSelectCamOrAlbum.setTitle("모임 썸네일 설정").setItems(selectCamorAlbum, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(selectCamorAlbum[which].equals("앨범")){
                     // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                    if(isPermission) goToAlbum();
+                    if(permssionCheckCamera == PackageManager.PERMISSION_GRANTED && permssionCheckWriteExternalStorage == PackageManager.PERMISSION_GRANTED) goToAlbum();
                     else Toast.makeText(getApplicationContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
 
                 } else if (selectCamorAlbum[which].equals("카메라")) {
                     // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-                    if(isPermission)  takePhoto();
+                    if(permssionCheckCamera == PackageManager.PERMISSION_GRANTED && permssionCheckWriteExternalStorage == PackageManager.PERMISSION_GRANTED)  takePhoto();
                     else Toast.makeText(getApplicationContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-//        m_img.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-//                if(isPermission) goToAlbum();
-//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        m_img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 권한 허용에 동의하지 않았을 경우 토스트를 띄웁니다.
-//                if(isPermission)  takePhoto();
-//                else Toast.makeText(view.getContext(), getResources().getString(R.string.permission_2), Toast.LENGTH_LONG).show();
-//            }
-//        });
 
         MoimCategoryData.serviceApi apiInterface = RetrofitClient.getClient().create(MoimCategoryData.serviceApi.class);
         Call<MoimCategoryData.MoimCategoryResponse> call = apiInterface.getSpinnerList();
@@ -237,30 +249,17 @@ public class Create extends AppCompatActivity {
 
                 dataList = response.body();
 
-                // 이거로 하면 하나의 값을 spinner에 저장 가능
-//                String[] names = new String[dataList.data.size()];
-//
-//                int i = 0;
-//                for(MoimCategoryData moimCategoryData : dataList.data) {
-//                    names[i] = moimCategoryData.getInterests_name();
-//                    i++;
-//                }
-
-//                categoryArrayListData = new ArrayList<HashMap<String, Integer>>();
-
                 String[] names = new String[dataList.data.size()];
                 categoryHashMap = new HashMap<String, Integer>();
                 int i = 0;
 
                 for(MoimCategoryData moimCategoryData : dataList.data) {
                     categoryHashMap.put(moimCategoryData.getInterests_name(), moimCategoryData.getInterests_id());
-//                    categoryArrayListData.add(categoryHashMap);
                     names[i] = moimCategoryData.getInterests_name();
                     i++;
                 }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, names);
-//                SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), categoryArrayListData,  R.layout.support_simple_spinner_dropdown_item, new String[]{"interest_name", "interest_id"}, new int[]{android.R.id.text1, android.R.id.text2});
                 interestSpinner.setAdapter(adapter);
 
                 Log.d("MoimList 성공?", dataList.toString());
@@ -288,15 +287,6 @@ public class Create extends AppCompatActivity {
 
         serviceApi = RetrofitClient.getClient().create(MoimData.ServiceApi.class);
 
-        selectLocationButton = findViewById(R.id.selectLocationButton);
-        selectLocationButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(), SearchMoimAddress.class);
-                startActivity(intent);
-            }
-        });
-
         showAddress.setVisibility(View.GONE);
 
 //        selectNoAddress.setOnClickListener();
@@ -323,27 +313,29 @@ public class Create extends AppCompatActivity {
         m_agemin.setError(null);
         m_agemax.setError(null);
 
-        if (selectAddress.isChecked()) {
             address = "";
             if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0 && spinnerDong.getSelectedItemPosition() != 0) {
                 address = spinnerCity.getSelectedItem().toString() + " " + spinnerSigungu.getSelectedItem().toString() + " " + spinnerDong.getSelectedItem().toString();
             }
             else if (spinnerCity.getSelectedItemPosition() != 0 && spinnerSigungu.getSelectedItemPosition() !=0) {
-                address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString() + " " + " ";
+                address = spinnerCity.getSelectedItem().toString() +" "+ spinnerSigungu.getSelectedItem().toString();
             }
             else if(spinnerCity.getSelectedItemPosition()!=0){
-                address = spinnerCity.getSelectedItem().toString() + " " + " " + " " + " ";
+                address = spinnerCity.getSelectedItem().toString();
             }
             if (spinnerCity.getSelectedItemPosition() == 0) {
                 Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
             }
-        }
+//        }
 
         String lastLocation = selectLastLocation.getText().toString();
         location = address + " " + lastLocation;
 
+        if (selectNoAddress.isChecked()) {
+            location = "장소 미정";
+        }
+
             String m_interest = interestSpinner.getSelectedItem().toString();
-//        int interest = categoryHashMap.get(m_interest);
             Log.d(TAG, "interest 안에 뭐가 들어있니 : " + m_interest);
 
             String name = m_name.getText().toString();
@@ -351,29 +343,16 @@ public class Create extends AppCompatActivity {
             String num = m_num.getText().toString();
             String agemin = m_agemin.getText().toString();
             String agemax = m_agemax.getText().toString();
-
-//        BitmapDrawable drawable = (BitmapDrawable) m_img.getDrawable();
-//        Bitmap bitmap = drawable.getBitmap();
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, bos);
-
-//        BitmapDrawable drawable = (BitmapDrawable) m_img.getDrawable();
-//        Bitmap bitmap = drawable.getBitmap();
-//        String img = bitmap.toString();
-
             String time = m_time.getText().toString();
-//        SimpleDateFormat trans = new SimpleDateFormat("yyyy-MM-dd");
-//        Date timeDate = trans.parse(time);
 
             if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
                     num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "빈 칸 존재", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "빈 칸이 존재합니다.", Toast.LENGTH_LONG).show();
             }
             else {
                 int numInt = Integer.parseInt(num);
                 int ageminInt = Integer.parseInt(agemin);
                 int agemaxInt = Integer.parseInt(agemax);
-//            int interest = Integer.parseInt(m_interest);
                 if ( ageminInt > agemaxInt ) {
                     Toast.makeText(getApplicationContext(), "최소 인원이 최대 인원보다 크게 설정되어 있습니다.", Toast.LENGTH_LONG).show();
                 } else {
@@ -429,7 +408,6 @@ public class Create extends AppCompatActivity {
                 break;
             }
             case Crop.REQUEST_CROP: {
-                //File cropFile = new File(Crop.getOutput(data).getPath());
                 setImage();
 
             }
@@ -467,9 +445,8 @@ public class Create extends AppCompatActivity {
      */
     private void goToAlbum() {
         isCamera = false;
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
@@ -478,6 +455,7 @@ public class Create extends AppCompatActivity {
      *  카메라에서 이미지 가져오기
      */
     private void takePhoto() {
+
         isCamera = true;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -494,17 +472,24 @@ public class Create extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.again.fileprovider", tempFile);
+                        "com.example.again.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             } else {
 
                 Uri photoUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             }
+
         }
     }
 
@@ -540,55 +525,42 @@ public class Create extends AppCompatActivity {
         Log.d(TAG, "setImage : " + tempFile.getAbsolutePath());
         m_img.setImageBitmap(originalBm);
 
-        /**
-         *  tempFile 사용 후 null 처리를 해줘야 합니다.
-         *  (resultCode != RESULT_OK) 일 때 tempFile 을 삭제하기 때문에
-         *  기존에 데이터가 남아 있게 되면 원치 않은 삭제가 이뤄집니다.
-         */
-
-//        tempFile = null;
     }
 
     /**
      *  권한 설정
      */
-    private void tedPermission() {
-
-        PermissionListener permissionListener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                // 권한 요청 성공
-                isPermission = true;
-
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                // 권한 요청 실패
-                isPermission = false;
-
-            }
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setRationaleMessage(getResources().getString(R.string.permission_2))
-                .setDeniedMessage(getResources().getString(R.string.permission_1))
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-
-    }
+//    private void tedPermission() {
+//
+//        PermissionListener permissionListener = new PermissionListener() {
+//            @Override
+//            public void onPermissionGranted() {
+//                // 권한 요청 성공
+//                isPermission = true;
+//
+//            }
+//
+//            @Override
+//            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//                // 권한 요청 실패
+//                isPermission = false;
+//
+//            }
+//        };
+//
+//        TedPermission.with(this)
+//                .setPermissionListener(permissionListener)
+//                .setRationaleMessage(getResources().getString(R.string.permission_2))
+//                .setDeniedMessage(getResources().getString(R.string.permission_1))
+//                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+//                .check();
+//
+//    }
 
     public void startCreateMoim(MoimData data) {
 
-        Log.d(TAG, "setImage : 여기까진 들어왔음 startCreateMoim");
-
         //  사진이 없다면 toast와 함께 return.
         if (tempFile == null || tempFile.length() <= 0) {
-            Toast.makeText(getApplicationContext(), "사진이 없음", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "setImage : startCreateMoim : temp가 null이야");
-
-//            return;
 
             serviceApi.createImageNullMoim(data).enqueue(new Callback<MoimData.MoimResponse>() {
                 //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
@@ -611,7 +583,6 @@ public class Create extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러1", t.getMessage());
                     t.printStackTrace();
                 }
             });
@@ -637,9 +608,7 @@ public class Create extends AppCompatActivity {
                     = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(data.getAge_limit_max()));
 
 
-//        serviceApi.createMoim(data.getMeeting_interest(), data.getMeeting_name(), data.getMeeting_description(), data.getMeeting_time(), data.getMeeting_location(), data.getMeeting_recruitment(), data.getAge_limit_min(), data.getAge_limit_max() , body).enqueue(new Callback<MoimData.MoimResponse>(){
-            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_location, meeting_time, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
-                //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
+            serviceApi.createMoim(meeting_interest, meeting_name, meeting_description, meeting_time, meeting_location, meeting_recruitment, age_limit_min, age_limit_max, body).enqueue(new Callback<MoimData.MoimResponse>() {
                 @Override
                 public void onResponse(Call<MoimData.MoimResponse> call, Response<MoimData.MoimResponse> response) {
                     MoimData.MoimResponse result = response.body();
@@ -647,20 +616,17 @@ public class Create extends AppCompatActivity {
                     Toast.makeText(Create.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if (result.getStatus() == 200) {
-                        System.out.println("yeah");
                         Toast.makeText(getApplicationContext(), "모임을 확인해보세요!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(), After_have_group.class);
                         startActivity(intent);
                         finish();
                     } else if (result.getStatus() == 400) {
-                        System.out.println("nooooo");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MoimData.MoimResponse> call, Throwable t) {
                     Toast.makeText(Create.this, "모임생성 에러", Toast.LENGTH_LONG).show();
-                    Log.e("모임생성 에러2", t.getMessage());
                     t.printStackTrace();
                 }
             });
@@ -688,9 +654,6 @@ public class Create extends AppCompatActivity {
                 timeSet(); // 시간 정하면 좋을 것 같아서 넣음
 
 
-// 날짜만 정하는거면 밑 두 줄만 해도 됨. timeSet() 함수랑 timecallbackMethod 지우고.
-//                int setmonthOfYear = monthOfYear + 1;
-//                m_time.setText(year + "-" + setmonthOfYear + "-" + dayOfMonth);
             }
         };
 
@@ -699,7 +662,6 @@ public class Create extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int newminute)
             {
-//                textView_Date.setText(hourOfDay + "시" + minute + "분");
                 hour = hourOfDay;
                 minute = newminute;
                 m_time.setText(year + "-" + month + "-" + day + " " + hour + ":" + minute);
@@ -715,6 +677,7 @@ public class Create extends AppCompatActivity {
         int nowMonth = calendar.get(Calendar.MONTH);
         int nowDay = calendar.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, nowYear, nowMonth, nowDay);
+        dialog.getDatePicker().setMinDate(System.currentTimeMillis());
         dialog.show();
     }
 

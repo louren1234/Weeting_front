@@ -43,7 +43,6 @@ public class UserData {
     public UserData(String user_img){
         this.user_img = user_img;
     }
-
     public String getUser_nick_name() {
         return user_nick_name;
     }

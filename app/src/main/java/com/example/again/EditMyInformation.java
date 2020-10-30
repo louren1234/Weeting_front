@@ -197,7 +197,12 @@ public class EditMyInformation extends AppCompatActivity {
                     myimg = userData.getUser_img();
                     myintro = userData.getUser_introduce();
                     myEmail.setText(userData.getUser_email());
-                    myBirth.setText(userData.getUser_birth());
+
+                    String birth = userData.getUser_birth();
+                    int index = birth.indexOf("T");
+                    String shortbirth = birth.substring(0, index);
+
+                    myBirth.setText(shortbirth);
                     myIntroduce.setText(userData.getUser_introduce());
                     myNickname.setText(userData.getUser_nick_name());
                 }
@@ -290,9 +295,8 @@ public class EditMyInformation extends AppCompatActivity {
      */
     private void goToAlbum() {
         isCamera = false;
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
@@ -301,6 +305,7 @@ public class EditMyInformation extends AppCompatActivity {
      *  카메라에서 이미지 가져오기
      */
     private void takePhoto() {
+
         isCamera = true;
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -317,17 +322,25 @@ public class EditMyInformation extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.again.fileprovider", tempFile);
+                        "com.example.again.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             } else {
 
                 Uri photoUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+//                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+                }
 
             }
+
         }
     }
 
@@ -407,8 +420,6 @@ public class EditMyInformation extends AppCompatActivity {
 
         myintro = myIntroduce.getText().toString();
 
-        Log.d(TAG, "이미지 값 : " + myimg + " 자기소개 " + myintro);
-
         if( tempFile == null || tempFile.length() <= 0) { // 새로운 이미지 업데이트가 없고
 
             if (myimg != null) { // 기존 이미지가 존재한다면
@@ -438,9 +449,6 @@ public class EditMyInformation extends AppCompatActivity {
 
             } else { // 기존 이미지도 null이라면
 
-//                RequestBody myNullImage
-//                        = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(null));
-
                 Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyImg(null);
                 call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>() {
                     @Override
@@ -457,7 +465,7 @@ public class EditMyInformation extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 }else {
-                                    Log.e("이미지 null & introduction보냄", "오류");
+                                    Log.e("이미지 null&introduction보냄", "오류");
                                 }
                             }
 
@@ -484,12 +492,9 @@ public class EditMyInformation extends AppCompatActivity {
             Call<UserData.UserImgorIntroorInterestsResponse> call = serviceApi.updateMyNewImg(body);
 
             call.enqueue(new Callback<UserData.UserImgorIntroorInterestsResponse>(){
-                //        serviceApi.createMoim(data).enqueue(new Callback<MoimData.MoimResponse>(){
                 @Override
                 public void onResponse(Call<UserData.UserImgorIntroorInterestsResponse> call, Response<UserData.UserImgorIntroorInterestsResponse> response) {
                     UserData.UserImgorIntroorInterestsResponse result = response.body();
-
-//                    Toast.makeText(EditMyInformation.this, result.getMessage(), Toast.LENGTH_LONG).show();
 
                     if(result.getState() == 200) {
 

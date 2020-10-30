@@ -1,232 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
-
-<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:layout_editor_absoluteX="1dp"
-    tools:layout_editor_absoluteY="152dp">
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginBottom="7dp"
-        android:gravity="bottom">
-
-        <ImageView
-            android:id="@+id/mainpage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:gravity="center_vertical"
-            app:srcCompat="@drawable/logonotmain" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="settings"
-            android:gravity="center_vertical"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/search"
-            tools:ignore="HardcodedText" />
-
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/toHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="home"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/home"
-            tools:ignore="HardcodedText" />
-
-        <ImageButton
-            android:id="@+id/toList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="list"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/list"
-            tools:ignore="HardcodedText" />
-
-
-
-
-        <ImageButton
-            android:id="@+id/toMypage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="mypage"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/user"
-            tools:ignore="HardcodedText" />
-
-        <ImageButton
-            android:id="@+id/chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:contentDescription="list"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_chat"
-            tools:ignore="HardcodedText" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="152dp">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="추천모임"
-            android:textSize="23sp"
-            tools:ignore="HardcodedText" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/mainRecommendMoim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mainRecommedRecycler"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="368dp">
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="내 모임"
-            android:textSize="23sp"
-            tools:ignore="HardcodedText" />
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="152dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:gravity="bottom">
 
-        <Button
-            android:id="@+id/myMoimButton"
-            android:layout_marginEnd="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내 모임 더보기"
-            tools:ignore="HardcodedText" />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/mainpage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    app:srcCompat="@drawable/logonotmain" />
 
-    <LinearLayout
-        android:id="@+id/noHaveMoimLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
-        <!--layout에서 gravity는 layout 안에 있는 것을 정렬하고 layout_gravity는 layout 안에 있는 요소들이 layout에서 정렬될 때 쓰이는 것 같다.
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/search"
+                    android:layout_width="31dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="settings"
+                    android:gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/search"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/toHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="home"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/home"
+                    tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:id="@+id/toList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="list"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/list"
+                    tools:ignore="HardcodedText" />
+
+
+                <ImageButton
+                    android:id="@+id/toMypage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="mypage"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/user"
+                    tools:ignore="HardcodedText" />
+
+                <ImageButton
+                    android:id="@+id/chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="list"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_chat"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="-1dp"
+                tools:layout_editor_absoluteY="152dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="추천모임"
+                    android:textSize="23sp"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mainRecommendMoim"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mainRecommedRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="368dp">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="내 모임"
+                    android:textSize="23sp"
+                    tools:ignore="HardcodedText" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/createMoim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="모임 만들기" />
+
+                <Button
+                    android:id="@+id/myMoimButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="내 모임 더보기"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/noHaveMoimLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <!--layout에서 gravity는 layout 안에 있는 것을 정렬하고 layout_gravity는 layout 안에 있는 요소들이 layout에서 정렬될 때 쓰이는 것 같다.
         즉, gravity : 어떤 요소 안의 것들을 정렬시킴 / layout_gravity : 어떤 요소 안의 것들이 그걸 감싸고 있는 요소에 맞춰 정렬됨
         뇌피셜이지만 이 차이인 것 같다. -->
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:inputType="textMultiLine"
-            android:text="원하는 모임이 없나요?\n 모임을 만들어보세요."
-            android:textSize="20sp"
-            tools:ignore="HardcodedText,TextViewEdits" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:inputType="textMultiLine"
+                    android:text="원하는 모임이 없나요?\n 모임을 만들어보세요."
+                    android:textSize="20sp"
+                    tools:ignore="HardcodedText,TextViewEdits" />
 
-        <Button
-            android:id="@+id/makeGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="모임 만들기"
-            tools:ignore="HardcodedText" />
+                <Button
+                    android:id="@+id/makeGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="모임 만들기"
+                    tools:ignore="HardcodedText" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/mainMyMoim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382">
+            <LinearLayout
+                android:id="@+id/mainMyMoim"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.382">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mainMyRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mainMyRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-</LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

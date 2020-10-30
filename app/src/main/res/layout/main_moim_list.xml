@@ -14,14 +14,14 @@
 
             <ImageView
                 android:id="@+id/mainMoimImg"
-                android:layout_width="200dp"
-                android:layout_height="142dp"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
                 android:layout_margin="3dp"
                 android:contentDescription="random_gruop"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="HardcodedText"
-                tools:srcCompat="@drawable/puppy" />
+                tools:srcCompat="@drawable/nullimage" />
 
             <TextView
                 android:id="@+id/mainMoimName"

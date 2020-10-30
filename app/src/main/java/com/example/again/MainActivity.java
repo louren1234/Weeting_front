@@ -2,6 +2,7 @@ package com.example.again;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -29,44 +32,69 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     EditText e_mail, e_password;
+    LinearLayout buttons;
     String email, password;
     SignUpData.ServiceApi serviceApi;
+    UserData.serviceApi serviceApi2;
+    UserData.UserDataResponse dataList;
+    String user;
+
     MoimCategoryResultData.serviceApi checkMoimServiceApi;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // 해시 키 받아오는 코드
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo("com.example.again", PackageManager.GET_SIGNATURES);
-//            for(Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash : ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-
+        user = "";
         serviceApi = RetrofitClient.getClient().create(SignUpData.ServiceApi.class);
         checkMoimServiceApi = RetrofitClient.getClient().create(MoimCategoryResultData.serviceApi.class);
         e_mail = findViewById(R.id.mainId);
         e_password = findViewById(R.id.mainPassword);
+        buttons = findViewById(R.id.buttons);
+
+        sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
+        email = sp.getString("email", null);
+        password = sp.getString("password", null);
+
+        e_mail.setVisibility(View.GONE);
+        e_password.setVisibility(View.GONE);
+        buttons.setVisibility(View.GONE);
+
+        if (email !=null || password != null){
+            LoginData autologin = new LoginData(email, password);
+            serviceApi.userLogin(autologin).enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    LoginResponse result = response.body();
+                    Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    if(result.getState()==200){
+
+                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
+                        i.putExtra("email", email);
+                        startActivity(i);
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "로그인 에러 발생", Toast.LENGTH_LONG).show();
+                    Log.e("로그인 에러 발생",t.getMessage());
+                }
+
+            });
+        } else {
+            e_mail.setVisibility(View.VISIBLE);
+            e_password.setVisibility(View.VISIBLE);
+            buttons.setVisibility(View.VISIBLE);
+        }
     }
 
-//    public void findId(View view){
-//        Intent i = new Intent(getApplicationContext(),FIndIdActivity.class);
-//        startActivity(i);
-//    }
-//    public void findPassword(View view){
-//        Intent i = new Intent(getApplicationContext(),FindPasswordActivity.class);
-//        startActivity(i);
-//
-//    }
     public void mainSignUp(View view){
         Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(i);
@@ -78,16 +106,28 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,"빈칸이 있습니다.",Toast.LENGTH_LONG).show();
         }
         LoginData data = new LoginData(email,password);
-        serviceApi.userLogin(data).enqueue(new Callback<LoginResponse>() {
+        Login(data);
+    }
+
+    public void Login(LoginData logindata) {
+        serviceApi.userLogin(logindata).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 if(result.getState()==200){
+
+                    sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("email", email);
+                    editor.putString("password", password);
+                    editor.commit();
+                    getNickName();
                     Intent i = new Intent(getApplicationContext(), After_have_group.class);
                     i.putExtra("email", email);
                     startActivity(i);
-                    SharedPreferences sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
+
                     String s = sp.getString("name", "");
                     System.out.println(s+"sssssssssssssss");
                     finish();
@@ -105,37 +145,32 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
-
     }
 
-//    public void checkHaveOrNotHaveMoim() {
-//        checkMoimServiceApi.getMyMoim().enqueue(new Callback<MoimCategoryResultData.MoimCategoryResultDataResponse>() {
-//            @Override
-//            public void onResponse(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Response<MoimCategoryResultData.MoimCategoryResultDataResponse> response) {
-//                MoimCategoryResultData.MoimCategoryResultDataResponse data = response.body();
-//                if(data.data != null){
-//                    if (data.data.size() > 0){
-//                        Intent i = new Intent(getApplicationContext(), After_have_group.class);
-//                        i.putExtra("email", email);
-//                        startActivity(i);
-//                        finish();
-//                    }
-//                }
-//                else if (data.data == null) {
-//                    Intent i = new Intent(getApplicationContext(), No_have_group.class);
-//                    i.putExtra("email", email);
-//                    startActivity(i);
-//                    finish();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MoimCategoryResultData.MoimCategoryResultDataResponse> call, Throwable t) {
-//                Log.e("내 모임 불러오기 에러 발생", t.getMessage());
-//            }
-//        });
-//    }
+
+    protected void getNickName(){
+        serviceApi2 = RetrofitClient.getClient().create(UserData.serviceApi.class);
+        Call<UserData.UserDataResponse> call = serviceApi2.getMyInfo();
+
+        call.enqueue(new Callback<UserData.UserDataResponse>() {
+            @Override
+            public void onResponse(Call<UserData.UserDataResponse> call, Response<UserData.UserDataResponse> response) {
+                dataList = response.body();
+
+                for(UserData userData : dataList.list ){
+                    user = userData.getUser_nick_name();
+                }
+                sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("name",user);
+                edit.commit();
+            }
+
+            @Override
+            public void onFailure(Call<UserData.UserDataResponse> call, Throwable t) {
+                Log.d("마이페이지에서 내 정보 가져오기 ", "실패원인 : ", t);
+            }
+        });
+    }
 
 }

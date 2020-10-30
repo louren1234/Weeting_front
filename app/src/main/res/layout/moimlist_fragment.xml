@@ -7,8 +7,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout13"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -22,6 +22,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragmentRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/ifmoimnull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:text="아직 모임이 없습니다.\n새로 모임을 만들어보세요!" />
+
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,8 +7,13 @@
     tools:context=".MainActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/scrollView9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +24,7 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
-                android:layout_width="408dp"
+                android:layout_width="match_parent"
                 android:layout_height="115dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="7dp"
@@ -55,7 +60,7 @@
             <LinearLayout
 
                 android:id="@+id/linearLayout3"
-                android:layout_width="414dp"
+                android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -82,8 +87,6 @@
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/list"
                     tools:ignore="HardcodedText" />
-
-
 
 
                 <ImageButton
@@ -118,8 +121,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -139,14 +142,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:textSize="20sp"
-                        tools:text="내 아이디"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText"
+                        tools:text="내 아이디" />
 
                     <TextView
                         android:id="@+id/mypageMyIntroduce"
-                        android:layout_width="26dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_marginBottom="30dp"
+                        android:gravity="center"
                         android:textSize="20sp"
                         tools:ignore="HardcodedText"
                         tools:text="소개" />
@@ -162,10 +168,10 @@
 
                     <LinearLayout
                         android:id="@+id/myinform"
-                        android:layout_width="410dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/line_updown"
                         android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_updown"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
@@ -192,10 +198,10 @@
 
                     <LinearLayout
                         android:id="@+id/interest"
-                        android:layout_width="410dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/line_updown"
                         android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_updown"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
@@ -222,10 +228,10 @@
 
                     <LinearLayout
                         android:id="@+id/qna"
-                        android:layout_width="410dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/line_updown"
                         android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_updown"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
@@ -252,10 +258,10 @@
 
                     <LinearLayout
                         android:id="@+id/terms_of_use"
-                        android:layout_width="410dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/line_updown"
                         android:layout_marginBottom="10dp"
+                        android:background="@drawable/line_updown"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"

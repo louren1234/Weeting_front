@@ -15,9 +15,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public class SignUpData {
     @SerializedName("user_email")
@@ -134,6 +136,9 @@ public class SignUpData {
         @FormUrlEncoded
         @POST("/login/join/auth/email")
         Call<Response> emailCheck(@Field("user_email") String user_email);
+
+        @GET("/chats/66/{user_nick_name}")
+        Call<Response> nickname(@Path("user_nick_name") String user_nick_name);
     }
 }
 

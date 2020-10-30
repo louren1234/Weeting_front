@@ -72,6 +72,8 @@ import retrofit2.http.Multipart;
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText e_name, e_password, e_nickname, e_mail, e_password_check;
+    EditText editFront;
+    EditText editBack;
     TextView e_birth;
     private SignUpData.ServiceApi serviceApi;
     boolean cancel;
@@ -93,6 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
     Calendar calendar;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     SharedPreferences sp;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint({"WrongThread", "WrongViewCast"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -344,8 +347,8 @@ public class SignUpActivity extends AppCompatActivity {
                 .check();
     }
     public void goToAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, PICK_ALBUM);
     }
 
@@ -388,33 +391,42 @@ public class SignUpActivity extends AppCompatActivity {
         imageView.setImageBitmap(originalBm);
     }
     private void takePhoto(){
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
             tempFile = createImageFile();
         } catch (IOException e) {
-            Toast.makeText(this, "이미지 처리 오류", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
-
         if (tempFile != null) {
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
 
                 Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.again.fileprovider", tempFile);
+                        "com.example.again.provider", tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_CAMERA);
+                }
 
             } else {
 
                 Uri photoUri = Uri.fromFile(tempFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_CAMERA);
+//                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(intent, PICK_CAMERA);
+                }
 
             }
+
         }
+
     }
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
@@ -537,10 +549,15 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
     public void PersonCheck(View view){
+
+        if(editFront.getText().toString().equals(null) || editBack.getText().toString().equals(null)){
+            Toast.makeText(getApplicationContext(),"빈칸입니다..", Toast.LENGTH_LONG).show();
+        }
         if(PersonCheckTF()){
             Toast.makeText(getApplicationContext(),"주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
             personTF = true;
         }
+
         else
             Toast.makeText(getApplicationContext(),"유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
 
@@ -550,8 +567,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public Boolean PersonCheckTF(){
-        EditText editFront = findViewById(R.id.sign_upPersonFront);
-        EditText editBack = findViewById(R.id.sign_upPersonBack);
+        editFront = findViewById(R.id.sign_upPersonFront);
+        editBack = findViewById(R.id.sign_upPersonBack);
+
         String leftSid = "";
         String rightSid = "";
         leftSid = editFront.getText().toString();
@@ -670,6 +688,7 @@ public class SignUpActivity extends AppCompatActivity {
             chipGroup = (ChipGroup) dlg.findViewById(R.id.chipgroup);
 
             okButton.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View view) {
                     // '확인' 버튼 클릭시 메인 액티비티에서 설정한 main_label에

@@ -53,8 +53,6 @@ public class SearchList extends AppCompatActivity implements RecyclerAdapter.OnD
 
         initAddressSpinner();
 
-
-
         searchRecycler.setLayoutManager(new LinearLayoutManager(this));
 
     }
