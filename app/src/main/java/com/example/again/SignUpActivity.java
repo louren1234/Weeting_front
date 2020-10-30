@@ -93,6 +93,10 @@ public class SignUpActivity extends AppCompatActivity {
     Calendar calendar;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     SharedPreferences sp;
+
+    EditText editFront;
+    EditText editBack;
+
     @SuppressLint({"WrongThread", "WrongViewCast"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,6 +109,10 @@ public class SignUpActivity extends AppCompatActivity {
         e_mail= findViewById(R.id.sign_upEmail);
         e_password_check = findViewById(R.id.sign_upPasswordCheck);
         e_birth = findViewById(R.id.sign_upBirth);
+
+        editFront = findViewById(R.id.sign_upPersonFront);
+        editBack = findViewById(R.id.sign_upPersonBack);
+
         serviceApi = RetrofitClient.getClient()
                 .create(SignUpData.ServiceApi.class);
         tedPermission();
@@ -546,29 +554,31 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
     public void PersonCheck(View view){
-        if(PersonCheckTF()){
-            Toast.makeText(getApplicationContext(),"주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
-            personTF = true;
-        }
-        else
-            Toast.makeText(getApplicationContext(),"유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
 
-        if(PersonCheckTF() && genderValid <= 0)
-            Toast.makeText(getApplicationContext(),"Weeting은 여성만 가입 가능한 어플입니다.", Toast.LENGTH_LONG).show();
+        if(editFront.getText().toString().replace(" ", "").equals("") || editBack.getText().toString().replace(" ", "").equals("")){
+            Toast.makeText(getApplicationContext(),"주민번호를 입력해주세요.", Toast.LENGTH_LONG).show();
+        } else {
+
+            if (PersonCheckTF()) {
+                Toast.makeText(getApplicationContext(), "주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                personTF = true;
+            } else
+                Toast.makeText(getApplicationContext(), "유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
+
+            if (PersonCheckTF() && genderValid <= 0)
+                Toast.makeText(getApplicationContext(), "Weeting은 여성만 가입 가능한 어플입니다.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
     public Boolean PersonCheckTF(){
-        EditText editFront = findViewById(R.id.sign_upPersonFront);
-        EditText editBack = findViewById(R.id.sign_upPersonBack);
         String leftSid = "";
         String rightSid = "";
         leftSid = editFront.getText().toString();
         rightSid = editBack.getText().toString();
         Boolean valid = false;
         genderValid = 0;
-        if (leftSid.length()+rightSid.length() != 13) ;
-        // 입력받은 주민번호 앞자리 유효성 검증============================
+        if (leftSid.length()+rightSid.length() != 13)
             Toast.makeText(getApplicationContext(),"주민등록번호 자리수 13자리를 확인하기 바랍니다.", Toast.LENGTH_LONG).show();
 
 

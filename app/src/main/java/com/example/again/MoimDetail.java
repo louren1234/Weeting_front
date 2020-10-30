@@ -42,6 +42,9 @@ public class MoimDetail extends AppCompatActivity {
     private MoimDetailData.MoimDetailDataResponse detailList;
     private MoimDetailData detailListConponent;
 
+    private int myId;
+    private String myNickname;
+
     List<MoimDetailData> moimMemberInfo;
     RecyclerView moimMemberRecyclerView;
     MoimMemberRecyclerAdapter moimMemberRecyclerAdapter;
@@ -85,6 +88,11 @@ public class MoimDetail extends AppCompatActivity {
                 moimMemberInfo = detailList.getMeeting_members();
                 moimMemberRecyclerAdapter = new MoimMemberRecyclerAdapter(getApplicationContext(), moimMemberInfo);
                 moimMemberRecyclerView.setAdapter(moimMemberRecyclerAdapter);
+
+//                for(MoimDetailData userData : moimMemberInfo) {
+//                    myId = userData.getUser_id();
+//                    myNickname = userData.getUser_nick_name();
+//                }
 
                 for(MoimDetailData moimDetailData : detailList.data){
 
