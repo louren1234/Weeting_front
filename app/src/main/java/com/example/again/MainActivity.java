@@ -1,6 +1,7 @@
 package com.example.again;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -62,29 +63,29 @@ public class MainActivity extends AppCompatActivity {
         e_password.setVisibility(View.GONE);
         buttons.setVisibility(View.GONE);
 
-        if (email !=null || password != null){
+        if (email != null || password != null) {
             LoginData autologin = new LoginData(email, password);
             serviceApi.userLogin(autologin).enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     LoginResponse result = response.body();
                     Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-                    if(result.getState()==200){
+                    if (result.getState() == 200) {
 
                         Intent i = new Intent(getApplicationContext(), After_have_group.class);
                         i.putExtra("email", email);
                         startActivity(i);
                         finish();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
 
                     }
                 }
+
                 @Override
                 public void onFailure(Call<LoginResponse> call, Throwable t) {
                     Toast.makeText(MainActivity.this, "로그인 에러 발생", Toast.LENGTH_LONG).show();
-                    Log.e("로그인 에러 발생",t.getMessage());
+                    Log.e("로그인 에러 발생", t.getMessage());
                 }
 
             });
@@ -95,17 +96,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void mainSignUp(View view){
+    public void mainSignUp(View view) {
         Intent i = new Intent(getApplicationContext(), SignUpActivity.class);
         startActivity(i);
     }
-    public void LoginCheck(View view){
+
+    public void LoginCheck(View view) {
         email = e_mail.getText().toString();
         password = e_password.getText().toString();
-        if(email.isEmpty() || password.isEmpty()){
-            Toast.makeText(MainActivity.this,"빈칸이 있습니다.",Toast.LENGTH_LONG).show();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(MainActivity.this, "빈칸이 있습니다.", Toast.LENGTH_LONG).show();
         }
-        LoginData data = new LoginData(email,password);
+        LoginData data = new LoginData(email, password);
         Login(data);
     }
 
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-                if(result.getState()==200){
+                if (result.getState() == 200) {
 
                     sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
 
@@ -129,26 +131,31 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
 
                     String s = sp.getString("name", "");
-                    System.out.println(s+"sssssssssssssss");
+                    System.out.println(s + "sssssssssssssss");
                     finish();
 //                    checkHaveOrNotHaveMoim();
-                }
-                else{
+                } else {
                     Toast.makeText(MainActivity.this, "없는 아이디입니다.", Toast.LENGTH_SHORT).show();
 
                 }
             }
+
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "로그인 에러 발생", Toast.LENGTH_LONG).show();
-                Log.e("로그인 에러 발생",t.getMessage());
+                Log.e("로그인 에러 발생", t.getMessage());
             }
 
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCompat.finishAffinity(this);
+    }
 
-    protected void getNickName(){
+    protected void getNickName() {
         serviceApi2 = RetrofitClient.getClient().create(UserData.serviceApi.class);
         Call<UserData.UserDataResponse> call = serviceApi2.getMyInfo();
 
@@ -157,12 +164,12 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UserData.UserDataResponse> call, Response<UserData.UserDataResponse> response) {
                 dataList = response.body();
 
-                for(UserData userData : dataList.list ){
+                for (UserData userData : dataList.list) {
                     user = userData.getUser_nick_name();
                 }
                 sp = getSharedPreferences("myFile", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor edit = sp.edit();
-                edit.putString("name",user);
+                edit.putString("name", user);
                 edit.commit();
             }
 
@@ -171,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("마이페이지에서 내 정보 가져오기 ", "실패원인 : ", t);
             }
         });
-    }
 
+
+    }
 }

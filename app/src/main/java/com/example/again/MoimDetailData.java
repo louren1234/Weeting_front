@@ -48,6 +48,16 @@ public class MoimDetailData {
     String user_img;
     @SerializedName("user_introduce")
     String user_introduce;
+    @SerializedName("user_id")
+    int user_id;
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     public MoimDetailData(int fk_meeting_interest, String meeting_name, String meeting_description, String meeting_location, String meeting_time,
                           int meeting_recruitment, int age_limit_min, int age_limit_max, String meeting_img, int present_members, String captain_nick_name) {
@@ -64,10 +74,11 @@ public class MoimDetailData {
         this.captain_nick_name = captain_nick_name;
     }
 
-    public MoimDetailData(String user_nick_name, String user_img, String user_introduce) {
+    public MoimDetailData(String user_nick_name, String user_img, String user_introduce, int user_id) {
         this.user_nick_name = user_nick_name;
         this.user_img = user_img;
         this.user_introduce = user_introduce;
+        this.user_id = user_id;
     }
 
     public int getFk_meeting_interest() {
