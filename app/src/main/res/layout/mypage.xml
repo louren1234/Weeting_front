@@ -257,36 +257,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/terms_of_use"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/line_updown"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:layout_editor_absoluteY="74dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_weight="1"
-                            android:text="이용약관 및 개인정보 취급 방침"
-                            android:textSize="20sp"
-                            tools:ignore="HardcodedText" />
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="15dp"
-                            android:adjustViewBounds="true"
-                            android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/in"
-                            tools:ignore="ContentDescription" />
-                    </LinearLayout>
-
-                    <LinearLayout
                         android:id="@+id/logout"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"

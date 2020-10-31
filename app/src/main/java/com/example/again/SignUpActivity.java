@@ -556,16 +556,15 @@ public class SignUpActivity extends AppCompatActivity {
     }
     public void PersonCheck(View view){
 
-        if(editFront.getText().toString().equals(null) || editBack.getText().toString().equals(null)){
-            Toast.makeText(getApplicationContext(),"빈칸입니다..", Toast.LENGTH_LONG).show();
-        }
-        if(PersonCheckTF()){
-            Toast.makeText(getApplicationContext(),"주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
-            personTF = true;
-        }
-
-        else
-            Toast.makeText(getApplicationContext(),"유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
+//        if(editFront.getText().toString().replace(" ", "").equals("") || editBack.getText().toString().replace(" ", "").equals("")){
+//            Toast.makeText(getApplicationContext(),"빈칸입니다..", Toast.LENGTH_LONG).show();
+//        }
+//        if(PersonCheckTF()){
+//            Toast.makeText(getApplicationContext(),"주민번호 인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
+//            personTF = true;
+//        }
+//        else
+//            Toast.makeText(getApplicationContext(),"유효한 주민번호가 아닙니다. 다시 한번 확인해주세요.", Toast.LENGTH_LONG).show();
 
         if(editFront.getText().toString().replace(" ", "").equals("") || editBack.getText().toString().replace(" ", "").equals("")){
             Toast.makeText(getApplicationContext(),"주민번호를 입력해주세요.", Toast.LENGTH_LONG).show();

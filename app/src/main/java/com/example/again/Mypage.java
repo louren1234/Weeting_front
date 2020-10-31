@@ -58,7 +58,7 @@ public class Mypage extends AppCompatActivity {
         LinearLayout editmyinform = findViewById(R.id.myinform);
         LinearLayout interest = findViewById(R.id.interest);
         LinearLayout qna = findViewById(R.id.qna);
-        LinearLayout terms_of_use = findViewById(R.id.terms_of_use);
+//        LinearLayout terms_of_use = findViewById(R.id.terms_of_use);
         LinearLayout logout = findViewById(R.id.logout);
 
         setInfo();
@@ -140,13 +140,13 @@ public class Mypage extends AppCompatActivity {
             }
         });
 
-        terms_of_use.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Terms_of_use.class);
-                startActivity(intent);
-            }
-        });
+//        terms_of_use.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), Terms_of_use.class);
+//                startActivity(intent);
+//            }
+//        });
 
         logout.setOnClickListener(new View.OnClickListener(){
             @Override

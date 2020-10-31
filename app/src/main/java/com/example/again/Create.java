@@ -323,10 +323,6 @@ public class Create extends AppCompatActivity {
             else if(spinnerCity.getSelectedItemPosition()!=0){
                 address = spinnerCity.getSelectedItem().toString();
             }
-            if (spinnerCity.getSelectedItemPosition() == 0) {
-                Toast.makeText(getApplicationContext(), "시를 선택해주세요! ", Toast.LENGTH_LONG).show();
-            }
-//        }
 
         String lastLocation = selectLastLocation.getText().toString();
         location = address + " " + lastLocation;
@@ -348,6 +344,8 @@ public class Create extends AppCompatActivity {
             if (name.isEmpty() || description.isEmpty() || time.isEmpty() || location.isEmpty() ||
                     num.isEmpty() || agemin.isEmpty() || agemax.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "빈 칸이 존재합니다.", Toast.LENGTH_LONG).show();
+            } else if(selectAddress.isChecked() && (selectLastLocation.getText().toString().replace(" ", "").equals("") && spinnerCity.getSelectedItemPosition() == 0)) {
+                Toast.makeText(getApplicationContext(), "주소를 선택해주세요! ", Toast.LENGTH_LONG).show();
             }
             else {
                 int numInt = Integer.parseInt(num);
