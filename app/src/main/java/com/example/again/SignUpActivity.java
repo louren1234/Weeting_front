@@ -352,16 +352,34 @@ public class SignUpActivity extends AppCompatActivity {
                 .check();
     }
     public void goToAlbum() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_ALBUM);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK) {
+
+            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+
+            if(tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e("TAG", tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
+                    }
+                }
+            }
+
+            return;
+        }
+
         if (requestCode == PICK_ALBUM) {
             Uri photoUri = data.getData();
+
             Cursor cursor = null;
             try {
                 String[] proj = { MediaStore.Images.Media.DATA };
@@ -381,10 +399,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
             setImage();
         }
-        else if(requestCode==PICK_ALBUM){
-            setImage();
-        }
-        if(requestCode==PICK_CAMERA && resultCode== Activity.RESULT_OK){
+        else if(requestCode==PICK_CAMERA){
             Uri photoUri = Uri.fromFile(tempFile);
             Log.d("tag", "takePhoto photoUri : " + photoUri);
             setImage();
