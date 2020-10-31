@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -53,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
         e_mail = findViewById(R.id.mainId);
         e_password = findViewById(R.id.mainPassword);
         buttons = findViewById(R.id.buttons);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+
+        출처: https://superwony.tistory.com/4 [개발자 키우기]
         sp = getSharedPreferences("myFile", Context.MODE_PRIVATE);
 
         email = sp.getString("email", null);

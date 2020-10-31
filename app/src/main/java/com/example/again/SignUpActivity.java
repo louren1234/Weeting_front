@@ -110,7 +110,6 @@ public class SignUpActivity extends AppCompatActivity {
         e_mail= findViewById(R.id.sign_upEmail);
         e_password_check = findViewById(R.id.sign_upPasswordCheck);
         e_birth = findViewById(R.id.sign_upBirth);
-
         editFront = findViewById(R.id.sign_upPersonFront);
         editBack = findViewById(R.id.sign_upPersonBack);
 
@@ -373,6 +372,7 @@ public class SignUpActivity extends AppCompatActivity {
                 cursor.moveToFirst();
 
                 tempFile = new File(cursor.getString(column_index));
+
 
             } finally {
                 if (cursor != null) {
